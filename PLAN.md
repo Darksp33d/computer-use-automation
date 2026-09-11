@@ -68,7 +68,7 @@ The target is deliberately legacy-like: server-rendered forms, an iframe workspa
 | Playwright with pinned Chromium | Real input, frame-aware locators, actionability checks, browser lifecycle, dialogs, and screenshots in one maintained dependency |
 | Zod 4 | Validate untrusted artifact, model, and operator inputs; derive TypeScript types and export the supported JSON Schema representation from one source |
 | OpenAI Responses API and official SDK | One discovery-only model adapter, strict structured decisions, image observations, bounded requests and usage evidence |
-| `gpt-6-astra` discovery model, `reasoning.effort` starting at `low` | Owner's selection. Documented image input, structured outputs and computer-use capability. No dated snapshot exists yet, so every discovery run records the exact model string, response IDs and token usage in provenance and evidence; the effort level is raised only if the live task measurably needs it |
+| `gpt-6-astra` discovery model, `reasoning.effort` starting at `low` | Owner's selection, supported by published grounding/workflow evaluations and actual P6 completion at low effort. No dated snapshot exists yet, so every discovery run records the exact model string, response IDs and token usage in provenance and evidence. D05 records a fallback evaluation order and triggers; no automatic fallback is implemented |
 | React, TypeScript and Vite | Stateful operator workspace with live sessions, stable forms, ownership transitions and reusable accessible controls; static assets served by the existing server |
 | Native Node HTTP and legacy HTML/CSS | Bounded local control API and intentionally older banking simulator; server enforces authentication and policy |
 | Node test runner and Playwright Test | Public contract/state-machine tests plus real-browser integration and operator-flow tests; each covers a different boundary |
@@ -203,7 +203,7 @@ Replay exits with 0 for success, 2 for a business outcome, 3 for failure or reje
 | Question | Resolution gate | Response if it fails |
 | --- | --- | --- |
 | Can the observation/targeting strategy handle unlabeled controls inside the actual legacy fixture? | P4 browser contract tests with regenerated IDs and duplicate labels | Refine the scoped relation binding; do not claim generic visual replay |
-| Is `gpt-6-astra` available to the owner's account and successful with the strict decision schema at the chosen effort level? | P6 provider smoke run and actual discovery | Verify account tier and access; raise effort or evaluate an explicitly documented replacement with the owner; never substitute a fake run |
+| Is `gpt-6-astra` available to the owner's account and successful with the strict decision schema at the chosen effort level? | P6 provider smoke run and actual discovery | Verify account tier and access; raise effort to `medium`, then evaluate the documented Claude Opus 5 fallback per D05; never substitute a fake run |
 | Can the compiled path run with different input values? | P6 fresh-session replay | Reject the artifact and repair parameterization or targeting |
 | Can manual events be mediated and resumed without a race? | P7 concurrent claim/resume/action tests | Keep session paused; simplify the console/controller before proceeding |
 | Are failure snapshots useful without leaking data? | P4/P9 sensitive canaries and human inspection | Prefer a structural snapshot with allowlisted labels; omit unsafe screenshots |

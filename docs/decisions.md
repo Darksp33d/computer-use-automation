@@ -36,7 +36,15 @@ Only the `gpt-6-astra` alias is published; no dated snapshot exists at the time 
 
 Official computer-use guidance supports custom UI tools alongside other integration approaches. We choose a narrow structured action interface because the assignment needs reviewable, policy-checked individual actions. No model-generated scripts are executed. Strict output shape does not remove refusal or incomplete-response handling. [Computer use](https://developers.openai.com/api/docs/guides/tools-computer-use), [structured outputs](https://developers.openai.com/api/docs/guides/structured-outputs).
 
-A newer flagship or smaller model may be better after task-specific measurement. The substitution rule is explicit: verify documented support, run the same live task, compare completion, invalid actions, latency and usage, then record the new decision and evidence. Do not implement automatic cross-provider fallback or silently change the model between runs. Discovery is infrequent; replay cost and latency come from UI execution, not model inference.
+The model comparison focuses on grounding, business workflows and unwanted effects. OpenAI reports 92.7% on ScreenSpot-Pro without tools, 41.4% on AutomationBench against Fable 5.1's 31.4%, and a 2.4% misaligned-outcome rate against 9.5% in its internal computer-use safety evaluation. These are vendor measurements with published harness limits. ScreenSpot-Pro tests static localization, not an entire workflow; this implementation also supplies reviewed semantic controls rather than requesting coordinates. [OpenAI evaluation table and methodology](https://openai.com/index/gpt-6-astra/).
+
+Artificial Analysis independently reports 69% on its AutomationBench-AA implementation and about one third of Fable 5.1's output tokens at maximum effort for the same Intelligence Index score. Those measurements support evaluating Astra, but do not establish this application's latency at low effort. Different OSWorld releases and harnesses are not interchangeable. The decisive local evidence is both real P6 workflows completing at `low`, followed by fresh replay with different inputs. [Artificial Analysis evaluation](https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra).
+
+The fallback evaluation order is Astra at `medium`, Claude Opus 5, then Fable 5.1 if Opus also falls short. Opus 5 supports images and structured output at half Astra's standard token price; Anthropic recommends starting there for most workloads before evaluating Fable 5.1. The earlier comparison draft attributed an 83.4% OSWorld-Verified score to Opus 5, but the cited leaderboard assigns that score to Opus 4.8; that number is excluded. [Opus 5 specifications](https://platform.claude.com/docs/en/models/opus-5/overview), [Fable 5.1 guidance](https://platform.claude.com/docs/en/models/fable-5-1/overview).
+
+The fallback was not needed and is not implemented. Re-evaluate after two consecutive failed discoveries at the current effort, repeated invalid control references, premature completion, or budget exhaustion before step ten. These are investigation triggers, not permission to retry consequential UI actions or change providers automatically.
+
+The substitution rule is unchanged: verify documented support, run the same live task, compare completion, invalid actions, latency and usage, then record the new decision and evidence. A fallback requires its own adapter behind the same provider interface; do not implement automatic cross-provider fallback or silently change the model between runs. Discovery is infrequent; replay cost and latency come from UI execution, not model inference.
 
 ## D06. Provider retention is separate from local redaction
 
@@ -80,6 +88,7 @@ P2 validation covers unknown fields/versions/actions, reference integrity, repea
 
 | Date | Decision | State |
 | --- | --- | --- |
-| 2026-09-11 | D01-D09 recorded | Proposed; validate at their implementation gates |
+| 2026-09-11 | D01-D09 recorded | Implemented and checked through P9; production limitations remain explicit |
+| 2026-09-11 | D05 revised: discovery model changed to `gpt-6-astra` on owner instruction; task-specific benchmark rationale and Claude Opus 5 fallback ladder recorded | P6 validates Astra at `low`; P10 source audit corrects the Opus score attribution; fallback not exercised |
 
 When evidence changes a decision, add a dated entry explaining the trigger, replacement, validation and effect on prior artifacts. Keep the final design coherent rather than accumulating incompatible alternatives.
