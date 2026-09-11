@@ -21,6 +21,7 @@ test("surface resolves legacy fields and emits safe structural observations", as
   try {
     const before = await surface.observe();
     expect(before.screen).toBe("search-screen");
+    expect(before.controls.find((control) => control.id === "member-number")?.visible).toBe(false);
     await surface.act(
       { kind: "fill", target: "member-field", input: "memberId" },
       inputs,

@@ -153,7 +153,10 @@ export class BrowserSurface implements Surface {
           .locator("..")
           .locator(target.control);
       case "cell":
-        return frame.getByText(target.caption, { exact: true }).locator("..").locator("td + td");
+        return frame
+          .getByText(target.caption, { exact: true })
+          .locator("..")
+          .locator("td + td:not(:has(input, select))");
     }
   }
 
