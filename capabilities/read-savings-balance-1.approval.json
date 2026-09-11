@@ -1,0 +1,10 @@
+{
+  "capabilityId": "read-savings-balance",
+  "revision": 1,
+  "artifactDigest": "ec9c9835300ac34c92726061b0b1b022da70b9ae78553663befbc5cc3dc24db5",
+  "bindingDigest": "32f47b9860933e39c2bb251b3831d377d9709e9130beb32529400ade395d4ab3",
+  "discoveryRunId": "3b1dffe5-ade5-4e07-b06e-f9df2a1e897b",
+  "replayRunId": "76a62553-6b3c-4624-93d6-61636ac14fb5",
+  "reviewedAt": "2026-09-11T17:12:39.069Z",
+  "reviewer": "engineering-review"
+}

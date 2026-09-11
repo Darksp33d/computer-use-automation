@@ -23,3 +23,7 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 ### In progress
 
 - P7 and later: React operator workspace, live handoff, expanded verification, containment and final evidence.
+
+### P7 control layer
+
+Implemented the digest-pinned review catalog, authenticated operator API, exclusive same-session commands, intervention expiry and verified resume. Browser coverage exercises notices, expired sessions and native dialogs, plus authorization and shutdown during startup. The React workspace is the next separate commit.

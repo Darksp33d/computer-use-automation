@@ -299,19 +299,22 @@ export class BrowserSurface implements Surface {
 
   async screenshot(): Promise<Buffer | null> {
     if (this.#dialog || this.#closed) return null;
-    const frame = this.page.frameLocator('iframe[name="workspace"]');
+    const observation = await this.observe();
+    if (
+      !observation.screen ||
+      (observation.state.kind === "blocked" &&
+        observation.state.code === "UNEXPECTED_DIALOG" &&
+        !observation.controls.some(
+          (control) => control.id === "operator-notice" && control.visible,
+        ))
+    )
+      return null;
     return this.page.screenshot({
       type: "png",
       animations: "disabled",
-      mask: [
-        frame.locator("input"),
-        frame.locator("select"),
-        frame.locator(".details td + td"),
-        frame.locator(".data-table tbody td"),
-        frame.locator(".intro"),
-        frame.locator(".training"),
-      ],
-      maskColor: "#dce3df",
+      // Hide sensitive elements in their stacking context so overlays stay readable.
+      style:
+        "input, select, .details td + td, .data-table tbody td, .intro, .training { visibility: hidden !important; }",
       timeout: this.timeoutMs,
     });
   }

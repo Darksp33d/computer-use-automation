@@ -1,0 +1,595 @@
+{
+  "schemaVersion": 1,
+  "id": "prepare-sub-account",
+  "revision": 1,
+  "description": "Prepare a sub-account and stop at the verified review screen",
+  "application": {
+    "family": "legacy-bank",
+    "bindingVersion": 1,
+    "driver": "browser-v1"
+  },
+  "inputs": {
+    "memberId": {
+      "kind": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "sensitivity": "sensitive"
+    },
+    "accountType": {
+      "kind": "enum",
+      "values": [
+        "savings",
+        "checking"
+      ],
+      "sensitivity": "public"
+    },
+    "nickname": {
+      "kind": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "sensitivity": "sensitive"
+    }
+  },
+  "outputs": {
+    "preparationStatus": {
+      "target": "preparation-status",
+      "parser": "text",
+      "allowedValues": [
+        "ready-for-review"
+      ],
+      "sensitivity": "public"
+    }
+  },
+  "targets": {
+    "search-screen": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "heading",
+      "name": "Member search"
+    },
+    "results-screen": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "heading",
+      "name": "Search results"
+    },
+    "member-screen": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "heading",
+      "name": "Member overview"
+    },
+    "savings-screen": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "heading",
+      "name": "Savings account"
+    },
+    "form-screen": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "heading",
+      "name": "New sub-account"
+    },
+    "review-screen": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "heading",
+      "name": "Review sub-account"
+    },
+    "member-field": {
+      "frame": "workspace",
+      "rationale": "Control in the row with the exact adjacent visible caption",
+      "kind": "field",
+      "caption": "Member number",
+      "control": "input"
+    },
+    "search-members": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "button",
+      "name": "Search members"
+    },
+    "open-member": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "link",
+      "name": "Open member"
+    },
+    "view-savings": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "link",
+      "name": "View savings"
+    },
+    "new-account": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "link",
+      "name": "New sub-account"
+    },
+    "account-type-field": {
+      "frame": "workspace",
+      "rationale": "Control in the row with the exact adjacent visible caption",
+      "kind": "field",
+      "caption": "Account type",
+      "control": "select"
+    },
+    "nickname-field": {
+      "frame": "workspace",
+      "rationale": "Control in the row with the exact adjacent visible caption",
+      "kind": "field",
+      "caption": "Account nickname",
+      "control": "input"
+    },
+    "review-account": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "button",
+      "name": "Review account"
+    },
+    "open-account": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "button",
+      "name": "Open account"
+    },
+    "member-number": {
+      "frame": "workspace",
+      "rationale": "Value cell adjacent to the exact visible caption",
+      "kind": "cell",
+      "caption": "Member number"
+    },
+    "account-type": {
+      "frame": "workspace",
+      "rationale": "Value cell adjacent to the exact visible caption",
+      "kind": "cell",
+      "caption": "Account type"
+    },
+    "balance": {
+      "frame": "workspace",
+      "rationale": "Value cell adjacent to the exact visible caption",
+      "kind": "cell",
+      "caption": "Available balance"
+    },
+    "currency": {
+      "frame": "workspace",
+      "rationale": "Value cell adjacent to the exact visible caption",
+      "kind": "cell",
+      "caption": "Currency"
+    },
+    "nickname": {
+      "frame": "workspace",
+      "rationale": "Value cell adjacent to the exact visible caption",
+      "kind": "cell",
+      "caption": "Account nickname"
+    },
+    "preparation-status": {
+      "frame": "workspace",
+      "rationale": "Value cell adjacent to the exact visible caption",
+      "kind": "cell",
+      "caption": "Preparation status"
+    },
+    "member-not-found": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "heading",
+      "name": "Member not found"
+    },
+    "account-not-found": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "heading",
+      "name": "Savings account not found"
+    },
+    "validation-rejected": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "heading",
+      "name": "Validation rejected"
+    },
+    "permission-denied": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "heading",
+      "name": "Permission denied"
+    },
+    "app-unavailable": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "heading",
+      "name": "Application unavailable"
+    },
+    "session-expired": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "heading",
+      "name": "Session expired"
+    },
+    "service-notice": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "heading",
+      "name": "Service notice"
+    },
+    "operator-notice": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "heading",
+      "name": "Operator acknowledgment"
+    },
+    "dismiss-notice": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "button",
+      "name": "Dismiss notice"
+    },
+    "acknowledge-notice": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "button",
+      "name": "Acknowledge notice"
+    },
+    "restore-session": {
+      "frame": "workspace",
+      "rationale": "Exact visible role and name in the unique workspace frame",
+      "kind": "role",
+      "role": "button",
+      "name": "Restore demo session"
+    }
+  },
+  "entry": {
+    "route": "search",
+    "conditions": [
+      {
+        "kind": "visible",
+        "target": "search-screen"
+      }
+    ]
+  },
+  "steps": [
+    {
+      "id": "step-1",
+      "action": {
+        "kind": "fill",
+        "target": "member-field",
+        "input": "memberId"
+      },
+      "preconditions": [
+        {
+          "kind": "visible",
+          "target": "search-screen"
+        },
+        {
+          "kind": "visible",
+          "target": "member-field"
+        }
+      ],
+      "postconditions": [
+        {
+          "kind": "visible",
+          "target": "search-screen"
+        },
+        {
+          "kind": "equalsInput",
+          "target": "member-field",
+          "input": "memberId"
+        }
+      ],
+      "effect": "reversible"
+    },
+    {
+      "id": "step-2",
+      "action": {
+        "kind": "click",
+        "target": "search-members"
+      },
+      "preconditions": [
+        {
+          "kind": "visible",
+          "target": "search-screen"
+        },
+        {
+          "kind": "visible",
+          "target": "search-members"
+        }
+      ],
+      "postconditions": [
+        {
+          "kind": "visible",
+          "target": "results-screen"
+        }
+      ],
+      "effect": "read"
+    },
+    {
+      "id": "step-3",
+      "action": {
+        "kind": "click",
+        "target": "open-member"
+      },
+      "preconditions": [
+        {
+          "kind": "visible",
+          "target": "results-screen"
+        },
+        {
+          "kind": "visible",
+          "target": "open-member"
+        }
+      ],
+      "postconditions": [
+        {
+          "kind": "visible",
+          "target": "member-screen"
+        }
+      ],
+      "effect": "read"
+    },
+    {
+      "id": "step-4",
+      "action": {
+        "kind": "click",
+        "target": "new-account"
+      },
+      "preconditions": [
+        {
+          "kind": "visible",
+          "target": "member-screen"
+        },
+        {
+          "kind": "visible",
+          "target": "new-account"
+        },
+        {
+          "kind": "equalsInput",
+          "target": "member-number",
+          "input": "memberId"
+        }
+      ],
+      "postconditions": [
+        {
+          "kind": "visible",
+          "target": "form-screen"
+        }
+      ],
+      "effect": "reversible"
+    },
+    {
+      "id": "step-5",
+      "action": {
+        "kind": "select",
+        "target": "account-type-field",
+        "input": "accountType"
+      },
+      "preconditions": [
+        {
+          "kind": "visible",
+          "target": "form-screen"
+        },
+        {
+          "kind": "visible",
+          "target": "account-type-field"
+        },
+        {
+          "kind": "equalsInput",
+          "target": "member-number",
+          "input": "memberId"
+        }
+      ],
+      "postconditions": [
+        {
+          "kind": "visible",
+          "target": "form-screen"
+        },
+        {
+          "kind": "equalsInput",
+          "target": "account-type-field",
+          "input": "accountType"
+        }
+      ],
+      "effect": "reversible"
+    },
+    {
+      "id": "step-6",
+      "action": {
+        "kind": "fill",
+        "target": "nickname-field",
+        "input": "nickname"
+      },
+      "preconditions": [
+        {
+          "kind": "visible",
+          "target": "form-screen"
+        },
+        {
+          "kind": "visible",
+          "target": "nickname-field"
+        },
+        {
+          "kind": "equalsInput",
+          "target": "member-number",
+          "input": "memberId"
+        }
+      ],
+      "postconditions": [
+        {
+          "kind": "visible",
+          "target": "form-screen"
+        },
+        {
+          "kind": "equalsInput",
+          "target": "nickname-field",
+          "input": "nickname"
+        }
+      ],
+      "effect": "reversible"
+    },
+    {
+      "id": "step-7",
+      "action": {
+        "kind": "click",
+        "target": "review-account"
+      },
+      "preconditions": [
+        {
+          "kind": "visible",
+          "target": "form-screen"
+        },
+        {
+          "kind": "visible",
+          "target": "review-account"
+        },
+        {
+          "kind": "equalsInput",
+          "target": "member-number",
+          "input": "memberId"
+        }
+      ],
+      "postconditions": [
+        {
+          "kind": "visible",
+          "target": "review-screen"
+        }
+      ],
+      "effect": "reversible"
+    },
+    {
+      "id": "step-8",
+      "action": {
+        "kind": "read",
+        "target": "preparation-status",
+        "output": "preparationStatus"
+      },
+      "preconditions": [
+        {
+          "kind": "visible",
+          "target": "review-screen"
+        },
+        {
+          "kind": "visible",
+          "target": "preparation-status"
+        },
+        {
+          "kind": "equalsInput",
+          "target": "member-number",
+          "input": "memberId"
+        },
+        {
+          "kind": "equalsInput",
+          "target": "account-type",
+          "input": "accountType"
+        },
+        {
+          "kind": "equalsInput",
+          "target": "nickname",
+          "input": "nickname"
+        }
+      ],
+      "postconditions": [
+        {
+          "kind": "visible",
+          "target": "review-screen"
+        }
+      ],
+      "effect": "read"
+    }
+  ],
+  "outcomes": [
+    {
+      "code": "MEMBER_NOT_FOUND",
+      "when": {
+        "kind": "visible",
+        "target": "member-not-found"
+      }
+    },
+    {
+      "code": "ACCOUNT_NOT_FOUND",
+      "when": {
+        "kind": "visible",
+        "target": "account-not-found"
+      }
+    },
+    {
+      "code": "VALIDATION_REJECTED",
+      "when": {
+        "kind": "visible",
+        "target": "validation-rejected"
+      }
+    }
+  ],
+  "recovery": [
+    {
+      "when": {
+        "kind": "visible",
+        "target": "service-notice"
+      },
+      "action": {
+        "kind": "click",
+        "target": "dismiss-notice"
+      },
+      "postconditions": [
+        {
+          "kind": "absent",
+          "target": "service-notice"
+        },
+        {
+          "kind": "visible",
+          "target": "member-screen"
+        }
+      ],
+      "maxAttempts": 1
+    }
+  ],
+  "success": [
+    {
+      "kind": "visible",
+      "target": "review-screen"
+    },
+    {
+      "kind": "equalsInput",
+      "target": "member-number",
+      "input": "memberId"
+    },
+    {
+      "kind": "equalsInput",
+      "target": "account-type",
+      "input": "accountType"
+    },
+    {
+      "kind": "equalsInput",
+      "target": "nickname",
+      "input": "nickname"
+    }
+  ],
+  "provenance": {
+    "kind": "discovery",
+    "runId": "a1023f21-7521-4ca9-9478-92a3a8ed8ea7",
+    "model": "gpt-6-astra",
+    "promptVersion": 1,
+    "browserVersion": "153.0.8010.12",
+    "sourceRevision": "aafe2eff6a8fe77147e7ae4a6640a10a806da483"
+  }
+}
