@@ -56,3 +56,5 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 - Completed P10 release documentation, the seven-section report and the requirement ledger. The delivered GitHub checkout verifies all evidence, replays revision 4 without a key, starts the console and exits cleanly on SIGINT with its port closed. The final tracked-file scan found no provider secret, private workstation path, broken Markdown file link or em dash.
 
 - Corrected a test-only 300 ms browser startup override exposed by Linux release CI. Decision-rejection tests use the normal five-second surface bound; production deadlines and policy are unchanged. The failed CI run `34635982748` is preserved.
+
+- Reopened assignment-complete sign-off after a fresh PDF/source audit identified that Section 3.1 requires goal and target inputs, while the delivered CLI/console only select predefined task contracts. Recorded requirement-by-requirement findings and the diagnostic/result caveat in `docs/assignment-audit.md`. Existing passing workflow evidence remains valid within its stated scope.

@@ -2,6 +2,8 @@
 
 Discover a workflow by operating a real UI. Save the successful path as a typed capability. Replay it without a model. When automation encounters a blocker, an operator can take control of the same live session and return it after checkpoint verification.
 
+**Audit status:** A fresh PDF review found an open Section 3.1 gap: discovery currently selects predefined workflows instead of accepting a caller-supplied goal and target. See [the assignment audit](docs/assignment-audit.md).
+
 **Implemented and verified:** genuine discovery for two workflows, provider-free replay, reviewed capabilities, same-session handoff, exceptional outcomes, a React operator console and optional container isolation. [Evidence and walkthrough](evidence/README.md).
 
 Groove uses a fictional Northstar banking application and synthetic records. Development remains private. This is a verified local execution system. The production deployment prerequisites and capacity assumptions are explicit in the [scale design](docs/scale.md).

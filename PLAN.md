@@ -1,6 +1,6 @@
 # Implementation plan
 
-Status: implementation and release verification complete, 2026-09-11. Checkboxes represent evidence-backed completion, not intent.
+Status: post-release assignment audit found an open Section 3.1 compliance gap. See [the audit](docs/assignment-audit.md). Checkboxes represent evidence-backed completion, not intent.
 
 ## 1. What we are building
 
@@ -155,7 +155,7 @@ Stage order is dependency-driven. If early research or the P4/P6 experiments inv
 - [x] P7: Live-session handoff. Verified exclusive claim, stale commands, premature resume, native dialog and session restoration in the original browser. The React console passed desktop, mobile form-state, keyboard, authorization and accessibility checks. A genuine console discovery passed fresh replay and explicit artifact review/approval. This operator exercise was driven through the UI by the development agent, not represented as an independent human recording. The owner separately completed the notice handoff successfully in run `b6e31893-3921-487c-a5cb-2c3da9477e13`. Final stage checks: 18 unit and 30 browser tests.
 - [x] P8: Both workflows, typed CLI outcomes, bounded recovery and uncertain-effect cases pass. The first stability exercise completed 100/100 fresh sessions at concurrency two, with zero account commits; source and limits are recorded in docs/verification.md.
 - [x] P9: Verified 22 unit and 56 browser tests, provider deadlines and cancellation, browser/journal loss, evidence quotas, prompt injection and unsupported browser channels. The non-root contained replay and independent egress probe pass locally and in Linux CI. Native and container limits are documented; final source-linked exports remain P10.
-- [x] P10: Final source-linked evidence, two revision 4 approvals, keyless replay, business/failure cases and scripted handoff captured at `67c4000`. The owner’s successful development exercise is separately preserved. UI slogans and redundant copy removed; desktop/mobile views and thirteen screenshots inspected. All 22 unit and 58 browser tests pass, 100/100 stability runs pass without retries, and containment passes locally and in Linux CI. Fresh-checkout installation, final revision 4 CLI replay, keyless demo and SIGINT cleanup pass. README, three-page report, change log and evidence integrity checks are complete. [Evidence index](evidence/README.md).
+- [ ] P10: Reopened after the PDF audit: add and verify caller-supplied goal/target discovery input, then refresh affected evidence and commands. Previously passed release work: final source-linked evidence, two revision 4 approvals, keyless replay, business/failure cases and scripted handoff captured at `67c4000`. The owner’s successful development exercise is separately preserved. UI slogans and redundant copy removed; desktop/mobile views and thirteen screenshots inspected. All 22 unit and 58 browser tests pass, 100/100 stability runs pass without retries, and containment passes locally and in Linux CI. Fresh-checkout installation, final revision 4 CLI replay, keyless demo and SIGINT cleanup pass. README, three-page report, change log and evidence integrity checks are complete. [Evidence index](evidence/README.md).
 
 ## 7. The evaluator experience
 
