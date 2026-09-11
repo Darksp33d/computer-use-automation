@@ -26,6 +26,23 @@ In the console:
 
 The default console listens on loopback port 4173. Stop it with Ctrl+C. The standalone legacy target is available with `corepack yarn target` on port 4174. Console runs start their own isolated target instances.
 
+## Invoke replay from another agent
+
+Build once, then send a JSON argument object through stdin. This command starts an isolated synthetic target, loads an approved capability revision and writes exactly one JSON result to stdout:
+
+```bash
+corepack yarn build
+node dist/src/cli/replay.js <<'JSON'
+{"memberId":"B1002"}
+JSON
+```
+
+Use `--capability prepare-sub-account --revision 1` with `memberId`, `accountType` and `nickname` inputs for account review. `--scenario not-found` exercises a known business outcome. The default capability is `read-savings-balance`, revision `1`. No provider key is loaded or needed.
+
+Output is redacted by default. An authorized caller can pass `--show-sensitive` to receive the typed values in stdout; persisted results stay redacted. Treat that stdout as private. Inputs are limited to 16 KB and are never included in errors. The CLI accepts approved local catalog entries only.
+
+Exit codes: `0` success, `2` business outcome, `3` failure or rejected invocation, `4` cancellation. A rejection before replay produces `{"status":"rejected","code":"INVALID_INPUT"}` or another safe failure code. Runtime results include a run ID and the status-specific fields defined in `src/contracts/runtime.ts`. An intervention requires the interactive console; unattended replay stops with the relevant failure code.
+
 ## Fresh discovery
 
 Configure `OPENAI_API_KEY` privately in the ignored `.env.local` file. Never put a key in a capability, a client environment variable, or a commit. Then choose **Discover** in the console, or run:
