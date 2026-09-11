@@ -4,6 +4,7 @@ import { Icon } from "./components/Icon.js";
 import { Inspector } from "./components/Inspector.js";
 import { NewRun } from "./components/NewRun.js";
 import { phaseLabel, SessionPanel, workflowTitle } from "./components/SessionPanel.js";
+import { Wordmark } from "./components/Wordmark.js";
 import { useWorkspace } from "./hooks/useWorkspace.js";
 
 export function App() {
@@ -18,9 +19,7 @@ export function App() {
   if (!workspace.authenticated)
     return (
       <main className="launch-state">
-        <div className="wordmark">
-          <span className="relay-symbol">r</span>relay
-        </div>
+        <Wordmark />
         <h1>Open your secure workspace.</h1>
         <p>
           Use the launch link printed by <code>yarn demo</code>. It connects this tab to your local
@@ -37,9 +36,7 @@ export function App() {
         Skip to workspace
       </a>
       <nav className="sidebar" aria-label="Main navigation">
-        <div className="wordmark">
-          <span className="relay-symbol">r</span>relay<span className="edition">LOCAL</span>
-        </div>
+        <Wordmark />
         <div className="workspace-label">
           <span className="workspace-avatar">N</span>
           <div>
@@ -234,7 +231,7 @@ export function App() {
           )}
         </main>
         <footer className="workspace-footer">
-          <span>RELAY / LOCAL WORKSPACE</span>
+          <span>PRAXIS LOOM / LOCAL WORKSPACE</span>
           <span>Discover. Verify. Replay.</span>
         </footer>
       </div>

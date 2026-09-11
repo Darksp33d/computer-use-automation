@@ -141,18 +141,30 @@ time {
   gap: 10px;
   padding: 0 9px;
 }
-.relay-symbol {
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 31px;
-  background: #db8b65;
-  color: #232b23;
-  border-radius: 7px 7px 7px 2px;
-  font-family: Georgia, serif;
-  font-style: italic;
-  font-size: 31px;
-  line-height: 1;
+.brand-symbol {
+  width: 32px;
+  height: 32px;
+  flex: none;
+  fill: none;
+  stroke: #db8b65;
+  stroke-width: 2;
+  stroke-linecap: square;
+}
+.brand-thread {
+  stroke: #f6f5f1;
+}
+.brand-name {
+  font-size: 24px;
+  line-height: 0.95;
+  letter-spacing: -0.8px;
+}
+.brand-name small {
+  display: block;
+  margin-top: 5px;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 3.6px;
+  text-transform: uppercase;
 }
 .edition {
   font-size: 10px;
@@ -1142,10 +1154,9 @@ input[type="radio"] {
     padding: 0;
     margin-right: auto;
   }
-  .relay-symbol {
+  .brand-symbol {
     width: 26px;
     height: 27px;
-    font-size: 27px;
   }
   .workspace-label,
   .nav-label,

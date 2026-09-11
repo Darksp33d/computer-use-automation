@@ -1,10 +1,10 @@
-# Relay: Computer-Use Automation
+# Praxis Loom: Computer-Use Automation
 
 Discover a workflow by operating a real UI. Save the successful path as a typed capability. Replay it without a model. When automation encounters a blocker, an operator can take control of the same live session and return it after checkpoint verification.
 
 **Current status: core discovery and replay are verified. The React operator workspace and same-session handoff pass browser tests. Final scenario coverage, containment and submission evidence are still in progress.**
 
-Relay uses a fictional Northstar banking application and synthetic records. Development remains private. This is a complete local execution architecture under active verification, not a claim of deployed enterprise scale.
+Praxis Loom uses a fictional Northstar banking application and synthetic records. Development remains private. This is a complete local execution architecture under active verification, not a claim of deployed enterprise scale.
 
 ## Try it locally
 
