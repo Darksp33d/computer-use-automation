@@ -17,8 +17,8 @@
     "retries": 0
   },
   "linuxCI": {
-    "sourceRevision": "c7d617cef632b3d4197e6ac4fa968ce0ddbcd646",
-    "url": "https://github.com/Darksp33d/computer-use-automation/actions/runs/34651378928",
+    "sourceRevision": "c774ea9f603718df5cdf652abebcbd98e70eef67",
+    "url": "https://github.com/Darksp33d/computer-use-automation/actions/runs/34652225619",
     "conclusion": "success",
     "jobs": [
       "verify",
@@ -63,7 +63,22 @@
         "availableBalanceMinor"
       ]
     },
-    "replayLocation": "Development checkout after exact reviewed artifacts were exported; clean-checkout full suite recorded above."
+    "replayLocation": "Development checkout after exact reviewed artifacts were exported; clean-checkout full suite recorded above.",
+    "releaseSourceRevision": "c774ea9f603718df5cdf652abebcbd98e70eef67",
+    "freshReleaseReplays": [
+      {
+        "capability": "read-savings-balance",
+        "revision": 5,
+        "runId": "c5163d9f-c7eb-470b-92f2-48b8bdc9414c",
+        "status": "success"
+      },
+      {
+        "capability": "prepare-sub-account",
+        "revision": 5,
+        "runId": "25a17205-c1a1-4026-90c8-41fd4afb94de",
+        "status": "success"
+      }
+    ]
   },
   "liveCLI": {
     "sourceRevision": "c7d617cef632b3d4197e6ac4fa968ce0ddbcd646",

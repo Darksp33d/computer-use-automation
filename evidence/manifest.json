@@ -1038,8 +1038,8 @@
     },
     {
       "path": "verification/checks.json",
-      "bytes": 2243,
-      "sha256": "3b68d6dadfb81bf624845ea4544b5f30997294075491a24bb4245c4059787bbf"
+      "bytes": 2692,
+      "sha256": "bf88da9e2ca9c54e626f80f31117c3be8d1fcbd7cc2473205cc72e7c02cd8db6"
     },
     {
       "path": "verification/cli-goal/capability.json",
