@@ -41,7 +41,7 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 
 - Retained the development console's approved sub-account revision 2 with its exact artifact bytes and original discovery/replay identifiers. It remains a development artifact; final source-linked discovery is captured separately.
 
-- Final-source discovery completed both workflows at `bba5b6e`, each followed by different-input validation and explicit contract review. Retained these exact approved revision-3 artifacts. The capture review found screenshots taken before the periodic image refresh; the harness now waits for the displayed bytes to match the current masked snapshot before saving an image.
+- Final-source discovery completed both workflows at `bba5b6e`, each followed by different-input validation and explicit contract review. Retained these exact approved revision-3 artifacts. The capture review found screenshots taken before the periodic image refresh; the harness now waits for a new image request and a decoded image before saving screenshots. An intermediate capture verification failed under the console CSP after its discovery succeeded; those run records are retained separately.
 
 ### Lifecycle review
 

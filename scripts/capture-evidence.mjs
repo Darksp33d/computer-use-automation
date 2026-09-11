@@ -66,23 +66,25 @@ async function current() {
 }
 async function screenshot(name) {
   const run = await current();
-  if (run && run.owner !== "automation") {
-    const expected = await manager.image(run.id);
-    if (expected) {
-      await expect
-        .poll(
-          async () => {
-            const image = page.locator(".screen-content img");
-            if ((await image.count()) !== 1) return false;
-            const bytes = await image.evaluate(async (element) =>
-              Array.from(new Uint8Array(await (await fetch(element.currentSrc)).arrayBuffer())),
-            );
-            return Buffer.from(bytes).equals(expected);
-          },
-          { timeout: 10_000 },
-        )
-        .toBe(true);
-    }
+  if (
+    run &&
+    run.owner !== "automation" &&
+    (await page.locator(".screen-content").count()) &&
+    (await manager.image(run.id))
+  ) {
+    const request = await page.waitForRequest(
+      (item) => new URL(item.url()).pathname === `/api/runs/${run.id}/image`,
+      { timeout: 5_000 },
+    );
+    const image = page.locator(".screen-content img");
+    const previous = (await image.count()) ? await image.getAttribute("src") : null;
+    const response = await request.response();
+    assert.equal(response?.status(), 200);
+    await response.finished();
+    if (previous) await expect(image).not.toHaveAttribute("src", previous);
+    await expect(image).toBeVisible();
+    await expect(image).toHaveJSProperty("complete", true);
+    await expect(image).toHaveJSProperty("naturalWidth", 1120);
   }
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: join(directory, `${name}.png`), fullPage: true });
