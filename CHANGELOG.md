@@ -22,7 +22,7 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 
 ### Product identity
 
-- Renamed Relay to Praxis Loom across the console, launch message and product documentation. Added an original woven-line mark. Kept repository links, capability revisions and historical run identifiers stable.
+- Renamed Relay to Groove across the console, launch message and product documentation. The owner chose Groove after a brief Praxis Loom iteration. Added an original concentric-path G mark. Kept repository links, capability revisions and historical run identifiers stable.
 
 ### Decisions
 

@@ -10,9 +10,9 @@ Reference review completed on Dribbble before UI implementation, 2026-09-11.
 
 These are composition references, not licensed assets. The implementation uses original markup, styles and icons. No reference images or copied branding ship in the product.
 
-## Product direction: Praxis Loom
+## Product direction: Groove
 
-Renamed from Relay on 2026-09-11 at the owner’s request for a more distinctive identity. “Praxis” reflects intent put into practice; “Loom” reflects composing observed actions into a reusable workflow. The original woven-line mark makes that connection without changing the interaction model. The name is a product identity, not a claim of exclusive rights. Repository paths and immutable execution evidence retain their existing identifiers.
+Renamed from Relay on 2026-09-11 at the owner's request for a more distinctive identity. The owner chose Groove after a brief Praxis Loom iteration. Groove describes a discovered path that becomes repeatable. An original concentric-path G mark carries that idea in the existing restrained palette. The name is a product identity, not a claim of exclusive rights. Repository paths and immutable execution evidence retain their existing identifiers.
 
 A calm operations workspace. Charcoal navigation, a warm paper canvas, white work surfaces, restrained burnt-orange actions, and precise tabular typography. The signature element is a vertical execution timeline paired with the live session, not a decorative hero or a grid of fabricated statistics.
 

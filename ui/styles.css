@@ -158,14 +158,6 @@ time {
   line-height: 0.95;
   letter-spacing: -0.8px;
 }
-.brand-name small {
-  display: block;
-  margin-top: 5px;
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 3.6px;
-  text-transform: uppercase;
-}
 .edition {
   font-size: 10px;
   letter-spacing: 1.2px;

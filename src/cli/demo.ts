@@ -7,7 +7,7 @@ import { Catalog } from "../services/catalog.js";
 const sourceRevision = execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
 const manager = new RunManager(new Catalog("capabilities"), ".local/runs", sourceRevision);
 const server = await startOperator(manager, { port: 4173, assets: resolve("dist/ui") });
-console.log(`Praxis Loom is ready. Open this local launch link:\n${server.url}`);
+console.log(`Groove is ready. Open this local launch link:\n${server.url}`);
 const stop = () => {
   void server.close().catch(() => {
     process.exitCode = 1;

@@ -231,7 +231,7 @@ export function App() {
           )}
         </main>
         <footer className="workspace-footer">
-          <span>PRAXIS LOOM / LOCAL WORKSPACE</span>
+          <span>GROOVE / LOCAL WORKSPACE</span>
           <span>Discover. Verify. Replay.</span>
         </footer>
       </div>
