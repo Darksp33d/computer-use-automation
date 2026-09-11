@@ -1,12 +1,12 @@
 # Computer-Use Automation System
 
-Implementation edition, updated at P6 on 2026-09-11. Contracts, the simulator, guarded browser sessions and deterministic replay are verified. Genuine GPT-6 Astra discovery has completed both workflows and produced artifacts that replayed with different inputs; artifact promotion, the React operator console, containment and final evidence remain pending. Statements about those pending features describe the planned contract. The detailed working checklist is in [PLAN.md](PLAN.md).
+Implementation edition, updated at P7 on 2026-09-11. Contracts, the simulator, guarded browser sessions and deterministic replay are verified. Genuine GPT-6 Astra discovery has completed both workflows and produced artifacts that replayed with different inputs; the React console, artifact review and same-session handoff are implemented with browser verification. Containment, expanded scenario coverage and final evidence remain pending. Statements about those pending features describe the planned contract. The detailed working checklist is in [PLAN.md](PLAN.md).
 
 ## Architecture
 
 The system will turn one model-discovered UI workflow into a reusable capability. A local fictional banking application supplies synthetic data, an iframe workspace, nested tables, generated element IDs and intentionally imperfect labels. The primary flow searches for a member, opens their savings account and reads the available balance. A second flow prepares a sub-account form and stops at review.
 
-TypeScript on Node.js 24 keeps the artifact, CLI, driver and operator contracts in one language. Playwright supplies real UI interaction and frame-aware targeting. The OpenAI Responses adapter supplies one strict decision per live observation, with masked screenshots, parameter references and bounded usage. Zod validates untrusted data. React with TypeScript and Vite will provide the stateful operator workspace, with static assets served by the local control server. The target retains intentionally legacy HTML and iframe navigation. Server-side authorization and policy remain the security boundary; the frontend framework does not confer trust.
+TypeScript on Node.js 24 keeps the artifact, CLI, driver and operator contracts in one language. Playwright supplies real UI interaction and frame-aware targeting. The OpenAI Responses adapter supplies one strict decision per live observation, with masked screenshots, parameter references and bounded usage. Zod validates untrusted data. React with TypeScript and Vite provides the stateful operator workspace, with static assets served by the local control server. The target retains intentionally legacy HTML and iframe navigation. Server-side authorization and policy remain the security boundary; the frontend framework does not confer trust.
 
 The run coordinator owns session lifetime. Discovery and replay share a policy-checked action executor, while replay has no dependency on the provider. The surface driver owns observation, target resolution and input. A separate compiler produces the artifact from actions that actually succeeded. Application bindings describe control meaning and known states without prescribing a workflow sequence. [Technology rationale and primary sources](docs/decisions.md).
 
@@ -32,15 +32,15 @@ An isolated session worker must remain responsible for its live session. A futur
 
 ## Escalation & handoff
 
-The coordinator will detect a blocked state, stop command admission, settle or classify any in-flight effect, and raise an intervention containing safe run/step context. One operator can claim the session. A monotonically increasing ownership epoch invalidates stale automation decisions and operator commands.
+The coordinator detects a blocked state, stop command admission, settle or classify any in-flight effect, and raise an intervention containing safe run/step context. One operator can claim the session. A monotonically increasing ownership epoch invalidates stale automation decisions and operator commands.
 
-The loopback console will drive the same browser/page through mediated click, type, select and dialog controls. Each manual action records actor and sanitized target context. Returning control revokes human command admission, waits for accepted actions to settle, re-observes and verifies the resume checkpoint. A human acknowledgment cannot bypass policy or declare success. Disconnection leaves the session paused until a bounded deadline. A crash does not pretend to preserve a lost live session.
+The loopback console drives the same browser/page through mediated click, type, select and dialog controls. Each manual action records actor and sanitized target context. Returning control revokes human command admission, waits for accepted actions to settle, re-observes and verifies the resume checkpoint. A human acknowledgment cannot bypass policy or declare success. Disconnection leaves the session paused until a bounded deadline. A crash does not pretend to preserve a lost live session.
 
 ## Safety
 
 Trusted policy restricts origins, routes, methods, controls and effects before dispatch. Artifacts and model responses cannot grant themselves permission. Unknown effects and the final account-opening action are blocked. Browser request controls, service-worker blocking and redirect denial protect the supported target; network-enforced worker isolation is a separate production requirement.
 
-Events and artifacts contain allowlisted fields and input references. Sensitive values, goals, credentials, browser storage, raw exceptions and traces are excluded. A sanitized structural failure snapshot supplies richer evidence even when an image cannot be safely masked. Only synthetic data is used for provider calls and submission evidence. Provider storage settings are documented without claiming zero retention. The planned operator endpoint uses a local credential, Origin/Host checks and ownership epochs; enterprise operator identity is a deployment requirement.
+Events and artifacts contain allowlisted fields and input references. Sensitive values, goals, credentials, browser storage, raw exceptions and traces are excluded. A sanitized structural failure snapshot supplies richer evidence even when an image cannot be safely masked. Only synthetic data is used for provider calls and submission evidence. Provider storage settings are documented without claiming zero retention. The operator endpoint uses a local credential, Origin/Host checks and ownership epochs; enterprise operator identity is a deployment requirement.
 
 ## Cuts
 

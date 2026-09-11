@@ -1,6 +1,6 @@
 # Design contract
 
-Status: living design contract. P1-P6 are implemented and verified, including both live discovery workflows; registry promotion, the React console and containment remain planned. PLAN.md records the latest passed gates. The schema descriptions below match the implemented v1; future behavior is identified by its stage.
+Status: living design contract. P1-P6 are implemented and verified, including both live discovery workflows; P7 also verifies the React console, review catalog and same-session handoff. Containment remains planned. PLAN.md records the latest passed gates. The schema descriptions below match the implemented v1; future behavior is identified by its stage.
 
 ## 1. Trust boundaries and module responsibilities
 
@@ -31,7 +31,7 @@ Use a strict JSON-compatible schema with a deliberately small expression languag
 | `success` | Conditions binding the requested subject, reached screen and declared output sources |
 | `provenance` | Discovery run ID, actual provider/model, prompt-template revision, driver/browser/binding versions and source revision; no raw transcript |
 
-A separate local registry entry pins the artifact's byte digest and binding digest and records a reviewed/approved revision. It is separate because an artifact must not approve itself. Hand-authored development fixtures are named and documented as fixtures; real evidence contains only genuinely discovered artifacts. Human review and replay validation are prerequisites to promote an artifact. Editing any content creates a new revision and invalidates its prior approval.
+A separate local registry entry pins the artifact's byte digest and binding digest and records a reviewed/approved revision. It is separate because an artifact must not approve itself. Hand-authored development fixtures are named and documented as fixtures; real evidence contains only genuinely discovered artifacts. A deliberate review and successful fresh replay are prerequisites to promote an artifact. The console records the local operator; bundled development revisions separately identify an engineering review and are not evidence of a human exercise. Editing any content creates a new revision and invalidates its prior approval.
 
 The initial schema implements only the browser strategies we actually execute. Future desktop strategies require a new explicit schema extension and driver support check. A generic `kind: string` escape hatch would weaken validation and is excluded.
 
@@ -125,7 +125,7 @@ The initial target requires no redirects. Its intercepted requests use bounded f
 
 The final account-opening action is blocked in v1 for automation and mediated operators. A person cannot approve a forbidden action by setting `confirmed: true`. The review page is the capability's terminal boundary. Production write capabilities would require reviewed effect semantics, transaction-specific authorization and reconciliation before expanding this policy.
 
-Persist schema-approved event fields only. Safe identifiers and allowlisted static labels describe what happened; sensitive inputs, output values, goals, DOM text, prompt contents, cookies, storage state, request bodies, credentials and raw screenshots do not enter logs. Do not hash low-entropy member IDs as a supposed anonymization method. Keep runtime values in memory and release them at session termination. A sanitization failure stops evidence export rather than falling back to raw data.
+Persist schema-approved event fields only. Safe identifiers and allowlisted static labels describe what happened; sensitive inputs, output values, goals, DOM text, prompt contents, cookies, storage state, request bodies, credentials and raw screenshots do not enter logs. Do not hash low-entropy member IDs as a supposed anonymization method. Keep runtime values out of persisted evidence. Release the active session after completion. The authenticated console retains output in its bounded in-memory run history until eviction or shutdown. A sanitization failure stops evidence export rather than falling back to raw data.
 
 The guaranteed richer failure signal is a structural snapshot: safe registered route, frame tree, control types, visible/enabled flags, vetted label references, matching counts, condition evaluations and ownership state. Unknown strings are omitted. Screenshots are optional and masked before leaving the process. Full traces and videos are disabled by default because they can contain sensitive page/network data. Synthetic evidence is exported explicitly after scanning and visual review.
 
@@ -165,7 +165,7 @@ Before resuming, revoke human command admission, wait for any accepted human com
 
 ## 8. Persistence and lifecycle
 
-Artifacts are immutable after promotion. Write a temporary file in the destination directory, flush it, then atomically rename it. Serialize bounded journal events with sequence numbers; disk write failures are surfaced. Enforce per-run event and byte limits. Persist action intent before dispatch and outcome afterward; if audit persistence is unavailable, stop new actions. A crash between these records means the effect may be unknown.
+Artifacts are immutable after promotion. Write and flush a temporary file in the destination directory, then publish it through a hard link that cannot replace an existing revision. Delete the temporary name afterward. Serialize bounded journal events with sequence numbers; disk write failures are surfaced. Enforce per-run event and byte limits. Persist action intent before dispatch and outcome afterward; if audit persistence is unavailable, stop new actions. A crash between these records means the effect may be unknown.
 
 The local runner supports one active session per invocation and bounded independent invocations. Each gets a separate browser process/context, credentials, output directory and lifecycle. Ownership is in-process; it is not a distributed lease. A small safe run manifest marks incomplete runs without retaining browser state or inputs. A subsequent invocation can report interruption, but cannot resume the lost session.
 

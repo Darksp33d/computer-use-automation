@@ -8,8 +8,8 @@
     "node": ">=24.15.0 <25"
   },
   "scripts": {
-    "build": "tsc && node scripts/assets.mjs",
-    "typecheck": "tsc --noEmit",
+    "build": "tsc && node scripts/assets.mjs && vite build --config ui/vite.config.ts",
+    "typecheck": "tsc --noEmit && tsc --project ui/tsconfig.json",
     "lint": "biome check .",
     "format": "biome check --write .",
     "setup": "playwright install chromium",
@@ -19,17 +19,26 @@
     "check": "yarn lint && yarn typecheck && yarn test:unit && node scripts/schema.mjs --check && yarn test:browser",
     "schema:write": "yarn build && node scripts/schema.mjs",
     "target": "yarn build && node dist/demo/server.js",
-    "discover": "yarn build && node --env-file-if-exists=.env.local dist/src/cli/discover.js"
+    "discover": "yarn build && node --env-file-if-exists=.env.local dist/src/cli/discover.js",
+    "demo": "yarn build && node --env-file-if-exists=.env.local dist/src/cli/demo.js"
   },
   "dependencies": {
     "openai": "7.13.0",
     "playwright": "1.63.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
     "zod": "4.5.4"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
     "@biomejs/biome": "2.5.12",
     "@playwright/test": "1.63.0",
     "@types/node": "24.10.1",
-    "typescript": "5.9.3"
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "playwright-core": "1.63.0",
+    "typescript": "5.9.3",
+    "vite": "8.3.0"
   }
 }

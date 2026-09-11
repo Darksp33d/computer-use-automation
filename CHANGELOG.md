@@ -14,6 +14,8 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 
 - P6: Genuine GPT-6 Astra discovery and execution-derived compilation for both savings and account review, each replayed with different synthetic inputs. Verified 17 unit and 22 browser tests. Added request, output-token, no-progress and estimated cost admission bounds. Development evidence is retained locally; final evidence is pending.
 
+- P7: React/Vite operator console, authenticated commands, same-session manual controls, exclusive claim, verified resume, intervention expiry and exact-byte capability approval. Verified 18 unit and 30 browser tests, including axe accessibility checks. A browser-driven development exercise completed genuine discovery, fresh replay, contract review and approval. The owner separately confirmed successful manual notice handoff in run `b6e31893-3921-487c-a5cb-2c3da9477e13`. The control layer was also checked independently before commit: 18 unit and 28 browser tests.
+
 ### Decisions
 
 - Selected the owner-requested GPT-6 Astra model for discovery, starting at low reasoning effort. Provider availability and full workflow completion are separate gates.
@@ -22,8 +24,4 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 
 ### In progress
 
-- P7 and later: React operator workspace, live handoff, expanded verification, containment and final evidence.
-
-### P7 control layer
-
-Implemented the digest-pinned review catalog, authenticated operator API, exclusive same-session commands, intervention expiry and verified resume. Browser coverage exercises notices, expired sessions and native dialogs, plus authorization and shutdown during startup. The React workspace is the next separate commit.
+- P8-P10: Expanded verification, containment and final evidence remain pending.

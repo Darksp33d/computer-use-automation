@@ -1,6 +1,6 @@
 # Verification and threat model
 
-Status: planned acceptance suite. No application test results are claimed at this baseline.
+Status: P1-P7 are implemented. The current aggregate check passes 18 unit and 30 browser tests, including operator accessibility and responsive form behavior. The owner confirmed a successful manual notice handoff in development run `b6e31893-3921-487c-a5cb-2c3da9477e13`. The matrix below remains the acceptance contract: unchecked P8-P10 scenarios, independent containment, the 100-session exercise and final source-linked evidence are still pending. Test definitions live in `tests/unit/` and `tests/browser/`; scripted provider and operator tests are not evidence of independent human or live-model execution.
 
 ## 1. Test strategy
 
