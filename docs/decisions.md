@@ -56,9 +56,15 @@ A retry is only safe when repeating the operation preserves intended business me
 
 A small explicit state machine and a serialized command gate are sufficient locally. No state-machine framework is needed initially. Handoff operates the original session through mediated commands; a new browser window with copied cookies would not satisfy the requirement. Epochs reject stale actions. Distributed deployment additionally needs an enforcing session gateway and durable ownership records.
 
-## D09. Small UI and reproducible tooling
+## D09. React operator console and reproducible tooling
 
-The operator needs an inbox, current state, manual controls and resume/cancel actions. Native HTTP plus plain HTML/CSS and typed client code can satisfy that bounded interface. React, Next.js, Tailwind, a component system and global state management are unnecessary for the first version. Reconsider only if the operator workflow grows enough to justify them.
+Revised 2026-09-11 following the owner's frontend review. Use React with TypeScript and Vite for the operator console. The concrete use cases are concurrent run updates, exclusive ownership transitions, intervention controls, an event timeline, and forms whose focus and draft values must survive polling. Components render; hooks orchestrate client state; a typed service performs HTTP I/O. Vite builds static assets served by the existing local HTTP server. Keep provider and automation dependencies outside the client graph. [React application guidance](https://react.dev/learn/build-a-react-app-from-scratch), [Vite backend integration](https://vite.dev/guide/backend-integration).
+
+The console has no search-indexing, server-rendering or server-component requirement, so Next.js adds a second server lifecycle without solving a current need. React with Vite is the chosen client stack, not a claim that one framework is best for every application. Begin with local React state and purpose-built CSS following the reviewed visual direction. Add dependencies only for demonstrated behavior.
+
+React's safe text rendering reduces accidental HTML injection when used correctly. It does not supply authorization, CSRF protection, isolation or a trusted client. The server authenticates and validates every command, enforces ownership epochs and policy, and supplies restrictive response headers. Client controls reflect server authority. Secrets never enter Vite environment variables or browser bundles. The deliberately legacy bank simulator retains server-rendered HTML, generated control IDs and iframe navigation to exercise the assignment's compatibility requirements.
+
+Validation at P7 covers a production asset build, accessible keyboard operation, preserved form state during live updates, unauthorized commands, stale ownership, and the complete operator flow in a real browser.
 
 Yarn's immutable install checks that dependency resolution does not alter the lockfile. The native Node test runner covers contracts/state transitions; Playwright Test covers real-browser workflows. Formatting/linting tooling is introduced in bootstrap with exact versions. [Yarn install](https://yarnpkg.com/cli/install), [Node test runner](https://nodejs.org/docs/latest-v24.x/api/test.html).
 

@@ -69,7 +69,8 @@ The target is deliberately legacy-like: server-rendered forms, an iframe workspa
 | Zod 4 | Validate untrusted artifact, model, and operator inputs; derive TypeScript types and export the supported JSON Schema representation from one source |
 | OpenAI Responses API and official SDK | One discovery-only model adapter, strict structured decisions, image observations, bounded requests and usage evidence |
 | `gpt-6-astra` discovery model, `reasoning.effort` starting at `low` | Owner's selection. Documented image input, structured outputs and computer-use capability. No dated snapshot exists yet, so every discovery run records the exact model string, response IDs and token usage in provenance and evidence; the effort level is raised only if the live task measurably needs it |
-| Native Node HTTP and plain HTML/CSS/TypeScript | The simulator and a small local operator console need forms and a few typed endpoints; no application framework, SPA state library, database, or frontend build system is justified yet |
+| React, TypeScript and Vite | Stateful operator workspace with live sessions, stable forms, ownership transitions and reusable accessible controls; static assets served by the existing server |
+| Native Node HTTP and legacy HTML/CSS | Bounded local control API and intentionally older banking simulator; server enforces authentication and policy |
 | Node test runner and Playwright Test | Public contract/state-machine tests plus real-browser integration and operator-flow tests; each covers a different boundary |
 | JSON artifacts and JSONL evidence | Human-reviewable files and simple local operation; atomic artifact writes and serialized bounded evidence writes |
 | Docker Compose containment profile | Reproducible Linux/browser environment and an internal browser/target network for the isolation tests; native setup remains available for the trusted local fixture |
@@ -109,7 +110,8 @@ src/discovery/       Observe/decide/act orchestration and provider adapter
 src/surfaces/        Surface interface and Playwright implementation
 src/applications/    Legacy simulator binding and trusted policy
 src/evidence/        Event serialization, sanitization and atomic file storage
-src/operator/        Local intervention API and small operator client
+src/operator/        Local intervention API
+ui/                  React operator workspace, hooks and typed HTTP service
 src/cli/             Arguments, lifecycle, output and exit codes
 demo/                Fictional banking UI, synthetic fixtures and fault harness
 tests/               Contract, integration, browser and adversarial tests
