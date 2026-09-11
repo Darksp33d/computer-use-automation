@@ -27,4 +27,4 @@ Read PLAN.md and the relevant design section before implementing a stage. The wo
 
 ## Commands
 
-No application commands exist at the planning baseline. Bootstrap must add and document install, setup, doctor, typecheck, lint, format check, unit, browser, and aggregate check commands before feature work depends on them.
+Use `corepack yarn install --immutable`, `yarn setup`, `yarn doctor`, and `yarn check`. The aggregate check runs lint/format, strict typechecking, unit tests and browser tests. Use `yarn format` to apply formatting before checking. Browser tests have no retry-to-green behavior. Runtime output belongs in ignored `.local/`.

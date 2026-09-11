@@ -2,7 +2,7 @@
 
 Learn a workflow by operating a real UI. Save it as a typed capability. Replay it without an LLM. Transfer the same live session to an operator when automation cannot proceed safely.
 
-**Current status: planning baseline. Application code, executable demos and real discovery evidence have not been implemented yet.**
+**Current status: implementation in progress. Tooling is available; executable workflows and real discovery evidence are still being built.**
 
 This repository is being built for the interface.ai computer-use assignment. Development is private. It uses a fictional local banking application and synthetic data; no access to a real banking system is needed.
 
@@ -23,7 +23,16 @@ Read [PLAN.md](PLAN.md) for the complete implementation sequence, understandable
 
 The implementation will support Node.js 24 LTS and Yarn 4, with a pinned Playwright Chromium build. The default local demonstration will replay an included capability without a model key. Fresh discovery will use a privately configured `OPENAI_API_KEY`.
 
-Exact runnable commands will be added and verified as the relevant stages pass. The intended command contract is documented in the plan. No current file should be mistaken for a successful discovery recording.
+Tooling available now:
+
+```bash
+corepack yarn install --immutable
+corepack yarn setup
+corepack yarn doctor
+corepack yarn check
+```
+
+Workflow commands will be added as their stages pass. No current file should be mistaken for a successful discovery recording. See [the visual direction](docs/visual-direction.md) for the Dribbble references reviewed before interface implementation.
 
 ## Working agreement
 

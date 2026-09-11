@@ -1,6 +1,6 @@
 # Implementation plan
 
-Status: planning baseline, 2026-09-11. Application implementation has not started. Checkboxes represent evidence-backed completion, not intent.
+Status: implementation in progress, 2026-09-11. Checkboxes represent evidence-backed completion, not intent.
 
 ## 1. What we are building
 
@@ -144,7 +144,7 @@ Stage order is dependency-driven. If early research or the P4/P6 experiments inv
 - [x] Research browser semantics, model contracts, data handling, runtime and isolation choices.
 - [x] Write the architecture, test strategy, threat model and capacity design.
 - [x] P0: Verify the planning baseline and establish the private repository at `Darksp33d/computer-use-automation`.
-- [ ] P1: Reproducible tooling.
+- [x] P1: Reproducible tooling. Immutable Yarn install, TypeScript checks, formatter/linter, doctor tests and pinned Chromium setup passed locally. CI is configured; remote execution is verified separately.
 - [ ] P2: Contracts and state machine.
 - [ ] P3: Simulator and scenarios.
 - [ ] P4: Policy and surface driver.
