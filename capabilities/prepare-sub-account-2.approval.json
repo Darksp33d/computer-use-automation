@@ -1,0 +1,10 @@
+{
+  "capabilityId": "prepare-sub-account",
+  "revision": 2,
+  "artifactDigest": "a511c3701e51107a0fce2fe0da466609aabb4c2673242f15b1bd967d144ea5d4",
+  "bindingDigest": "32f47b9860933e39c2bb251b3831d377d9709e9130beb32529400ade395d4ab3",
+  "discoveryRunId": "617432e2-250a-4d58-8e4c-82ac357679f0",
+  "replayRunId": "3760abd2-65cb-4d91-91e9-8330114e3936",
+  "reviewedAt": "2026-09-11T17:33:19.117Z",
+  "reviewer": "local-operator"
+}

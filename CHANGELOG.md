@@ -39,6 +39,8 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 
 - Preserved the model-comparison rationale and fallback evaluation order, checked the cited sources, and corrected an Opus 4.8 score previously attributed to Opus 5. Published benchmarks remain separate from local completion evidence; no cross-provider fallback is implemented.
 
+- Retained the development console's approved sub-account revision 2 with its exact artifact bytes and original discovery/replay identifiers. It remains a development artifact; final source-linked discovery is captured separately.
+
 ### Lifecycle review
 
 - Preserved the final masked snapshot when an earlier image request finishes late. Propagated cancellation into discovery's validation replay in both the operator and CLI. A canceled validation cannot expose output or become approvable. Verified 22 unit and 58 browser tests, including deterministic races at both boundaries.
