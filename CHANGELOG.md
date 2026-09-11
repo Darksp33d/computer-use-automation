@@ -54,3 +54,5 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 - Added a release evidence verifier that checks all exported file digests, runtime source identity, journal order and outcomes, provider/replay separation, artifact copies and validation links. Preserved the actual owner development handoff, the first discovery failure and both earlier capture attempts with their limitations. Fresh-checkout verification passes 22 unit and 58 browser tests; the final stability exercise passed 100/100 without retries.
 
 - Completed P10 release documentation, the seven-section report and the requirement ledger. The delivered GitHub checkout verifies all evidence, replays revision 4 without a key, starts the console and exits cleanly on SIGINT with its port closed. The final tracked-file scan found no provider secret, private workstation path, broken Markdown file link or em dash.
+
+- Corrected a test-only 300 ms browser startup override exposed by Linux release CI. Decision-rejection tests use the normal five-second surface bound; production deadlines and policy are unchanged. The failed CI run `34635982748` is preserved.

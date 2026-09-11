@@ -64,7 +64,6 @@ for (const behavior of ["premature-finish", "forbidden-action", "repeated-action
     const session = await createDiscoverySession("savings", { memberId: "A1001" }, "0".repeat(40), {
       origin: target.origin,
       directory,
-      conditionTimeoutMs: 300,
     });
     const provider: DecisionProvider = {
       async decide() {
