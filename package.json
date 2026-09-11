@@ -8,16 +8,17 @@
     "node": ">=24.15.0 <25"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node scripts/assets.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "biome check .",
     "format": "biome check --write .",
     "setup": "playwright install chromium",
     "doctor": "yarn build && node dist/src/cli/doctor.js",
     "test:unit": "yarn build && node --test dist/tests/unit/*.test.js",
-    "test:browser": "playwright test --pass-with-no-tests",
+    "test:browser": "playwright test",
     "check": "yarn lint && yarn typecheck && yarn test:unit && node scripts/schema.mjs --check && yarn test:browser",
-    "schema:write": "yarn build && node scripts/schema.mjs"
+    "schema:write": "yarn build && node scripts/schema.mjs",
+    "target": "yarn build && node dist/demo/server.js"
   },
   "dependencies": {
     "playwright": "1.63.0",

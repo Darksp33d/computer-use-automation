@@ -146,7 +146,7 @@ Stage order is dependency-driven. If early research or the P4/P6 experiments inv
 - [x] P0: Verify the planning baseline and establish the private repository at `Darksp33d/computer-use-automation`.
 - [x] P1: Reproducible tooling. Immutable Yarn install, TypeScript checks, formatter/linter, doctor tests and pinned Chromium setup passed locally. CI is configured; remote execution is verified separately.
 - [x] P2: Contracts and state machine. Twelve unit tests pass, including invalid artifacts, typed parameters, money parsing and ownership races. Generated schema consistency passes.
-- [ ] P3: Simulator and scenarios.
+- [x] P3: Simulator and scenarios. Three real Chromium flow tests and a visual inspection pass. Fault fixtures are available for the runtime suite; no account commit occurs in the tested flows.
 - [ ] P4: Policy and surface driver.
 - [ ] P5: Deterministic replay.
 - [ ] P6: Genuine discovery and compiler.
