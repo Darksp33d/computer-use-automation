@@ -2,8 +2,6 @@
 
 Discover a workflow by operating a real UI. Save the successful path as a typed capability. Replay it without a model. When automation encounters a blocker, an operator can take control of the same live session and return it after checkpoint verification.
 
-**Assignment audit complete:** All seven core requirements have implementation or design evidence within the stated scope. The final review corrected goal/target input, failure diagnostics and prompt provenance. See [the audit](docs/assignment-audit.md) and [presentation guide](docs/presentation.md).
-
 **Implemented and verified:** genuine discovery for two workflows, provider-free replay, reviewed capabilities, same-session handoff, exceptional outcomes, a React operator console and optional container isolation. [Evidence and walkthrough](evidence/README.md).
 
 Groove uses a fictional Northstar banking application and synthetic records. Development remains private. This is a verified local execution system. The production deployment prerequisites and capacity assumptions are explicit in the [scale design](docs/scale.md).
@@ -95,6 +93,7 @@ The final capture harness is `node --env-file-if-exists=.env.local scripts/captu
 | [Visual direction](docs/visual-direction.md) | Dribbble references reviewed before UI implementation |
 | [Evidence and recording](evidence/README.md) | Source-linked runs, reviewed artifacts, failure evidence and walkthrough |
 | [Assignment report](REPORT.md) | The assignment's seven required sections |
+| [Requirement audit](docs/assignment-audit.md) | Each assignment requirement mapped to its implementation, evidence and scope limits |
 
 Each implementation stage is a focused, verified commit. See [AGENTS.md](AGENTS.md) for the repository's engineering rules.
 

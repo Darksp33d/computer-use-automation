@@ -68,7 +68,7 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 
 - Closed the assignment audit with explicit goal/target discovery, safe expected/observed failures and prompt version 2 provenance. Two genuine console discoveries produced reviewed revision 5 capabilities. Their fresh validations, provider-free replays, unsupported-goal rejection, business/failure cases and live-session handoff all pass. A separate genuine JSON-stdin CLI goal also discovers and replays with another member.
 - Verified 23 unit and 62 browser tests in the working repository, a clean GitHub checkout and Linux CI `34651378928`. The post-audit stability sample passes 100/100 at concurrency two with zero account commits; container egress and replay checks pass. Keyless startup and SIGINT cleanup pass.
-- Refreshed the evidence source snapshot, journals, 17 inspected screenshots and continuous recording. Reconciled README, REPORT, plan, decisions and the requirement audit; added a five-minute presentation walkthrough with concrete answers to architecture and scope questions. Publication remains the owner's decision.
+- Refreshed the evidence source snapshot, journals, 17 inspected screenshots and continuous recording. Reconciled README, REPORT, plan, decisions and the requirement audit. Publication remains the owner's decision.
 
 ### CI runtime maintenance
 

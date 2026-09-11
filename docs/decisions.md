@@ -78,22 +78,11 @@ Yarn's immutable install checks that dependency resolution does not alter the lo
 
 No database is needed for a local capability and sanitized journal. Atomic files and a bounded writer satisfy the local lifecycle. Production metadata, leases and tenant authorization require durable services, as specified in the scale plan.
 
-## Change log
-
-### D10. Implement only the expressions the two workflows use
+## D10. Implement only the expressions the two workflows use
 
 The first executable contract uses input references for fill/select and declared output references for reads. It does not include unused literal-value actions, output-to-input chaining, arbitrary route navigation or nested condition expressions. Conditions are bounded lists of conjunctions. Known recovery handlers can only click one reviewed dismiss control once. This is a narrower implementation of D04, preserving the required capability contract while reducing executable semantics. Navigation enters through the registered entry point; unsupported cases are rejected rather than stored as placeholders.
 
 P2 validation covers unknown fields/versions/actions, reference integrity, repeated outputs, parameter typing, safe money parsing and exclusive control races. The JSON Schema is generated from the runtime source and checked for drift.
-
-| Date | Decision | State |
-| --- | --- | --- |
-| 2026-09-11 | D01-D09 recorded | Implemented and checked through P9; production limitations remain explicit |
-| 2026-09-11 | D05 revised: discovery model changed to `gpt-6-astra` on owner instruction; task-specific benchmark rationale and Claude Opus 5 fallback ladder recorded | P6 validates Astra at `low`; P10 source audit corrects the Opus score attribution; fallback not exercised |
-
-| 2026-09-11 | P10 evidence export | Two final live discoveries, revision 4 approvals, keyless replay, owner exercise, exceptional outcomes, 100-session stability and source integrity checks documented |
-
-When evidence changes a decision, add a dated entry explaining the trigger, replacement, validation and effect on prior artifacts. Keep the final design coherent rather than accumulating incompatible alternatives.
 
 ## D11. Accept explicit intent within a reviewed task contract
 
@@ -103,4 +92,13 @@ Public goals use a deliberately narrow English text format, at most 500 characte
 
 Failure results now carry safe expected conditions, output type/parser and observed structural state beside the existing code, step and effect state. This closes the audit's diagnostic weakness without persisting raw DOM or invalid financial values.
 
-The 2026-09-11 post-audit export supersedes the revision 4 release evidence with revision 5 capabilities and prompt version 2. Prior captures and failed attempts retain their original source identities. The final requirement audit and presentation commands are reconciled with the new evidence.
+## Change log
+
+| Date | Decision | State |
+| --- | --- | --- |
+| 2026-09-11 | D01-D09 recorded | Implemented and checked through P9; production limitations remain explicit |
+| 2026-09-11 | D05 revised: discovery model changed to `gpt-6-astra` on owner instruction; task-specific benchmark rationale and Claude Opus 5 fallback ladder recorded | P6 validates Astra at `low`; P10 source audit corrects the Opus score attribution; fallback not exercised |
+| 2026-09-11 | P10 evidence export | Two final live discoveries, revision 4 approvals, keyless replay, owner exercise, exceptional outcomes, 100-session stability and source integrity checks documented |
+| 2026-09-11 | D11 recorded: explicit goal/target input within the reviewed task contract; post-audit export supersedes the revision 4 evidence | Validated by the final capture at `c7d617c` with revision 5 capabilities and prompt version 2; prior captures and failed attempts retain their original source identities |
+
+When evidence changes a decision, add a dated entry explaining the trigger, replacement, validation and effect on prior artifacts. Keep the final design coherent rather than accumulating incompatible alternatives.
