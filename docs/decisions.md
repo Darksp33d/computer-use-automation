@@ -66,6 +66,12 @@ No database is needed for a local capability and sanitized journal. Atomic files
 
 ## Change log
 
+### D10. Implement only the expressions the two workflows use
+
+The first executable contract uses input references for fill/select and declared output references for reads. It does not include unused literal-value actions, output-to-input chaining, arbitrary route navigation or nested condition expressions. Conditions are bounded lists of conjunctions. Known recovery handlers can only click one reviewed dismiss control once. This is a narrower implementation of D04, preserving the required capability contract while reducing executable semantics. Navigation enters through the registered entry point; unsupported cases are rejected rather than stored as placeholders.
+
+P2 validation covers unknown fields/versions/actions, reference integrity, repeated outputs, parameter typing, safe money parsing and exclusive control races. The JSON Schema is generated from the runtime source and checked for drift.
+
 | Date | Decision | State |
 | --- | --- | --- |
 | 2026-09-11 | D01-D09 recorded | Proposed; validate at their implementation gates |

@@ -145,7 +145,7 @@ Stage order is dependency-driven. If early research or the P4/P6 experiments inv
 - [x] Write the architecture, test strategy, threat model and capacity design.
 - [x] P0: Verify the planning baseline and establish the private repository at `Darksp33d/computer-use-automation`.
 - [x] P1: Reproducible tooling. Immutable Yarn install, TypeScript checks, formatter/linter, doctor tests and pinned Chromium setup passed locally. CI is configured; remote execution is verified separately.
-- [ ] P2: Contracts and state machine.
+- [x] P2: Contracts and state machine. Twelve unit tests pass, including invalid artifacts, typed parameters, money parsing and ownership races. Generated schema consistency passes.
 - [ ] P3: Simulator and scenarios.
 - [ ] P4: Policy and surface driver.
 - [ ] P5: Deterministic replay.
