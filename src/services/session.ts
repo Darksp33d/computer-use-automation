@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { join } from "node:path";
+import { bankImage } from "../applications/bank-image.js";
 import {
   bankActions,
   bankMarkers,
@@ -95,6 +96,7 @@ async function initializeSession(
   let surface: BrowserSurface;
   try {
     surface = await BrowserSurface.create(policy, inputs, bankMarkers, {
+      imagePolicy: bankImage,
       ...(options.conditionTimeoutMs === undefined
         ? {}
         : { timeoutMs: options.conditionTimeoutMs }),

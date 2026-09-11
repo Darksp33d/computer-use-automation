@@ -34,13 +34,18 @@ export class BrowserSurface implements Surface {
     private readonly context: BrowserContext,
     private readonly page: Page,
     private readonly timeoutMs: number,
+    private readonly imagePolicy: { mask: string; text: string[] } | undefined,
   ) {}
 
   static async create(
     policy: Policy,
     inputs: Arguments,
     markers: SurfaceMarkers,
-    options: { timeoutMs?: number; endpoint?: string } = {},
+    options: {
+      timeoutMs?: number;
+      endpoint?: string;
+      imagePolicy?: { mask: string; text: string[] };
+    } = {},
   ) {
     const env = Object.fromEntries(
       Object.entries(process.env).filter(
@@ -67,10 +72,21 @@ export class BrowserSurface implements Surface {
         context,
         page,
         options.timeoutMs ?? 5_000,
+        options.imagePolicy,
       );
       page.setDefaultTimeout(surface.timeoutMs);
       page.on("dialog", (dialog) => {
         surface.#dialog = dialog;
+      });
+      page.on("framenavigated", (frame) => {
+        if (
+          !policy.permitsRequest(frame.url(), "GET") &&
+          !policy.permitsRequest(frame.url(), "POST")
+        )
+          surface.#violation = true;
+      });
+      page.on("filechooser", () => {
+        surface.#violation = true;
       });
       page.on("pageerror", () => {
         surface.#networkFailure = true;
@@ -298,7 +314,8 @@ export class BrowserSurface implements Surface {
   }
 
   async screenshot(): Promise<Buffer | null> {
-    if (this.#dialog || this.#closed) return null;
+    if (this.#dialog || this.#closed || !this.imagePolicy || this.page.frames().length !== 2)
+      return null;
     const observation = await this.observe();
     if (
       !observation.screen ||
@@ -309,6 +326,39 @@ export class BrowserSurface implements Surface {
         ))
     )
       return null;
+    for (const frame of this.page.frames()) {
+      const safe = await frame.locator("body").evaluate((body, policy) => {
+        const allowed = new Set(policy.text);
+        const elements = body.querySelectorAll("*");
+        if (elements.length > 2_000) return false;
+        for (const element of [body, ...elements]) {
+          if (element.closest(policy.mask)) continue;
+          const style = getComputedStyle(element);
+          if (
+            style.visibility === "hidden" ||
+            style.display === "none" ||
+            !element.getClientRects().length
+          )
+            continue;
+          if (
+            ["IMG", "CANVAS", "SVG", "VIDEO", "OBJECT", "EMBED"].includes(element.tagName) ||
+            style.backgroundImage !== "none"
+          )
+            return false;
+          for (const pseudo of ["::before", "::after"]) {
+            const content = getComputedStyle(element, pseudo).content;
+            if (!["none", "normal", '""'].includes(content)) return false;
+          }
+          for (const node of element.childNodes) {
+            if (node.nodeType !== Node.TEXT_NODE) continue;
+            const text = node.textContent?.trim().replace(/\s+/g, " ");
+            if (text && !allowed.has(text)) return false;
+          }
+        }
+        return true;
+      }, this.imagePolicy);
+      if (!safe) return null;
+    }
     return this.page.screenshot({
       type: "png",
       animations: "disabled",
