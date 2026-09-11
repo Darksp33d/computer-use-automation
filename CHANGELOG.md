@@ -47,4 +47,4 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 
 ### In progress
 
-- P10: Simplified page titles, empty states, dialogs, activity and inspector copy following the owner’s review. Removed slogans and duplicate explanations, preserved contextual handoff instructions, and made the closed-session placeholder compact. Desktop/mobile visual inspection and the full automated suite pass. Final committed-source evidence and the clean-checkout walkthrough remain pending.
+- P10: Added an explicit capture harness for genuine console discovery, artifact review, keyless replay and exceptional outcomes. Captures stay private until reviewed. Simplified page titles, empty states, dialogs, activity and inspector copy following the owner’s review. Removed slogans and duplicate explanations, preserved contextual handoff instructions, and made the closed-session placeholder compact. Desktop/mobile visual inspection and the full automated suite pass. Final committed-source evidence and the clean-checkout walkthrough remain pending.

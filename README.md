@@ -2,7 +2,7 @@
 
 Discover a workflow by operating a real UI. Save the successful path as a typed capability. Replay it without a model. When automation encounters a blocker, an operator can take control of the same live session and return it after checkpoint verification.
 
-**Current status: core discovery and replay are verified. The React operator workspace and same-session handoff pass browser tests. The optional container profile passes independent egress verification. Remaining lifecycle checks and final submission evidence are still in progress.**
+**Current status: core discovery and replay are verified. The React operator workspace and same-session handoff pass browser tests. The optional container profile passes independent egress verification. Lifecycle and failure checks pass. Final submission evidence and clean-checkout verification are in progress.**
 
 Groove uses a fictional Northstar banking application and synthetic records. Development remains private. This is a complete local execution architecture under active verification, not a claim of deployed enterprise scale.
 
@@ -67,13 +67,15 @@ The aggregate check builds the server and production React assets, checks strict
 
 The included capability revisions currently originate from genuine development discovery runs. Their review metadata explicitly identifies an engineering review. Final submission evidence will be regenerated from committed runtime code and documented separately; scripted tests are never presented as live model or human recordings.
 
+The final capture harness is `node --env-file-if-exists=.env.local scripts/capture-evidence.mjs` after a build and a clean commit. It performs real discovery through the console, pauses for complete artifact review, records provider-free replay and exceptional outcomes, and saves an agent-operated video and sanitized run files under `.local/submission/`. It never labels its scripted handoff as an independent human exercise. Review the export before tracking it.
+
 ## Boundaries
 
 - The local controller admits two active runs and retains at most 50 run summaries. Each run owns a separate browser context and target session. This is not a multi-tenant hosted service.
 - Browser actions and network requests are checked against the reviewed binding. Unknown effects and final account creation are denied for automation and operators.
 - Sensitive output can be displayed to the authenticated local operator and returned to an authorized caller. Persisted evidence redacts sensitive output. Browser observations and screenshots omit sensitive runtime values.
 - Ownership uses serialized commands and epochs. An expired operator lease leaves the run paused; an expired intervention ends it. A lost browser cannot be reconstructed as the same live session.
-- Runtime files are local and ignored by Git. A browser request allowlist is an application guardrail, not a substitute for network isolation. The containment profile and final adversarial checks are still being completed.
+- Runtime files are local and ignored by Git. A browser request allowlist is an application guardrail, not a substitute for network isolation. The contained profile independently verifies worker egress denial on macOS Docker and Linux CI. Total local evidence retention remains manual.
 
 ## Project documents
 
