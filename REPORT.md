@@ -38,6 +38,8 @@ The loopback console drives the same browser/page through mediated click, type, 
 
 ## Safety
 
+The optional local container profile has passed an independent egress probe and real replay. Non-root workers use read-only filesystems, dropped host capabilities and resource limits; Chromium’s sandbox stays enabled. The browser has no published network port, and host control crosses a bounded stdin/stdout stream. See `docs/containment.md` for the verified scope and remaining production prerequisites.
+
 Trusted policy restricts origins, routes, methods, controls and effects before dispatch. Artifacts and model responses cannot grant themselves permission. Unknown effects and the final account-opening action are blocked. Browser request controls, service-worker blocking and redirect denial protect the supported target; network-enforced worker isolation is a separate production requirement.
 
 Events and artifacts contain allowlisted fields and input references. Sensitive values, goals, credentials, browser storage, raw exceptions and traces are excluded. A sanitized structural failure snapshot supplies richer evidence even when an image cannot be safely masked. Only synthetic data is used for provider calls and submission evidence. Provider storage settings are documented without claiming zero retention. The operator endpoint uses a local credential, Origin/Host checks and ownership epochs; enterprise operator identity is a deployment requirement.

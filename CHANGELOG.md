@@ -32,5 +32,6 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 
 ### In progress
 
-- P8: Added agent-invocable replay with bounded stdin, approved capability lookup, one JSON result, deliberate exit codes and opt-in sensitive stdout. Keyless subprocess tests cover success, redaction, business outcomes and invalid input. Expanded tests reject wrong currency/account type, distinguish application validation and prove one request after an uncertain navigation. The 100-session stability exercise remains in progress.
-- P9-P10: Containment and final evidence remain pending.
+- P8: Added agent-invocable replay with bounded stdin, approved capability lookup, one JSON result, deliberate exit codes and opt-in sensitive stdout. Keyless subprocess tests cover success, redaction, business outcomes and invalid input. Expanded tests reject wrong currency/account type, distinguish application validation and prove one request after an uncertain navigation. The no-retry stability exercise passed 100/100 fresh sessions at concurrency two: p50 1.11 s, p95 1.56 s, 100 searches and zero account commits on the documented local machine.
+- P9: Native receiver probes cover nine escape channels; unrecognized image content causes omission. The isolated non-root container replay and independent egress probe passed in development. Remaining lifecycle, provider and release checks are in progress.
+- P10: Final committed-source evidence remains pending.

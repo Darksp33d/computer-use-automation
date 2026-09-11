@@ -2,7 +2,7 @@
 
 Discover a workflow by operating a real UI. Save the successful path as a typed capability. Replay it without a model. When automation encounters a blocker, an operator can take control of the same live session and return it after checkpoint verification.
 
-**Current status: core discovery and replay are verified. The React operator workspace and same-session handoff pass browser tests. Final scenario coverage, containment and submission evidence are still in progress.**
+**Current status: core discovery and replay are verified. The React operator workspace and same-session handoff pass browser tests. The optional container profile passes independent egress verification. Remaining lifecycle checks and final submission evidence are still in progress.**
 
 Groove uses a fictional Northstar banking application and synthetic records. Development remains private. This is a complete local execution architecture under active verification, not a claim of deployed enterprise scale.
 
@@ -89,3 +89,7 @@ The included capability revisions currently originate from genuine development d
 | [Assignment report](REPORT.md) | The assignment's seven required sections |
 
 Each implementation stage is a focused, verified commit. See [AGENTS.md](AGENTS.md) for the repository's engineering rules.
+
+## Optional containment verification
+
+With Docker running, use `corepack yarn build` followed by `node scripts/verify-containment.mjs`. The script creates and tears down its own isolated project, verifies a real replay and proves that an external request receiver cannot be reached by either worker. See the [verified profile and limits](docs/containment.md).

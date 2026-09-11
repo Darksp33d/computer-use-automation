@@ -1,0 +1,15 @@
+**
+!package.json
+!yarn.lock
+!.yarnrc.yml
+!tsconfig.json
+!src/
+!src/**
+!demo/
+!demo/**
+!ui/
+!ui/**
+!scripts/
+!scripts/assets.mjs
+!containers/
+!containers/**

@@ -1,6 +1,6 @@
 # Verification and threat model
 
-Status: P1-P7 are implemented. The current aggregate check passes 18 unit and 37 browser tests, including operator accessibility and responsive form behavior. The owner confirmed a successful manual notice handoff in development run `b6e31893-3921-487c-a5cb-2c3da9477e13`. A later visual canary exposed a CSP-related screenshot redaction defect, corrected with native masks and byte-level image invariance coverage. Pre-fix development images are not privacy evidence. The matrix below remains the acceptance contract: unchecked P8-P10 scenarios, independent containment, the 100-session exercise and final source-linked evidence are still pending. Test definitions live in `tests/unit/` and `tests/browser/`; scripted provider and operator tests are not evidence of independent human or live-model execution.
+Status: P1-P7 are implemented. The current aggregate check passes 18 unit and 47 browser tests, including operator accessibility and responsive form behavior. The owner confirmed a successful manual notice handoff in development run `b6e31893-3921-487c-a5cb-2c3da9477e13`. A later visual canary exposed a CSP-related screenshot redaction defect, corrected with native masks and byte-level image invariance coverage. Pre-fix development images are not privacy evidence. The matrix below remains the acceptance contract: unchecked P8-P10 scenarios, independent containment, the 100-session exercise and final source-linked evidence are still pending. Test definitions live in `tests/unit/` and `tests/browser/`; scripted provider and operator tests are not evidence of independent human or live-model execution.
 
 ## 1. Test strategy
 
@@ -60,7 +60,7 @@ Every scenario starts with a fresh session and isolated fixture state. The harne
 | Malicious instructions in the UI/model response | Untrusted observation, strict decisions, no executable code, independent trusted policy | Prompts cannot guarantee immunity; policy must constrain consequential effects |
 | Artifact tampering or malicious expression | Strict data-only schema, bounded parsing, semantic validation, digest-pinned review | Local filesystem owner can alter both artifact and registry; production needs separate signing/approval authority |
 | Unsafe effect through an allowed-looking control | Reviewed effect map and postconditions; unknown effects denied | Incorrect vendor policy remains a risk; independent review and sandbox validation required |
-| Browser egress or redirect escape | Exact allowlist, interception with redirects disabled, service workers blocked, unsupported channels denied | Browser hooks alone do not isolate malicious content; require network-enforced workers for real targets |
+| Browser egress or redirect escape | Exact allowlist, interception with redirects disabled, service workers blocked, unsupported channels denied | Native interception is a guardrail. The [contained profile](containment.md) independently verifies worker egress denial; real target support remains disabled |
 | Tenant data crossover | Separate session/process/runtime directory in local tests | Production needs tenant-scoped identity, scheduling, network, storage and secret controls |
 | Operator impersonation or race | Loopback credential, Origin/Host checks, serialized commands and epochs | Enterprise SSO/RBAC, durable leases and audited identities are not locally implemented |
 | Data in evidence | Allowlisted event schema, reference values, safe structural snapshots and explicit export | Unknown visual content cannot be safely retained by generic regex masking |
@@ -68,7 +68,7 @@ Every scenario starts with a fresh session and isolated fixture state. The harne
 | Duplicate financial side effect | Block irreversible actions, record dispatch state, re-observe on timeout | UI-only exactly-once effects are unavailable; write support needs reconciliation and business authorization |
 | Browser compromise or dependency compromise | Pinned dependencies, non-root contained browser, resource limits and no mounted credentials | Requires patch operations and isolated production workers; context separation is insufficient |
 
-The containment profile separates browser/target networking from provider access. Chromium receives no model key, host workspace mount, Docker socket or operator secret. The provider client runs outside the browser's internal network. Expose only necessary loopback ports and validate commands crossing the control boundary. Internal container networking is one layer, not a claim that a container is equivalent to a microVM.
+The verified local [containment profile](containment.md) separates browser/target networking from provider access. Chromium receives no model key, host workspace mount, Docker socket or operator secret. The provider client runs outside the browser's internal network. Expose only necessary loopback ports and validate commands crossing the control boundary. Internal container networking is one layer, not a claim that a container is equivalent to a microVM.
 
 ## 4. Evidence that can be trusted
 
@@ -114,3 +114,5 @@ Before each commit, inspect the staged diff, run the stage's full available chec
 The first Linux runs of the operator UI test (`34628609067`, `34628859463`) failed while the resumed workflow was still running. The assertion used the five-second single-element default for a multi-step workflow; other Linux replay measurements took seven to eight seconds. The completion assertion now allows twenty seconds while polling actual status. Runtime action and execution deadlines are unchanged, and the suite still has zero retries. The original failed CI runs remain in the history.
 
 The corrected operator assertion passed Linux CI at `3b9b20d` in run `34629344817`. `scripts/stability.mjs` runs the separate, no-retry 100-session exercise after a build and writes a sanitized summary under `.local/stability/`; this is not part of each ordinary CI run.
+
+The first stability exercise passed 100/100 at `c97f368`, with p50 1105.99 ms, p95 1559.19 ms and maximum 1694.88 ms. Runs alternated synthetic members at concurrency two on an Apple M5 Pro with 24 GiB memory. Full results are retained under `.local/stability/c1ffe9f2-2a76-4b61-aead-ee8536bd8e63/summary.json`; final export records the source revision and measurement limits.
