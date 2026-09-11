@@ -13,7 +13,7 @@ export async function startTarget(
   const scenario = options.scenario ?? "normal";
   const sessions = new Map<string, Session>();
   const css = await readFile(new URL("./public/bank.css", import.meta.url), "utf8");
-  const stats = { requests: 0, commits: 0, searches: 0 };
+  const stats = { requests: 0, commits: 0, searches: 0, savingsLoads: 0 };
   const server = createServer(async (request, response) => {
     try {
       stats.requests++;
@@ -61,7 +61,8 @@ export async function startTarget(
             body = views.member(session, scenario);
             break;
           case "/savings":
-            if (scenario === "delayed-click") await delay(350);
+            stats.savingsLoads++;
+            if (scenario === "delayed-click") await delay(600);
             body = views.savings(session, scenario);
             break;
           case "/new":

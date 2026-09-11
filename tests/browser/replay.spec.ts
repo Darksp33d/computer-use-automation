@@ -44,6 +44,8 @@ for (const [scenario, expectedStatus, code] of [
   ["unavailable", "failure", "APP_UNAVAILABLE"],
   ["malformed-balance", "failure", "OUTPUT_INVALID"],
   ["wrong-member", "failure", "CHECKPOINT_FAILED"],
+  ["wrong-currency", "failure", "OUTPUT_INVALID"],
+  ["wrong-account-type", "failure", "OUTPUT_INVALID"],
 ] as const) {
   test(`replay deliberately classifies ${scenario}`, async () => {
     const target = await startTarget({ scenario });
@@ -103,6 +105,47 @@ test("review capability stops before the account-opening boundary", async () => 
     await expect(
       session.surface.act({ kind: "click", target: "open-account" }, {}, "human"),
     ).rejects.toThrow("POLICY_DENIED");
+    expect(target.stats.commits).toBe(0);
+  } finally {
+    await session.close();
+    await target.close();
+    await rm(directory, { recursive: true });
+  }
+});
+
+test("application validation remains a business outcome after valid boundary inputs", async () => {
+  const target = await startTarget({ scenario: "validation" });
+  const directory = await mkdtemp(join(tmpdir(), "review-validation-"));
+  const session = await createSession(
+    JSON.stringify(fixtureFlow("review")),
+    { memberId: "A1001", accountType: "checking", nickname: "Travel" },
+    { origin: target.origin, directory },
+  );
+  try {
+    expect(await session.replay()).toMatchObject({
+      status: "business_outcome",
+      code: "VALIDATION_REJECTED",
+    });
+    expect(target.stats.commits).toBe(0);
+  } finally {
+    await session.close();
+    await target.close();
+    await rm(directory, { recursive: true });
+  }
+});
+
+test("a timed-out navigation reports unknown effect without repeating the request", async () => {
+  const target = await startTarget({ scenario: "delayed-click" });
+  const directory = await mkdtemp(join(tmpdir(), "uncertain-navigation-"));
+  const session = await createSession(
+    JSON.stringify(fixtureFlow()),
+    { memberId: "A1001" },
+    { origin: target.origin, directory, conditionTimeoutMs: 200 },
+  );
+  try {
+    expect(await session.replay()).toMatchObject({ status: "failure", effect: "unknown" });
+    expect(target.stats.savingsLoads).toBe(1);
+    expect(target.stats.searches).toBe(1);
     expect(target.stats.commits).toBe(0);
   } finally {
     await session.close();

@@ -13,6 +13,8 @@ export const scenarios = [
   "frame-drift",
   "malformed-balance",
   "wrong-member",
+  "wrong-currency",
+  "wrong-account-type",
   "native-dialog",
   "delayed-click",
 ] as const;

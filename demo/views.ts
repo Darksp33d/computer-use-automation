@@ -68,7 +68,7 @@ export function savings(session: Session, scenario: Scenario) {
   if (!record) return results(session, "not-found");
   return page(
     "Savings account",
-    `<h1>Savings account</h1><p class="intro">Primary savings <span class="tag">Open</span></p><section class="panel"><h2>Account details</h2><table class="details"><tbody><tr><td>Member number</td><td>${e(session.memberId)}</td></tr><tr><td>Account type</td><td>savings</td></tr><tr><td>Available balance</td><td class="balance">${scenario === "malformed-balance" ? "$1,23.00" : record.balance}</td></tr><tr><td>Currency</td><td>USD</td></tr></tbody></table><div class="form-footer"><span>Balance verified for this training session</span><a href="/member">Back to member</a></div></section>`,
+    `<h1>Savings account</h1><p class="intro">Primary savings <span class="tag">Open</span></p><section class="panel"><h2>Account details</h2><table class="details"><tbody><tr><td>Member number</td><td>${e(session.memberId)}</td></tr><tr><td>Account type</td><td>${scenario === "wrong-account-type" ? "checking" : "savings"}</td></tr><tr><td>Available balance</td><td class="balance">${scenario === "malformed-balance" ? "$1,23.00" : record.balance}</td></tr><tr><td>Currency</td><td>${scenario === "wrong-currency" ? "EUR" : "USD"}</td></tr></tbody></table><div class="form-footer"><span>Balance verified for this training session</span><a href="/member">Back to member</a></div></section>`,
   );
 }
 

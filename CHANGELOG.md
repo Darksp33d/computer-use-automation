@@ -32,5 +32,5 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 
 ### In progress
 
-- P8: Added agent-invocable replay with bounded stdin, approved capability lookup, one JSON result, deliberate exit codes and opt-in sensitive stdout. Keyless subprocess tests cover success, redaction, business outcomes and invalid input. Expanded scenario and stability verification remain in progress.
+- P8: Added agent-invocable replay with bounded stdin, approved capability lookup, one JSON result, deliberate exit codes and opt-in sensitive stdout. Keyless subprocess tests cover success, redaction, business outcomes and invalid input. Expanded tests reject wrong currency/account type, distinguish application validation and prove one request after an uncertain navigation. The 100-session stability exercise remains in progress.
 - P9-P10: Containment and final evidence remain pending.
