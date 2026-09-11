@@ -1,6 +1,6 @@
 # Verification and threat model
 
-Status: P1-P9 are implemented. The current checks pass 22 unit and 58 browser tests, including provider failure classification, cancellation, lost browser sessions, journal quotas, eleven unsupported network/browser channels and operator accessibility. The isolated container probe passed locally and in Linux CI at `14d8d2a`. The first no-retry stability exercise passed 100/100 at `c97f368`. Final source-linked runs, clean-checkout verification and the owner-requested UI simplification remain in P10.
+Status: all implementation stages have passing checks. The suite contains 22 unit and 58 browser tests. Final discovery, replay, exceptional outcomes and scripted handoff were captured at `67c4000`; the [evidence index](../evidence/README.md) links every run. A fresh GitHub checkout passed installation and all checks without a provider key. The owner-requested UI simplification passed desktop/mobile visual review. Container egress verification and the 100/100 no-retry stability exercise passed at `bba5b6e`, with identical runtime source to the final capture.
 
 The owner confirmed a successful manual notice handoff in development run `b6e31893-3921-487c-a5cb-2c3da9477e13`. A later visual canary exposed a CSP-related screenshot redaction defect, corrected with native masks and byte-level image invariance coverage. Pre-fix development images are not privacy evidence. Scripted provider and operator tests are not evidence of independent human or live-model execution.
 
@@ -83,24 +83,21 @@ The verified local [containment profile](containment.md) separates browser/targe
 
 ## 4. Evidence that can be trusted
 
-The final `/evidence/` export will contain:
+The reviewed export contains:
 
 ```text
 evidence/README.md
 evidence/manifest.json
-evidence/savings.capability.json
-evidence/discovery/events.jsonl
-evidence/discovery/result.json
-evidence/replay/events.jsonl
-evidence/replay/result.json
-evidence/not-found/events.jsonl
-evidence/not-found/result.json
-evidence/handoff/events.jsonl
-evidence/handoff/result.json
-evidence/failure/structure.json
+evidence/capture.json
+evidence/artifacts/
+evidence/runs/<run-id>/
+evidence/screenshots/
+evidence/walkthrough.webm
+evidence/verification/
+evidence/development/
 ```
 
-Actual paths may include stable run subdirectories, but the README must link each piece explicitly. The manifest records source commit, runtime/browser/provider/model versions, fixture revision, commands, timestamps, file digests and what each run demonstrates. Provider response/request IDs and usage metadata establish a useful audit trail; they are not independent cryptographic proof of provider execution. Optional screenshots are inspected after sanitization. A recording is optional and may only use synthetic data.
+The evidence README links each run explicitly. The manifest records source commit, runtime/browser/provider/model versions, fixture revision, commands, timestamps, file digests and what each run demonstrates. Provider response/request IDs and usage metadata establish a useful audit trail; they are not independent cryptographic proof of provider execution. Optional screenshots are inspected after sanitization. A recording is optional and may only use synthetic data.
 
 The final discovery and replay must be captured from the final tested code revision. If code affecting execution changes afterward, regenerate the affected evidence. Preserve failures honestly rather than selecting only successful attempts. A scripted CI operator demonstrates control mechanics; the submission also includes a real human exercise, clearly distinguished. Never claim the user manually tested a flow unless they did.
 
@@ -127,3 +124,5 @@ The first Linux runs of the operator UI test (`34628609067`, `34628859463`) fail
 The corrected operator assertion passed Linux CI at `3b9b20d` in run `34629344817`. `scripts/stability.mjs` runs the separate, no-retry 100-session exercise after a build and writes a sanitized summary under `.local/stability/`; this is not part of each ordinary CI run.
 
 The first stability exercise passed 100/100 at `c97f368`, with p50 1105.99 ms, p95 1559.19 ms and maximum 1694.88 ms. Runs alternated synthetic members at concurrency two on an Apple M5 Pro with 24 GiB memory. Full results are retained under `.local/stability/c1ffe9f2-2a76-4b61-aead-ee8536bd8e63/summary.json`; final export records the source revision and measurement limits.
+
+The final stability exercise at `bba5b6e` passed 100/100, p50 1088.15 ms, p95 1153.73 ms, maximum 1545.56 ms. It uses approved revision 1, alternating two members at concurrency two. Revision 4 is separately exercised in the final capture. Runtime file hashes establish that later capture-harness, artifact and documentation commits did not alter execution code.

@@ -2,9 +2,9 @@
 
 Discover a workflow by operating a real UI. Save the successful path as a typed capability. Replay it without a model. When automation encounters a blocker, an operator can take control of the same live session and return it after checkpoint verification.
 
-**Current status: core discovery and replay are verified. The React operator workspace and same-session handoff pass browser tests. The optional container profile passes independent egress verification. Lifecycle and failure checks pass. Final submission evidence and clean-checkout verification are in progress.**
+**Implemented and verified:** genuine discovery for two workflows, provider-free replay, reviewed capabilities, same-session handoff, exceptional outcomes, a React operator console and optional container isolation. [Evidence and walkthrough](evidence/README.md).
 
-Groove uses a fictional Northstar banking application and synthetic records. Development remains private. This is a complete local execution architecture under active verification, not a claim of deployed enterprise scale.
+Groove uses a fictional Northstar banking application and synthetic records. Development remains private. This is a verified local execution system. The production deployment prerequisites and capacity assumptions are explicit in the [scale design](docs/scale.md).
 
 ## Try it locally
 
@@ -65,7 +65,9 @@ corepack yarn check
 
 The aggregate check builds the server and production React assets, checks strict TypeScript and formatting, runs unit tests, verifies schema generation, and exercises real Chromium workflows. Browser coverage includes deterministic replay, typed outcomes, genuine compiler semantics using labeled test providers, same-session operator handoff, authorization, mobile form persistence, keyboard access, and an axe accessibility audit. Tests have no retry-to-green setting.
 
-The included capability revisions currently originate from genuine development discovery runs. Their review metadata explicitly identifies an engineering review. Final submission evidence will be regenerated from committed runtime code and documented separately; scripted tests are never presented as live model or human recordings.
+The aggregate suite passes 22 unit and 58 browser tests. A separate 100-session stability exercise passed 100/100 without retries at concurrency two. These are local measurements, not a production availability claim.
+
+Revision 4 of each included capability comes from the final live-model capture and passed a fresh replay before explicit review approval. The console uses the latest approved revision; pass `--revision 4` to the calling-agent CLI to select it. Earlier revisions remain immutable. `corepack yarn verify:evidence` checks the exported file hashes, run relationships and matching runtime source.
 
 The final capture harness is `node --env-file-if-exists=.env.local scripts/capture-evidence.mjs` after a build and a clean commit. It performs real discovery through the console, pauses for complete artifact review, records provider-free replay and exceptional outcomes, and saves an agent-operated video and sanitized run files under `.local/submission/`. It never labels its scripted handoff as an independent human exercise. Review the export before tracking it.
 
@@ -88,6 +90,7 @@ The final capture harness is `node --env-file-if-exists=.env.local scripts/captu
 | [Scale and operations](docs/scale.md) | Multi-tenant architecture and capacity assumptions |
 | [Decisions and sources](docs/decisions.md) | Technology rationale and researched alternatives |
 | [Visual direction](docs/visual-direction.md) | Dribbble references reviewed before UI implementation |
+| [Evidence and recording](evidence/README.md) | Source-linked runs, reviewed artifacts, failure evidence and walkthrough |
 | [Assignment report](REPORT.md) | The assignment's seven required sections |
 
 Each implementation stage is a focused, verified commit. See [AGENTS.md](AGENTS.md) for the repository's engineering rules.

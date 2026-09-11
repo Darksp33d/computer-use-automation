@@ -5,7 +5,12 @@
     "origin": "https://github.com/Darksp33d/computer-use-automation.git",
     "platform": "macOS arm64",
     "providerKeyConfigured": false,
-    "commands": ["corepack yarn install --immutable", "corepack yarn setup", "corepack yarn doctor", "corepack yarn check"],
+    "commands": [
+      "corepack yarn install --immutable",
+      "corepack yarn setup",
+      "corepack yarn doctor",
+      "corepack yarn check"
+    ],
     "exitCode": 0,
     "unitPassed": 22,
     "browserPassed": 58,
@@ -15,7 +20,10 @@
     "sourceRevision": "67c40003f3c822d7a916bb64ebd9c73c007aa1db",
     "url": "https://github.com/Darksp33d/computer-use-automation/actions/runs/34635276700",
     "conclusion": "success",
-    "jobs": ["verify", "containment"]
+    "jobs": [
+      "verify",
+      "containment"
+    ]
   },
   "dependencyAudit": {
     "command": "corepack yarn npm audit --recursive --json",
@@ -25,8 +33,29 @@
   },
   "visualReview": {
     "screenshotsInspected": 13,
-    "desktopViewport": [1440, 960],
-    "mobileViewport": [390, 844],
-    "operator": "development agent"
+    "desktopViewport": [
+      1440,
+      960
+    ],
+    "mobileViewport": [
+      390,
+      844
+    ],
+    "operator": "development agent",
+    "videoDurationSeconds": 187.8,
+    "videoDecoding": "Verified with bundled Playwright ffmpeg"
+  },
+  "deliveredCheckout": {
+    "sourceRevision": "b017cb0",
+    "evidenceVerification": "passed",
+    "revision4Replay": {
+      "runId": "7d451eac-1b22-4a71-abaf-cbd6616049a9",
+      "status": "success",
+      "providerKeyConfigured": false
+    },
+    "keylessDemoReady": true,
+    "shutdownSignal": "SIGINT",
+    "shutdownExitCode": 0,
+    "portClosed": true
   }
 }

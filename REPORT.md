@@ -1,6 +1,6 @@
 # Computer-Use Automation System
 
-Implementation edition, updated through P9 on 2026-09-11. Both workflows, genuine discovery, deterministic replay, operator review and handoff, failure boundaries and the local containment profile are implemented and verified. Final source-linked evidence and the clean-checkout walkthrough remain in P10. [PLAN.md](PLAN.md) records the completion gates.
+Groove, verified on 2026-09-11. Two genuine model discoveries produced reviewed, reusable capabilities. The suite passes 22 unit and 58 browser tests; 100 fresh local replays passed without retries. [Runs, recording and measurement limits](evidence/README.md).
 
 ## Architecture
 
@@ -48,4 +48,4 @@ Events and artifacts contain allowlisted fields and input references. Sensitive 
 
 The implementation deliberately excludes real bank access, irreversible transactions, native desktop execution, arbitrary website onboarding, distributed scheduling, enterprise operator SSO, model recovery during replay and a full co-browsing product. These are explicit boundaries, not mock replacements for the core assignment. Genuine discovery, parameterized replay, exceptional outcomes, policy enforcement, safe evidence and live-session handoff must all work.
 
-The next deployment work is production orchestration of isolated workers, durable ownership enforcement, tenant-bound identity and secrets, controlled capability rollout and measured capacity. A second tenant variant is an optional extension only after every core gate passes. The repository's evidence will distinguish real provider runs, deterministic test fixtures and manual operator exercises. No production throughput or reliability percentage will be claimed without measurements.
+The next deployment work is production orchestration of isolated workers, durable ownership enforcement, tenant-bound identity and secrets, controlled capability rollout and measured capacity. A second tenant variant is an optional extension only after every core gate passes. The evidence distinguishes live provider runs, scripted checks and the owner’s confirmed development handoff. Local replay latency was p50 1.09 s and p95 1.15 s at concurrency two, including browser startup. This sample does not establish production throughput or availability.

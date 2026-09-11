@@ -1,6 +1,6 @@
 # Design contract
 
-Status: living design contract. P1-P9 are implemented and verified, including both live discovery workflows, the React console, review catalog, same-session handoff, fault scenarios and local containment. Final source-linked evidence and the submission walkthrough remain in P10. PLAN.md records the latest passed gates. The schema descriptions below match the implemented v1; future behavior is identified by its stage.
+Status: verified implementation contract. Both live discovery workflows, the React console, review catalog, same-session handoff, fault scenarios and local containment are implemented. [Final evidence](../evidence/README.md) links the source, runs and recording. PLAN.md records the passed gates. Deployment extensions are identified explicitly.
 
 ## 1. Trust boundaries and module responsibilities
 
@@ -84,7 +84,7 @@ Implemented P6 limits are 30 model decisions, 180 seconds active discovery, 30 s
 
 The OpenAI adapter admits a request only if a conservative $0.50 reservation fits within its $2 estimated run budget. A completed response reconciles this against reported tokens at the researched standard rates ($10 input and $50 output per million, 2026-09-11). A failed or timed-out call retains the reservation. Each pending request is also canceled when the remaining active execution budget expires; user cancellation is reported separately. Refusal, invalid responses and transport failure have distinct safe classifications. This is application admission accounting, not a provider billing guarantee; account-level spending controls remain separate. Standard service tier is explicit. [Published pricing](https://openai.com/index/gpt-6-astra/).
 
-SDK retry behavior must be configured explicitly to avoid multiplying retry layers. Cancellation stops new commands and aborts model requests; it cannot undo a UI effect already sent. The first genuine run verifies these budgets instead of assuming the initial values will work.
+SDK retries are disabled to avoid multiplying retry layers. Cancellation stops new commands and aborts model requests; it cannot undo a UI effect already sent. Both final genuine discoveries completed within the configured budgets.
 
 ## 5. Replay and result semantics
 

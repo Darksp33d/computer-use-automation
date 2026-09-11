@@ -583,8 +583,8 @@
     },
     {
       "path": "verification/checks.json",
-      "bytes": 1129,
-      "sha256": "7d951dccce82e224d5b45270141e0451b1b4aeb612e6f20eff81d825d93fadd4"
+      "bytes": 1676,
+      "sha256": "315b037083c83c4082231c666000bb5168f368be6d58c5a220081121ace0703c"
     },
     {
       "path": "verification/containment.json",

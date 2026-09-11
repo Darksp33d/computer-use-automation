@@ -1,12 +1,12 @@
 # Implementation plan
 
-Status: implementation in progress, 2026-09-11. Checkboxes represent evidence-backed completion, not intent.
+Status: implementation and release verification complete, 2026-09-11. Checkboxes represent evidence-backed completion, not intent.
 
 ## 1. What we are building
 
 A computer-use system that learns a task by operating a real application, saves what worked as a typed capability, and executes that capability later without a model deciding the steps.
 
-The demonstration will use a local, fictional banking application with synthetic data. An evaluator will give a goal such as "Find this member's savings account and return its available balance." The model will inspect the live screen, choose controls, and operate the application. The resulting capability will accept a different member ID on replay and return typed data or a named business outcome. When the application presents an unresolved interruption, an operator will take control of the same browser session, resolve it, and explicitly return control.
+The demonstration uses a local, fictional banking application with synthetic data. An evaluator can choose a goal such as "Find this member's savings account and return its available balance." The model inspects the live screen, chooses controls, and operates the application. The resulting capability accepts a different member ID on replay and returns typed data or a named business outcome. When the application presents an unresolved interruption, an operator can take control of the same browser session, resolve it, and explicitly return control.
 
 The first delivery is this plan and a private GitHub repository. The implementation sequence below is the working checklist for subsequent development. The repository becomes public only when the owner requests that change. The assignment's submission instructions are requirements to prepare for, not authorization to email the company.
 
@@ -14,7 +14,7 @@ The first delivery is this plan and a private GitHub repository. The implementat
 
 Build every required part of the end-to-end chain. Make failures observable and safe. Prove important claims with executable tests and real run evidence. Keep abstractions small enough to explain during an interview. Document uncertainty instead of claiming universal safety, zero possible regressions, or unmeasured scale.
 
-Millions of concurrent users and millions of active UI sessions are different capacity requirements. We will design for both explicitly. The assignment implementation will be a rigorously tested execution core; a deployment serving millions requires the isolation, scheduling, operational controls, and measurements in [the scale plan](docs/scale.md). Those are release prerequisites for that deployment, not capabilities the local submission can claim.
+Millions of concurrent users and millions of active UI sessions are different capacity requirements. The scale design addresses both explicitly. The assignment implements a tested execution core; a deployment serving millions requires the isolation, scheduling, operational controls, and measurements in [the scale plan](docs/scale.md). Those are release prerequisites for that deployment, not capabilities the local submission can claim.
 
 ## 2. Scope and acceptance map
 
@@ -54,7 +54,7 @@ A replay encounters an unexpected application interstitial requiring an operator
 
 ### Runtime scenarios
 
-The simulator will support normal behavior, member absent, account absent, validation rejected, permission denied, known dismissible notice, unexpected modal, session expired, bounded slow load, persistent application error, duplicate matching controls, changed frame/control binding, and a click whose visible completion is delayed. Fault selection belongs to the test/demo harness, never to model observations or automation decision logic.
+The simulator supports normal behavior, member absent, account absent, validation rejected, permission denied, known dismissible notice, unexpected modal, session expired, bounded slow load, persistent application error, duplicate matching controls, changed frame/control binding, and a click whose visible completion is delayed. Fault selection belongs to the test/demo harness, never to model observations or automation decision logic.
 
 The target is deliberately legacy-like: server-rendered forms, an iframe workspace, nested tables, no test IDs, some controls with adjacent text instead of associated labels, and regenerated element IDs. It must remain usable by a person. Success must come from UI interaction; discovery and replay may not call fixture data/reset/fault endpoints or read application source, hidden state, or database contents.
 
@@ -101,7 +101,7 @@ flowchart LR
 
 The replay interpreter cannot import the model adapter. Every automation or operator command goes through the same policy and ownership boundary. A browser session has exactly one owner at a time. The application binding owns knowledge of controls, allowed effects, and error markers; it does not prescribe the workflow order. The model discovers that order through observations.
 
-Proposed source layout, to be created only as each component is implemented:
+Source layout:
 
 ```text
 src/contracts/       Artifact, decision, result, event and intervention schemas
@@ -155,7 +155,7 @@ Stage order is dependency-driven. If early research or the P4/P6 experiments inv
 - [x] P7: Live-session handoff. Verified exclusive claim, stale commands, premature resume, native dialog and session restoration in the original browser. The React console passed desktop, mobile form-state, keyboard, authorization and accessibility checks. A genuine console discovery passed fresh replay and explicit artifact review/approval. This operator exercise was driven through the UI by the development agent, not represented as an independent human recording. The owner separately completed the notice handoff successfully in run `b6e31893-3921-487c-a5cb-2c3da9477e13`. Final stage checks: 18 unit and 30 browser tests.
 - [x] P8: Both workflows, typed CLI outcomes, bounded recovery and uncertain-effect cases pass. The first stability exercise completed 100/100 fresh sessions at concurrency two, with zero account commits; source and limits are recorded in docs/verification.md.
 - [x] P9: Verified 22 unit and 56 browser tests, provider deadlines and cancellation, browser/journal loss, evidence quotas, prompt injection and unsupported browser channels. The non-root contained replay and independent egress probe pass locally and in Linux CI. Native and container limits are documented; final source-linked exports remain P10.
-- [ ] P10: Submission-quality evidence and walkthrough. Include the owner-requested final UI pass: remove decorative slogans and redundant text, sharpen page titles and empty states, and preserve useful instructions and visual quality.
+- [x] P10: Final source-linked evidence, two revision 4 approvals, keyless replay, business/failure cases and scripted handoff captured at `67c4000`. The owner’s successful development exercise is separately preserved. UI slogans and redundant copy removed; desktop/mobile views and thirteen screenshots inspected. All 22 unit and 58 browser tests pass, 100/100 stability runs pass without retries, and containment passes locally and in Linux CI. Fresh-checkout installation, final revision 4 CLI replay, keyless demo and SIGINT cleanup pass. README, three-page report, change log and evidence integrity checks are complete. [Evidence index](evidence/README.md).
 
 ## 7. The evaluator experience
 
@@ -198,17 +198,11 @@ Replay exits with 0 for success, 2 for a business outcome, 3 for failure or reje
 - A file digest proves content identity, not provenance authenticity. Production approval and signing need independently protected authority.
 - A local browser context is useful session separation, not a hostile-tenant security boundary.
 
-## 9. Remaining uncertainties and stop conditions
+## 9. Resolved gates and deployment prerequisites
 
-| Question | Resolution gate | Response if it fails |
-| --- | --- | --- |
-| Can the observation/targeting strategy handle unlabeled controls inside the actual legacy fixture? | P4 browser contract tests with regenerated IDs and duplicate labels | Refine the scoped relation binding; do not claim generic visual replay |
-| Is `gpt-6-astra` available to the owner's account and successful with the strict decision schema at the chosen effort level? | P6 provider smoke run and actual discovery | Verify account tier and access; raise effort to `medium`, then evaluate the documented Claude Opus 5 fallback per D05; never substitute a fake run |
-| Can the compiled path run with different input values? | P6 fresh-session replay | Reject the artifact and repair parameterization or targeting |
-| Can manual events be mediated and resumed without a race? | P7 concurrent claim/resume/action tests | Keep session paused; simplify the console/controller before proceeding |
-| Are failure snapshots useful without leaking data? | P4/P9 sensitive canaries and human inspection | Prefer a structural snapshot with allowlisted labels; omit unsafe screenshots |
-| Do network controls block actual prohibited traffic? | P9 external receiver tests in native and contained modes | Remove any unsupported claim; require the contained profile for that boundary |
-| What throughput and success rate can the system sustain? | P8/P9 measured local suite, future deployment load tests | Publish raw measurements and limits; no extrapolation presented as a benchmark |
+Legacy targeting, actual provider access, different-input reuse, exclusive handoff, image privacy and independent network denial have passing evidence. The original checkpoint and capture failures are preserved with their corrections in [the evidence history](evidence/README.md). Local stability was measured at concurrency two; no production throughput is inferred.
+
+Production deployment still requires tenant-bound identity and secrets, isolated worker orchestration, durable ownership enforcement, signed approval authority, retention operations and load measurements against actual vendor limits. These are documented in [the scale design](docs/scale.md). Native desktop execution and arbitrary website onboarding are explicit cuts in [the report](REPORT.md).
 
 ## 10. Definition of done
 

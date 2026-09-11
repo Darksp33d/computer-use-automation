@@ -1,10 +1,10 @@
 # Decisions and research notes
 
-Status: planning decisions, researched 2026-09-11. Links are primary sources. Their documented behavior supports a choice; it does not prove that our implementation works. The exit gates in PLAN.md supply that proof.
+Status: implementation decisions, researched and verified 2026-09-11. Links are primary sources. Their documented behavior supports a choice; it does not prove that our implementation works. The exit gates in PLAN.md supply that proof.
 
 ## D01. A complete local core with an explicit deployment design
 
-The assignment evaluates artifact quality, correct replay, real handoff and sensible scope. The owner requires exceptional engineering and a credible path to millions of concurrent users. We will implement all required core capabilities and deeply verify their boundaries, while documenting production scheduling and isolation separately. Building a cloud control plane before proving one replay would defer the highest-risk work without establishing capacity.
+The assignment evaluates artifact quality, correct replay, real handoff and sensible scope. The owner requires exceptional engineering and a credible path to millions of concurrent users. The implementation covers the required core capabilities and verifies their boundaries, with production scheduling and isolation documented separately. Building a cloud control plane before proving one replay would defer the highest-risk work without establishing capacity.
 
 One supervised process per local run avoids distributed coordination during the assignment. It does not erase the need for distributed leases at scale. A process crash cannot resume its lost browser. That limitation is represented in the result contract and deployment plan.
 
@@ -16,7 +16,7 @@ Python would be a strong choice if native OS automation, OCR or computer vision 
 
 ## D03. Playwright for perception and action
 
-Playwright provides fresh locator resolution, frame scoping and actionability checks. We will build on these semantics rather than creating a coordinate-click replay system. Waiting must target an observable condition. A control that is visible and clickable still may be the wrong control, so policy, scope, cardinality and postconditions remain our responsibility. [Locators](https://playwright.dev/docs/locators), [actionability](https://playwright.dev/docs/actionability).
+Playwright provides fresh locator resolution, frame scoping and actionability checks. The driver uses these semantics for deterministic target resolution. Waiting must target an observable condition. A control that is visible and clickable still may be the wrong control, so policy, scope, cardinality and postconditions remain our responsibility. [Locators](https://playwright.dev/docs/locators), [actionability](https://playwright.dev/docs/actionability).
 
 Selenium is viable but adds no required capability for the chosen TypeScript browser slice. Raw CDP creates more browser-specific lifecycle work. A broad agent framework can discover tasks but does not remove the need for our own policy, replay contract and ownership rules. Screenshot-only actions are valuable for opaque desktops; raw coordinates alone are a weak reusable identity. V1 uses visual context during discovery and verified semantic/relational browser targets on replay, with unsupported opaque controls failing closed.
 
@@ -30,7 +30,7 @@ Unknown schema versions are rejected. Introduce migrations only when a real vers
 
 ## D05. One provider adapter, one decision per observation
 
-Use the official OpenAI SDK and Responses API with a strict decision schema. The discovery model is `gpt-6-astra`, selected by the owner on 2026-09-11 and replacing the earlier candidate `gpt-5.4-2026-03-05`. The model page documents image input, structured outputs, computer-use support and a `reasoning.effort` setting from `low` to `max`. Start at `low`; OpenAI's published calibration states Astra at `low` performs better than the previous flagship at `high`, and discovery is infrequent so the higher per-token price is acceptable. P6 development verified account access and a successful savings discovery at low effort, followed by model-free replay with a different member. The account-preparation discovery also passed and replayed with different parameters. Final evidence will be regenerated from committed code. [GPT-6 Astra model page](https://developers.openai.com/api/docs/models/gpt-6-astra), [GPT-6 Astra announcement](https://openai.com/index/gpt-6-astra/).
+Use the official OpenAI SDK and Responses API with a strict decision schema. The discovery model is `gpt-6-astra`, selected by the owner on 2026-09-11 and replacing the earlier candidate `gpt-5.4-2026-03-05`. The model page documents image input, structured outputs, computer-use support and a `reasoning.effort` setting from `low` to `max`. Start at `low`; OpenAI's published calibration states Astra at `low` performs better than the previous flagship at `high`, and discovery is infrequent so the higher per-token price is acceptable. P6 development verified account access and a successful savings discovery at low effort, followed by model-free replay with a different member. The account-preparation discovery also passed and replayed with different parameters. The final committed-source capture and reviewed revision 4 artifacts are indexed in [the evidence export](../evidence/README.md). [GPT-6 Astra model page](https://developers.openai.com/api/docs/models/gpt-6-astra), [GPT-6 Astra announcement](https://openai.com/index/gpt-6-astra/).
 
 Only the `gpt-6-astra` alias is published; no dated snapshot exists at the time of this decision. The alias can change behavior underneath us. Compensate by recording the exact model string returned by the API, each response ID and token usage in artifact provenance and run evidence, and re-run the live discovery if a snapshot becomes available or the alias is observed to change behavior. Do not claim byte-for-byte reproducibility of a discovery run; claim only that the compiled artifact replays deterministically.
 
@@ -90,5 +90,7 @@ P2 validation covers unknown fields/versions/actions, reference integrity, repea
 | --- | --- | --- |
 | 2026-09-11 | D01-D09 recorded | Implemented and checked through P9; production limitations remain explicit |
 | 2026-09-11 | D05 revised: discovery model changed to `gpt-6-astra` on owner instruction; task-specific benchmark rationale and Claude Opus 5 fallback ladder recorded | P6 validates Astra at `low`; P10 source audit corrects the Opus score attribution; fallback not exercised |
+
+| 2026-09-11 | P10 evidence export | Two final live discoveries, revision 4 approvals, keyless replay, owner exercise, exceptional outcomes, 100-session stability and source integrity checks documented |
 
 When evidence changes a decision, add a dated entry explaining the trigger, replacement, validation and effect on prior artifacts. Keep the final design coherent rather than accumulating incompatible alternatives.
