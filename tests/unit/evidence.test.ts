@@ -64,3 +64,46 @@ test("artifact publication is complete and never replaces an existing revision",
     await rm(directory, { recursive: true });
   }
 });
+
+for (const limit of ["events", "bytes"] as const) {
+  test(`journal ${limit} quota stops admission without extending the file`, async () => {
+    const directory = await mkdtemp(join(tmpdir(), "groove-quota-"));
+    const journal = await Journal.create(directory, randomUUID());
+    const payload: EventPayload =
+      limit === "events"
+        ? { type: "checkpoint" }
+        : {
+            type: "model-decision",
+            stepId: "s".repeat(64),
+            target: "t".repeat(64),
+            provider: {
+              model: "m".repeat(80),
+              responseId: "r".repeat(160),
+              inputTokens: 1,
+              outputTokens: 1,
+            },
+          };
+    try {
+      let stopped = false;
+      for (let count = 0; count <= 2000; count++) {
+        try {
+          await journal.append(payload);
+        } catch (error) {
+          assert.match(String(error), /EVIDENCE_UNAVAILABLE/);
+          stopped = true;
+          break;
+        }
+      }
+      assert.equal(stopped, true);
+      const before = await readFile(join(directory, "events.jsonl"));
+      assert.ok(before.length <= 1_048_576);
+      if (limit === "events") assert.equal(journal.events.length, 2000);
+      else assert.ok(journal.events.length > 1000 && journal.events.length < 2000);
+      await assert.rejects(journal.append({ type: "checkpoint" }), /EVIDENCE_UNAVAILABLE/);
+      assert.deepEqual(await readFile(join(directory, "events.jsonl")), before);
+    } finally {
+      await journal.close();
+      await rm(directory, { recursive: true });
+    }
+  });
+}

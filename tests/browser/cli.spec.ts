@@ -6,7 +6,11 @@ function invoke(input: string, args: string[] = []) {
     const env = { ...process.env };
     delete env.OPENAI_API_KEY;
     delete env.FORCE_COLOR;
-    const child = spawn(process.execPath, ["dist/src/cli/replay.js", ...args], { env });
+    const child = spawn(
+      process.execPath,
+      ["--import", "./tests/fixtures/no-provider.mjs", "dist/src/cli/replay.js", ...args],
+      { env },
+    );
     let stdout = "";
     let stderr = "";
     child.stdout.on("data", (chunk) => {

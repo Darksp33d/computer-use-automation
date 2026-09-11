@@ -30,8 +30,11 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 - Revised the operator stack to React, TypeScript and Vite following the owner's review. Live state, stable forms and ownership transitions justify component state management. CSS remains the styling layer. The legacy target remains HTML and CSS by design. See D09 for alternatives and security boundaries.
 - Kept capability expressions limited to the two implemented workflows. See D10 for the excluded speculative features.
 
-### In progress
+### Runtime and containment
 
 - P8: Added agent-invocable replay with bounded stdin, approved capability lookup, one JSON result, deliberate exit codes and opt-in sensitive stdout. Keyless subprocess tests cover success, redaction, business outcomes and invalid input. Expanded tests reject wrong currency/account type, distinguish application validation and prove one request after an uncertain navigation. The no-retry stability exercise passed 100/100 fresh sessions at concurrency two: p50 1.11 s, p95 1.56 s, 100 searches and zero account commits on the documented local machine.
-- P9: Native receiver probes cover nine escape channels; unrecognized image content causes omission. The isolated non-root container replay and independent egress probe passed in development. Remaining lifecycle, provider and release checks are in progress.
-- P10: Final committed-source evidence remains pending.
+- P9: Native probes cover eleven unsupported browser channels; unrecognized image content causes omission. The non-root container replay and independent egress probe passed locally and in Linux CI. Provider calls now honor the remaining active deadline and distinguish invalid responses from transport failure. Verified 22 unit and 56 browser tests, including cancellation, browser loss after dispatch, unavailable journals, evidence quotas and prompt injection. Replay import boundaries and provider-disabled subprocess checks are part of the aggregate gate.
+
+### In progress
+
+- P10: Final committed-source evidence and the clean-checkout walkthrough remain pending. The final UI pass will remove decorative slogans and repeated text while preserving useful instructions and the visual design.

@@ -1,6 +1,8 @@
 # Verification and threat model
 
-Status: P1-P7 are implemented. The current aggregate check passes 18 unit and 47 browser tests, including operator accessibility and responsive form behavior. The owner confirmed a successful manual notice handoff in development run `b6e31893-3921-487c-a5cb-2c3da9477e13`. A later visual canary exposed a CSP-related screenshot redaction defect, corrected with native masks and byte-level image invariance coverage. Pre-fix development images are not privacy evidence. The matrix below remains the acceptance contract: unchecked P8-P10 scenarios, independent containment, the 100-session exercise and final source-linked evidence are still pending. Test definitions live in `tests/unit/` and `tests/browser/`; scripted provider and operator tests are not evidence of independent human or live-model execution.
+Status: P1-P9 are implemented. The current checks pass 22 unit and 56 browser tests, including provider failure classification, cancellation, lost browser sessions, journal quotas, eleven unsupported network/browser channels and operator accessibility. The isolated container probe passed locally and in Linux CI at `14d8d2a`. The first no-retry stability exercise passed 100/100 at `c97f368`. Final source-linked runs, clean-checkout verification and the owner-requested UI simplification remain in P10.
+
+The owner confirmed a successful manual notice handoff in development run `b6e31893-3921-487c-a5cb-2c3da9477e13`. A later visual canary exposed a CSP-related screenshot redaction defect, corrected with native masks and byte-level image invariance coverage. Pre-fix development images are not privacy evidence. Scripted provider and operator tests are not evidence of independent human or live-model execution.
 
 ## 1. Test strategy
 
@@ -43,7 +45,7 @@ Every scenario starts with a fresh session and isolated fixture state. The harne
 | H06 | Operator disconnect or intervention deadline | Session stays paused until bounded termination; credentials expire |
 | S01 | Prompt injection in target UI requests exfiltration or policy change | Policy unchanged and prohibited action not dispatched, regardless of model response |
 | S02 | Direct, framed, popup, form, redirect or resource request to forbidden origin | External receiver sees zero prohibited requests in the supported containment profile |
-| S03 | Service worker, WebSocket, download, file chooser and non-HTTP scheme | Denied before unsupported behavior; no persisted download |
+| S03 | Service worker, WebSocket, download, file chooser and non-HTTP scheme | Service-worker requests blocked, unsupported channels rejected, downloads canceled with acceptance disabled |
 | S04 | Target tries to contact operator API or model endpoint | Denied; operator/model credential unavailable to target |
 | S05 | Missing/invalid credential, foreign Origin/Host, replayed operator epoch | Command rejected before touching the live session |
 | S06 | Sensitive canaries in inputs, outputs, UI text, errors, provider content and manual typing | No canary in artifact, log, snapshot, filename, URL or exported image; model observation sanitized |
@@ -52,6 +54,15 @@ Every scenario starts with a fresh session and isolated fixture state. The harne
 | L02 | Browser/worker death between intent and result | Incomplete/unknown effect reported; no automatic session recreation |
 | L03 | Journal disk full, unwritable output, oversized evidence | New actions stop; clear safe failure without raw-data fallback |
 | L04 | Parallel isolated local runs and repeat runs | No session, fixture, input or evidence cross-contamination; no orphan processes |
+
+### Coverage locations
+
+- D02-D05: `tests/browser/discovery.spec.ts` and `tests/unit/provider.test.ts`; fake provider responses test the real SDK adapter and interpreter boundaries. D01 is a separate live-provider evidence gate.
+- C01-C05: `tests/unit/contracts.test.ts`, `tests/unit/catalog.test.ts` and the discovery compiler browser test.
+- R01-R13: `tests/browser/cli.spec.ts`, `replay.spec.ts`, `surface.spec.ts` and `handoff.spec.ts`. The CLI subprocess denies provider fetches; `scripts/boundaries.mjs` checks transitive imports.
+- H01-H06: `tests/unit/ownership.test.ts`, `tests/browser/handoff.spec.ts` and the full operator UI/API tests. The independent owner exercise supplements these scripted checks.
+- S01-S07: discovery injection, native receiver probes, policy, operator API and privacy tests; `scripts/verify-containment.mjs` separately bypasses application interception to test worker networking. Its external receiver has a positive control.
+- L01-L04: `tests/browser/lifecycle.spec.ts`, pending-provider cancellation, handoff expiry and operator shutdown tests; journal byte/event quotas in `tests/unit/evidence.test.ts`; the isolated-session stability harness. Browser loss is injected after the target accepted a search and before action completion is recorded. Journal loss uses a closed handle, not a claim of a real disk-full or host-power-loss experiment.
 
 ## 3. Threat boundaries and residual risks
 

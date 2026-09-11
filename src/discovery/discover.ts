@@ -66,7 +66,7 @@ export function discover(session: Session, provider: DecisionProvider) {
         const response = await provider.decide(
           view(execution),
           await session.surface.screenshot(),
-          execution.signal,
+          AbortSignal.any([execution.signal, AbortSignal.timeout(execution.remainingActiveMs)]),
         );
         execution.assertActive();
         const parsed = Decision.safeParse(response.decision);

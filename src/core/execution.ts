@@ -59,6 +59,11 @@ export class Execution {
     if (performance.now() >= this.#deadline) throw new RunError("BUDGET_EXCEEDED");
   }
 
+  get remainingActiveMs() {
+    this.assertActive();
+    return Math.max(1, Math.ceil(this.#deadline - performance.now()));
+  }
+
   async observe(conditions: Condition[] = []) {
     this.assertActive();
     this.current = await this.surface.observe(conditions);
@@ -148,7 +153,10 @@ export class Execution {
     }
     await this.pause("CHECKPOINT_FAILED", conditions);
     const observed = await this.handleState(conditions);
-    if (!observed.conditions.every((item) => item.satisfied))
+    if (
+      observed.conditions.length !== conditions.length ||
+      !observed.conditions.every((item) => item.satisfied)
+    )
       throw new RunError("CHECKPOINT_FAILED");
   }
 

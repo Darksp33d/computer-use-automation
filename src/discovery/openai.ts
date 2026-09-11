@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { zodTextFormat } from "openai/helpers/zod";
+import { ZodError } from "zod";
 import { RunError } from "../contracts/errors.js";
 import { Decision, type DecisionProvider, type DiscoveryView } from "./provider.js";
 
@@ -77,8 +78,15 @@ export class OpenAIDecisions implements DecisionProvider {
         },
       };
     } catch (error) {
-      if (signal.aborted) throw new RunError("CANCELED");
+      if (signal.aborted)
+        throw new RunError(
+          signal.reason instanceof DOMException && signal.reason.name === "TimeoutError"
+            ? "BUDGET_EXCEEDED"
+            : "CANCELED",
+        );
       if (error instanceof RunError) throw error;
+      if (error instanceof ZodError || error instanceof SyntaxError)
+        throw new RunError("MODEL_INVALID");
       throw new RunError("MODEL_UNAVAILABLE");
     }
   }

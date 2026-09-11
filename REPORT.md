@@ -1,10 +1,10 @@
 # Computer-Use Automation System
 
-Implementation edition, updated at P7 on 2026-09-11. Contracts, the simulator, guarded browser sessions and deterministic replay are verified. Genuine GPT-6 Astra discovery has completed both workflows and produced artifacts that replayed with different inputs; the React console, artifact review and same-session handoff are implemented with browser verification. Containment, expanded scenario coverage and final evidence remain pending. Statements about those pending features describe the planned contract. The detailed working checklist is in [PLAN.md](PLAN.md).
+Implementation edition, updated through P9 on 2026-09-11. Both workflows, genuine discovery, deterministic replay, operator review and handoff, failure boundaries and the local containment profile are implemented and verified. Final source-linked evidence and the clean-checkout walkthrough remain in P10. [PLAN.md](PLAN.md) records the completion gates.
 
 ## Architecture
 
-The system will turn one model-discovered UI workflow into a reusable capability. A local fictional banking application supplies synthetic data, an iframe workspace, nested tables, generated element IDs and intentionally imperfect labels. The primary flow searches for a member, opens their savings account and reads the available balance. A second flow prepares a sub-account form and stops at review.
+The system turns one model-discovered UI workflow into a reusable capability. A local fictional banking application supplies synthetic data, an iframe workspace, nested tables, generated element IDs and intentionally imperfect labels. The primary flow searches for a member, opens their savings account and reads the available balance. A second flow prepares a sub-account form and stops at review.
 
 TypeScript on Node.js 24 keeps the artifact, CLI, driver and operator contracts in one language. Playwright supplies real UI interaction and frame-aware targeting. The OpenAI Responses adapter supplies one strict decision per live observation, with masked screenshots, parameter references and bounded usage. Zod validates untrusted data. React with TypeScript and Vite provides the stateful operator workspace, with static assets served by the local control server. The target retains intentionally legacy HTML and iframe navigation. Server-side authorization and policy remain the security boundary; the frontend framework does not confer trust.
 
@@ -18,7 +18,7 @@ The artifact is independent of the model transcript. Its provenance identifies t
 
 ## Determinism & error handling
 
-Replay interprets the saved steps without a model, uniquely resolve each target, verify conditions and extract typed output from the UI. Exact role/text targets within frame scopes are preferred. Legacy controls use reviewed relations to visible captions; generated IDs and positional first-match choices are excluded. Ambiguity stops execution.
+Replay interprets the saved steps without a model, uniquely resolves each target, verifies conditions and extracts typed output from the UI. Exact role/text targets within frame scopes are preferred. Legacy controls use reviewed relations to visible captions; generated IDs and positional first-match choices are excluded. Ambiguity stops execution.
 
 Business outcomes such as member absent and validation rejected are separate from technical failures. Known notices have bounded recovery; unknown dialogs and expired sessions require intervention. A timeout after a click does not authorize a repeat: the engine re-observes, verifies the effect, or reports uncertainty. Final success requires the requested member, account type, screen and output schema to agree. Deterministic execution does not imply that a changing bank balance must be identical across runs. [Acceptance scenarios](docs/verification.md).
 
@@ -32,7 +32,7 @@ An isolated session worker must remain responsible for its live session. A futur
 
 ## Escalation & handoff
 
-The coordinator detects a blocked state, stop command admission, settle or classify any in-flight effect, and raise an intervention containing safe run/step context. One operator can claim the session. A monotonically increasing ownership epoch invalidates stale automation decisions and operator commands.
+The coordinator detects a blocked state, stops command admission, settles or classifies any in-flight effect, and raises an intervention containing safe run/step context. One operator can claim the session. A monotonically increasing ownership epoch invalidates stale automation decisions and operator commands.
 
 The loopback console drives the same browser/page through mediated click, type, select and dialog controls. Each manual action records actor and sanitized target context. Returning control revokes human command admission, waits for accepted actions to settle, re-observes and verifies the resume checkpoint. A human acknowledgment cannot bypass policy or declare success. Disconnection leaves the session paused until a bounded deadline. A crash does not pretend to preserve a lost live session.
 
@@ -48,4 +48,4 @@ Events and artifacts contain allowlisted fields and input references. Sensitive 
 
 The implementation deliberately excludes real bank access, irreversible transactions, native desktop execution, arbitrary website onboarding, distributed scheduling, enterprise operator SSO, model recovery during replay and a full co-browsing product. These are explicit boundaries, not mock replacements for the core assignment. Genuine discovery, parameterized replay, exceptional outcomes, policy enforcement, safe evidence and live-session handoff must all work.
 
-The next deployment work is isolated session workers, durable ownership enforcement, tenant-bound identity and secrets, controlled capability rollout and measured capacity. A second tenant variant is an optional extension only after every core gate passes. The repository's evidence will distinguish real provider runs, deterministic test fixtures and manual operator exercises. No production throughput or reliability percentage will be claimed without measurements.
+The next deployment work is production orchestration of isolated workers, durable ownership enforcement, tenant-bound identity and secrets, controlled capability rollout and measured capacity. A second tenant variant is an optional extension only after every core gate passes. The repository's evidence will distinguish real provider runs, deterministic test fixtures and manual operator exercises. No production throughput or reliability percentage will be claimed without measurements.

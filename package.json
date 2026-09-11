@@ -16,7 +16,7 @@
     "doctor": "yarn build && node dist/src/cli/doctor.js",
     "test:unit": "yarn build && node --test dist/tests/unit/*.test.js",
     "test:browser": "playwright test",
-    "check": "yarn lint && yarn typecheck && yarn test:unit && node scripts/schema.mjs --check && yarn test:browser",
+    "check": "yarn lint && yarn typecheck && yarn test:unit && node scripts/schema.mjs --check && node scripts/boundaries.mjs && yarn test:browser",
     "schema:write": "yarn build && node scripts/schema.mjs",
     "target": "yarn build && node dist/demo/server.js",
     "discover": "yarn build && node --env-file-if-exists=.env.local dist/src/cli/discover.js",

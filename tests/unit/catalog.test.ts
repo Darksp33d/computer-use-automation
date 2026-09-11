@@ -19,6 +19,14 @@ test("catalog pins exact artifact bytes and rejects edits after review", async (
       message: "INVALID_ARTIFACT",
     });
     await assert.rejects(catalog.load("../outside", 1), { message: "INVALID_ARTIFACT" });
+    await writeFile(join(directory, `${capability.id}-${capability.revision}.json`), source);
+    const approvalPath = join(directory, `${capability.id}-${capability.revision}.approval.json`);
+    const approval = JSON.parse(await readFile(approvalPath, "utf8"));
+    approval.bindingDigest = "0".repeat(64);
+    await writeFile(approvalPath, JSON.stringify(approval));
+    await assert.rejects(catalog.load(capability.id, capability.revision), {
+      message: "UNSUPPORTED_BINDING",
+    });
   } finally {
     await rm(directory, { recursive: true, force: true });
   }

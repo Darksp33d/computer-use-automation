@@ -153,36 +153,37 @@ Stage order is dependency-driven. If early research or the P4/P6 experiments inv
 - [x] P5: Deterministic replay. Verified 17 unit and 18 browser tests, including two parameter sets, typed outcomes, bounded notice recovery, delayed navigation, safe output persistence and the account-review boundary. Artifacts in these tests are explicitly handwritten fixtures; genuine discovery is P6.
 - [x] P6: Genuine discovery and compiler. GPT-6 Astra at low effort completed both savings and review workflows; each generated artifact replayed in a fresh session with different synthetic inputs. Verified 17 unit and 22 browser tests. Development run IDs: savings 3b1dffe5-ade5-4e07-b06e-f9df2a1e897b, review a1023f21-7521-4ca9-9478-92a3a8ed8ea7. Final evidence will be regenerated from committed source. Promotion review remains part of the operator layer.
 - [x] P7: Live-session handoff. Verified exclusive claim, stale commands, premature resume, native dialog and session restoration in the original browser. The React console passed desktop, mobile form-state, keyboard, authorization and accessibility checks. A genuine console discovery passed fresh replay and explicit artifact review/approval. This operator exercise was driven through the UI by the development agent, not represented as an independent human recording. The owner separately completed the notice handoff successfully in run `b6e31893-3921-487c-a5cb-2c3da9477e13`. Final stage checks: 18 unit and 30 browser tests.
-- [ ] P8: Complete flows and runtime recovery.
-- [ ] P9: Adversarial and containment verification.
-- [ ] P10: Submission-quality evidence and walkthrough.
+- [x] P8: Both workflows, typed CLI outcomes, bounded recovery and uncertain-effect cases pass. The first stability exercise completed 100/100 fresh sessions at concurrency two, with zero account commits; source and limits are recorded in docs/verification.md.
+- [x] P9: Verified 22 unit and 56 browser tests, provider deadlines and cancellation, browser/journal loss, evidence quotas, prompt injection and unsupported browser channels. The non-root contained replay and independent egress probe pass locally and in Linux CI. Native and container limits are documented; final source-linked exports remain P10.
+- [ ] P10: Submission-quality evidence and walkthrough. Include the owner-requested final UI pass: remove decorative slogans and redundant text, sharpen page titles and empty states, and preserve useful instructions and visual quality.
 
 ## 7. The evaluator experience
 
-The following is the intended command contract, not currently available software. README will contain only verified commands once implementation exists.
+These commands are implemented. The [README](README.md) supplies the complete setup and walkthrough.
 
 ```bash
-corepack enable
-yarn install --immutable
-yarn setup
-yarn doctor
-yarn demo
+corepack yarn install --immutable
+corepack yarn setup
+corepack yarn doctor
+corepack yarn demo
 ```
 
-`yarn demo` will start the local target and operator console, replay the included genuine capability, show typed output, exercise a not-found result, then offer the handoff scenario. It will require no model key, Docker, bank credentials, or cloud services after dependencies and Chromium are installed. It will label this path as replay of a saved discovery artifact. It will print useful local URLs and stop owned processes cleanly on exit.
+`demo` builds and starts Groove, then prints a private loopback launch link. Choose **New session**, a workflow and **Replay**. No model key, Docker, bank credentials or cloud service is needed for replay after installation. Each run owns a fresh synthetic target and browser. Select **Operator notice** to exercise takeover, acknowledgment and verified resume in the same live session.
 
-To perform a fresh discovery, the documented sequence will be:
+For genuine discovery, configure `OPENAI_API_KEY` privately in ignored `.env.local`, then choose **Discover** in the console. A successful discovery is checked by a fresh replay with different inputs. Review its complete JSON contract before approving the immutable revision. The CLI experiment is also available:
 
 ```bash
-yarn target
-# In a second terminal, with OPENAI_API_KEY configured privately:
-yarn cua discover --target legacy-bank --goal "Read the savings balance for the supplied member" --inputs demo/inputs/member-a.json --out .local/capabilities/savings.json
-yarn cua replay --artifact .local/capabilities/savings.json --target legacy-bank --inputs demo/inputs/member-b.json
+corepack yarn discover savings
+corepack yarn discover review
 ```
 
-The input files will contain synthetic values only. For real confidential inputs in future deployments, use authenticated request bodies or private files/stdin, not shell arguments. `discover` will require the registered target's reviewed task contract, resolved from the selected demo workflow or an explicit contract file; it will never obtain success by matching the goal to a hardcoded action sequence. The basic savings demo is the default registered contract. The secondary workflow selects its separate contract explicitly.
+Each experiment starts its own target, performs actual provider-backed discovery, and replays the generated capability with different synthetic inputs. Its progress JSON is intended for an interactive experiment. The separate calling-agent interface accepts bounded JSON on stdin and returns exactly one result on stdout:
 
-Machine output goes to stdout as one typed JSON result. Progress goes to stderr. Default presentation suppresses sensitive output values; an explicit result-output option can return them to an authorized caller without adding them to logs. Synthetic demo values are clearly labeled and can be displayed. Planned exit codes: 0 success, 2 known business outcome, 3 failure, 4 canceled; a run awaiting intervention remains live and exposes its current state.
+```bash
+printf '%s' '{"memberId":"B1002"}' | node dist/src/cli/replay.js
+```
+
+Replay exits with 0 for success, 2 for a business outcome, 3 for failure or rejected input, and 4 for cancellation. Sensitive output values are suppressed by default; `--show-sensitive` explicitly returns them to the caller without adding them to persisted logs. The console displays clearly labeled synthetic values. Shutdown drains admitted work and closes owned sessions.
 
 ## 8. Decisions that must survive scrutiny
 

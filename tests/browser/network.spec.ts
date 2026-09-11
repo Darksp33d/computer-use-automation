@@ -20,9 +20,12 @@ for (const kind of [
   "websocket",
   "data-frame",
   "file-chooser",
+  "download",
+  "service-worker",
 ] as const) {
   test(`browser denies ${kind} escape with zero external receiver requests`, async () => {
     let prohibited = 0;
+    let workerRequests = 0;
     const receiver = await listen(
       createServer((_request, response) => {
         prohibited++;
@@ -41,9 +44,17 @@ for (const kind of [
       websocket: `new WebSocket('${destination.replace("http:", "ws:")}')`,
       "data-frame": `const f=document.createElement('iframe');f.src='data:text/html,UNTRUSTED';document.body.append(f)`,
       "file-chooser": `document.querySelector('input').click()`,
+      download: `const a=document.createElement('a');a.href=window.URL.createObjectURL(new Blob(['PRIVATE-CANARY']));a.download='canary.txt';document.body.append(a);a.click()`,
+      "service-worker": `navigator.serviceWorker.register('/bank.css').catch(()=>{})`,
     };
     const application = await listen(
       createServer((request, response) => {
+        if (request.url === "/bank.css") {
+          workerRequests++;
+          response.setHeader("Content-Type", "application/javascript");
+          response.end("self.addEventListener('fetch',()=>{});");
+          return;
+        }
         if (request.url === "/savings") {
           response.writeHead(302, { Location: destination });
           response.end();
@@ -72,7 +83,9 @@ for (const kind of [
       await surface
         .act({ kind: "click", target: "search-members" }, {}, "automation")
         .catch(() => {});
-      await expect(surface.observe()).rejects.toThrow("POLICY_DENIED");
+      if (kind === "service-worker") {
+        expect(workerRequests).toBe(0);
+      } else await expect(surface.observe()).rejects.toThrow("POLICY_DENIED");
       expect(prohibited).toBe(0);
     } finally {
       await surface.close();
