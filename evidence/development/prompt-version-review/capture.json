@@ -1,0 +1,28 @@
+{
+  "sourceRevision": "11a82256759c065e231369d17bd3001cf1837a45",
+  "sourceDirty": false,
+  "startedAt": "2026-09-11T21:48:50.954Z",
+  "node": "v24.15.0",
+  "browser": "153.0.8010.12",
+  "model": "gpt-6-astra",
+  "command": "node --env-file-if-exists=.env.local scripts/capture-evidence.mjs",
+  "operator": "Development agent: scripted browser controls with explicit artifact review",
+  "data": "Fictional Northstar records only. Console output is synthetic; runtime journals are redacted.",
+  "runs": [
+    {
+      "id": "8166442a-d689-4d50-98da-0dee5d5fe7c9",
+      "workflow": "savings",
+      "mode": "discovery",
+      "scenario": "normal",
+      "syntheticMember": "A1001",
+      "target": "northstar",
+      "publicGoal": "Find the available savings balance and currency for {memberId}.",
+      "status": "success",
+      "code": null
+    }
+  ],
+  "browserErrors": [],
+  "status": "failed",
+  "errorClass": "AbortError",
+  "completedAt": "2026-09-11T21:49:54.426Z"
+}

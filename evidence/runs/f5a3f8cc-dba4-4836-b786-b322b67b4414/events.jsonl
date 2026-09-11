@@ -1,0 +1,16 @@
+{"type":"run-started","seq":1,"runId":"f5a3f8cc-dba4-4836-b786-b322b67b4414","at":"2026-09-11T21:54:40.548Z"}
+{"type":"action-intent","stepId":"step-1","target":"member-field","action":"fill","actor":"automation","epoch":0,"reason":"goal-step","seq":2,"runId":"f5a3f8cc-dba4-4836-b786-b322b67b4414","at":"2026-09-11T21:54:40.656Z"}
+{"type":"action-completed","stepId":"step-1","target":"member-field","action":"fill","actor":"automation","epoch":0,"seq":3,"runId":"f5a3f8cc-dba4-4836-b786-b322b67b4414","at":"2026-09-11T21:54:40.668Z"}
+{"type":"checkpoint","stepId":"step-1","reason":"checkpoint","seq":4,"runId":"f5a3f8cc-dba4-4836-b786-b322b67b4414","at":"2026-09-11T21:54:40.697Z"}
+{"type":"action-intent","stepId":"step-2","target":"search-members","action":"click","actor":"automation","epoch":0,"reason":"goal-step","seq":5,"runId":"f5a3f8cc-dba4-4836-b786-b322b67b4414","at":"2026-09-11T21:54:40.746Z"}
+{"type":"action-completed","stepId":"step-2","target":"search-members","action":"click","actor":"automation","epoch":0,"seq":6,"runId":"f5a3f8cc-dba4-4836-b786-b322b67b4414","at":"2026-09-11T21:54:40.788Z"}
+{"type":"checkpoint","stepId":"step-2","reason":"checkpoint","seq":7,"runId":"f5a3f8cc-dba4-4836-b786-b322b67b4414","at":"2026-09-11T21:54:40.834Z"}
+{"type":"action-intent","stepId":"step-3","target":"open-member","action":"click","actor":"automation","epoch":0,"reason":"goal-step","seq":8,"runId":"f5a3f8cc-dba4-4836-b786-b322b67b4414","at":"2026-09-11T21:54:40.881Z"}
+{"type":"action-completed","stepId":"step-3","target":"open-member","action":"click","actor":"automation","epoch":0,"seq":9,"runId":"f5a3f8cc-dba4-4836-b786-b322b67b4414","at":"2026-09-11T21:54:40.917Z"}
+{"type":"checkpoint","stepId":"step-3","reason":"checkpoint","seq":10,"runId":"f5a3f8cc-dba4-4836-b786-b322b67b4414","at":"2026-09-11T21:54:40.950Z"}
+{"type":"action-intent","stepId":"step-4","target":"view-savings","action":"click","actor":"automation","epoch":0,"reason":"goal-step","seq":11,"runId":"f5a3f8cc-dba4-4836-b786-b322b67b4414","at":"2026-09-11T21:54:41.006Z"}
+{"type":"action-completed","stepId":"step-4","target":"view-savings","action":"click","actor":"automation","epoch":0,"seq":12,"runId":"f5a3f8cc-dba4-4836-b786-b322b67b4414","at":"2026-09-11T21:54:41.034Z"}
+{"type":"checkpoint","stepId":"step-4","reason":"checkpoint","seq":13,"runId":"f5a3f8cc-dba4-4836-b786-b322b67b4414","at":"2026-09-11T21:54:41.068Z"}
+{"type":"action-intent","stepId":"step-5","target":"balance","action":"read","actor":"automation","epoch":0,"reason":"goal-step","seq":14,"runId":"f5a3f8cc-dba4-4836-b786-b322b67b4414","at":"2026-09-11T21:54:41.129Z"}
+{"type":"action-completed","stepId":"step-5","target":"balance","action":"read","actor":"automation","epoch":0,"seq":15,"runId":"f5a3f8cc-dba4-4836-b786-b322b67b4414","at":"2026-09-11T21:54:41.135Z"}
+{"type":"run-finished","code":"OUTPUT_INVALID","status":"failure","reason":"completed","seq":16,"runId":"f5a3f8cc-dba4-4836-b786-b322b67b4414","at":"2026-09-11T21:54:41.164Z"}

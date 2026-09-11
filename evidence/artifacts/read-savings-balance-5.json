@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "prepare-sub-account",
-  "revision": 4,
-  "description": "Prepare a sub-account and stop at the verified review screen",
+  "id": "read-savings-balance",
+  "revision": 5,
+  "description": "Look up a member and return their verified savings balance",
   "application": {
     "family": "legacy-bank",
     "bindingVersion": 1,
@@ -14,28 +14,28 @@
       "minLength": 1,
       "maxLength": 32,
       "sensitivity": "sensitive"
-    },
-    "accountType": {
-      "kind": "enum",
-      "values": [
-        "savings",
-        "checking"
-      ],
-      "sensitivity": "public"
-    },
-    "nickname": {
-      "kind": "string",
-      "minLength": 1,
-      "maxLength": 40,
-      "sensitivity": "sensitive"
     }
   },
   "outputs": {
-    "preparationStatus": {
-      "target": "preparation-status",
+    "availableBalanceMinor": {
+      "target": "balance",
+      "parser": "usd-minor",
+      "allowedValues": [],
+      "sensitivity": "sensitive"
+    },
+    "currency": {
+      "target": "currency",
+      "parser": "currency",
+      "allowedValues": [
+        "USD"
+      ],
+      "sensitivity": "public"
+    },
+    "accountType": {
+      "target": "account-type",
       "parser": "text",
       "allowedValues": [
-        "ready-for-review"
+        "savings"
       ],
       "sensitivity": "public"
     }
@@ -352,7 +352,7 @@
       "id": "step-4",
       "action": {
         "kind": "click",
-        "target": "new-account"
+        "target": "view-savings"
       },
       "preconditions": [
         {
@@ -361,7 +361,7 @@
         },
         {
           "kind": "visible",
-          "target": "new-account"
+          "target": "view-savings"
         },
         {
           "kind": "equalsInput",
@@ -372,125 +372,96 @@
       "postconditions": [
         {
           "kind": "visible",
-          "target": "form-screen"
+          "target": "savings-screen"
         }
       ],
-      "effect": "reversible"
+      "effect": "read"
     },
     {
       "id": "step-5",
       "action": {
-        "kind": "select",
-        "target": "account-type-field",
-        "input": "accountType"
+        "kind": "read",
+        "target": "balance",
+        "output": "availableBalanceMinor"
       },
       "preconditions": [
         {
           "kind": "visible",
-          "target": "form-screen"
+          "target": "savings-screen"
         },
         {
           "kind": "visible",
-          "target": "account-type-field"
+          "target": "balance"
         },
         {
           "kind": "equalsInput",
           "target": "member-number",
           "input": "memberId"
+        },
+        {
+          "kind": "equalsLiteral",
+          "target": "account-type",
+          "value": "savings"
         }
       ],
       "postconditions": [
         {
           "kind": "visible",
-          "target": "form-screen"
-        },
-        {
-          "kind": "equalsInput",
-          "target": "account-type-field",
-          "input": "accountType"
+          "target": "savings-screen"
         }
       ],
-      "effect": "reversible"
+      "effect": "read"
     },
     {
       "id": "step-6",
       "action": {
-        "kind": "fill",
-        "target": "nickname-field",
-        "input": "nickname"
+        "kind": "read",
+        "target": "currency",
+        "output": "currency"
       },
       "preconditions": [
         {
           "kind": "visible",
-          "target": "form-screen"
+          "target": "savings-screen"
         },
         {
           "kind": "visible",
-          "target": "nickname-field"
+          "target": "currency"
         },
         {
           "kind": "equalsInput",
           "target": "member-number",
           "input": "memberId"
+        },
+        {
+          "kind": "equalsLiteral",
+          "target": "account-type",
+          "value": "savings"
         }
       ],
       "postconditions": [
         {
           "kind": "visible",
-          "target": "form-screen"
-        },
-        {
-          "kind": "equalsInput",
-          "target": "nickname-field",
-          "input": "nickname"
+          "target": "savings-screen"
         }
       ],
-      "effect": "reversible"
+      "effect": "read"
     },
     {
       "id": "step-7",
       "action": {
-        "kind": "click",
-        "target": "review-account"
-      },
-      "preconditions": [
-        {
-          "kind": "visible",
-          "target": "form-screen"
-        },
-        {
-          "kind": "visible",
-          "target": "review-account"
-        },
-        {
-          "kind": "equalsInput",
-          "target": "member-number",
-          "input": "memberId"
-        }
-      ],
-      "postconditions": [
-        {
-          "kind": "visible",
-          "target": "review-screen"
-        }
-      ],
-      "effect": "reversible"
-    },
-    {
-      "id": "step-8",
-      "action": {
         "kind": "read",
-        "target": "preparation-status",
-        "output": "preparationStatus"
+        "target": "account-type",
+        "output": "accountType"
       },
       "preconditions": [
         {
           "kind": "visible",
-          "target": "review-screen"
+          "target": "savings-screen"
         },
         {
           "kind": "visible",
-          "target": "preparation-status"
+          "target": "account-type"
         },
         {
           "kind": "equalsInput",
@@ -498,20 +469,15 @@
           "input": "memberId"
         },
         {
-          "kind": "equalsInput",
+          "kind": "equalsLiteral",
           "target": "account-type",
-          "input": "accountType"
-        },
-        {
-          "kind": "equalsInput",
-          "target": "nickname",
-          "input": "nickname"
+          "value": "savings"
         }
       ],
       "postconditions": [
         {
           "kind": "visible",
-          "target": "review-screen"
+          "target": "savings-screen"
         }
       ],
       "effect": "read"
@@ -566,7 +532,7 @@
   "success": [
     {
       "kind": "visible",
-      "target": "review-screen"
+      "target": "savings-screen"
     },
     {
       "kind": "equalsInput",
@@ -574,22 +540,17 @@
       "input": "memberId"
     },
     {
-      "kind": "equalsInput",
+      "kind": "equalsLiteral",
       "target": "account-type",
-      "input": "accountType"
-    },
-    {
-      "kind": "equalsInput",
-      "target": "nickname",
-      "input": "nickname"
+      "value": "savings"
     }
   ],
   "provenance": {
     "kind": "discovery",
-    "runId": "21b33994-3baa-479b-8bec-993ad242c882",
+    "runId": "db4d1a4c-fce1-4ad4-bf73-d90a51fc4ff7",
     "model": "gpt-6-astra",
-    "promptVersion": 1,
+    "promptVersion": 2,
     "browserVersion": "153.0.8010.12",
-    "sourceRevision": "67c40003f3c822d7a916bb64ebd9c73c007aa1db"
+    "sourceRevision": "c7d617cef632b3d4197e6ac4fa968ce0ddbcd646"
   }
 }

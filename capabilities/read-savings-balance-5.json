@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "read-savings-balance",
-  "revision": 4,
+  "revision": 5,
   "description": "Look up a member and return their verified savings balance",
   "application": {
     "family": "legacy-bank",
@@ -547,10 +547,10 @@
   ],
   "provenance": {
     "kind": "discovery",
-    "runId": "58a9c731-56a9-4937-b2ce-64745e30961a",
+    "runId": "db4d1a4c-fce1-4ad4-bf73-d90a51fc4ff7",
     "model": "gpt-6-astra",
-    "promptVersion": 1,
+    "promptVersion": 2,
     "browserVersion": "153.0.8010.12",
-    "sourceRevision": "67c40003f3c822d7a916bb64ebd9c73c007aa1db"
+    "sourceRevision": "c7d617cef632b3d4197e6ac4fa968ce0ddbcd646"
   }
 }

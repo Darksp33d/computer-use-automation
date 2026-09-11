@@ -1,7 +1,7 @@
 {
   "checkedOn": "2026-09-11",
   "freshCheckout": {
-    "sourceRevision": "bba5b6e46df47bc86790b73919307da41eaf22ba",
+    "sourceRevision": "c7d617cef632b3d4197e6ac4fa968ce0ddbcd646",
     "origin": "https://github.com/Darksp33d/computer-use-automation.git",
     "platform": "macOS arm64",
     "providerKeyConfigured": false,
@@ -12,13 +12,13 @@
       "corepack yarn check"
     ],
     "exitCode": 0,
-    "unitPassed": 22,
-    "browserPassed": 58,
+    "unitPassed": 23,
+    "browserPassed": 62,
     "retries": 0
   },
   "linuxCI": {
-    "sourceRevision": "67c40003f3c822d7a916bb64ebd9c73c007aa1db",
-    "url": "https://github.com/Darksp33d/computer-use-automation/actions/runs/34635276700",
+    "sourceRevision": "c7d617cef632b3d4197e6ac4fa968ce0ddbcd646",
+    "url": "https://github.com/Darksp33d/computer-use-automation/actions/runs/34651378928",
     "conclusion": "success",
     "jobs": [
       "verify",
@@ -32,7 +32,7 @@
     "limit": "Registry audit snapshot on the check date, not proof that dependencies have no vulnerabilities."
   },
   "visualReview": {
-    "screenshotsInspected": 13,
+    "screenshotsInspected": 17,
     "desktopViewport": [
       1440,
       960
@@ -42,20 +42,33 @@
       844
     ],
     "operator": "development agent",
-    "videoDurationSeconds": 187.8,
-    "videoDecoding": "Verified with bundled Playwright ffmpeg"
+    "videoDurationSeconds": 197,
+    "videoDecoding": "Decoded entire recording with bundled Playwright ffmpeg; inspected exported screenshots and sampled video frames."
   },
   "deliveredCheckout": {
-    "sourceRevision": "b017cb0",
-    "evidenceVerification": "passed",
-    "revision4Replay": {
-      "runId": "7d451eac-1b22-4a71-abaf-cbd6616049a9",
-      "status": "success",
-      "providerKeyConfigured": false
-    },
+    "runtimeSourceRevision": "c7d617cef632b3d4197e6ac4fa968ce0ddbcd646",
     "keylessDemoReady": true,
     "shutdownSignal": "SIGINT",
     "shutdownExitCode": 0,
-    "portClosed": true
+    "portClosed": true,
+    "revision5Replay": {
+      "status": "success",
+      "runId": "4c9563f6-6bc4-4715-b234-cccee8659825",
+      "outputs": {
+        "availableBalanceMinor": "[redacted]",
+        "currency": "USD",
+        "accountType": "savings"
+      },
+      "redactedFields": [
+        "availableBalanceMinor"
+      ]
+    },
+    "replayLocation": "Development checkout after exact reviewed artifacts were exported; clean-checkout full suite recorded above."
+  },
+  "liveCLI": {
+    "sourceRevision": "c7d617cef632b3d4197e6ac4fa968ce0ddbcd646",
+    "invocation": "cli-goal/invocation.json",
+    "status": "success",
+    "differentInputReplay": "success"
   }
 }

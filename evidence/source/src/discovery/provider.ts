@@ -4,10 +4,12 @@ import type { Observation } from "../contracts/runtime.js";
 import type { EventPayload } from "../evidence/journal.js";
 
 export const Decision = z.strictObject({
-  kind: z.enum(["act", "finish"]),
+  kind: z.enum(["act", "finish", "unsupported"]),
   action: Action.nullable(),
 });
 export interface DiscoveryView {
+  goal: string;
+  target: "northstar";
   task: Pick<Capability, "description" | "inputs" | "outputs" | "success">;
   observation: Observation;
   controls: { id: string; label: string; action: Action["kind"]; input: string | null }[];

@@ -34,6 +34,8 @@ export class Execution {
   current: Observation | null = null;
   stepId: string | null = null;
   completedSteps = 0;
+  expectedConditions: Condition[] = [];
+  expectedOutput: string | null = null;
   intervention: Intervention | null = null;
   onIntervention: ((request: Intervention) => Promise<void>) | null = null;
   #recoveries = new Set<number>();
@@ -132,6 +134,7 @@ export class Execution {
   }
 
   async wait(conditions: Condition[]) {
+    this.expectedConditions = conditions;
     const started = performance.now();
     let paused = 0;
     while (performance.now() - started - paused < this.conditionTimeoutMs) {
@@ -162,6 +165,7 @@ export class Execution {
 
   async step(step: Step) {
     this.stepId = step.id;
+    this.expectedOutput = step.action.kind === "read" ? step.action.output : null;
     this.executor.effect = "not_dispatched";
     await this.wait(step.preconditions);
     let raw: string | null = null;
@@ -213,8 +217,30 @@ export class Execution {
         stepId: this.stepId,
         effect: this.executor.effect,
       };
+    const output = this.expectedOutput ? this.capability.outputs[this.expectedOutput] : null;
     return {
       status: "failure",
+      diagnostic: {
+        stage: "execution",
+        expected: {
+          conditions: this.expectedConditions,
+          output: output
+            ? {
+                name: this.expectedOutput!,
+                target: output.target,
+                parser: output.parser,
+                allowedValues: output.allowedValues,
+              }
+            : null,
+        },
+        observed: this.current
+          ? {
+              screen: this.current.screen,
+              state: this.current.state.kind,
+              conditions: this.current.conditions,
+            }
+          : null,
+      },
       runId: this.runId,
       code,
       stepId: this.stepId,

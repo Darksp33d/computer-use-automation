@@ -111,7 +111,7 @@ export const Capability = z.strictObject({
     kind: z.enum(["discovery", "test-fixture"]),
     runId: z.string().uuid(),
     model: z.string().min(1).max(80),
-    promptVersion: z.literal(1),
+    promptVersion: z.union([z.literal(1), z.literal(2)]),
     browserVersion: z.string().min(1).max(80),
     sourceRevision: z.string().regex(/^[a-f0-9]{40}$/),
   }),

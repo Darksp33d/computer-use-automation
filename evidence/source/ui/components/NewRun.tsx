@@ -17,6 +17,8 @@ export function NewRun({
   const dialog = useRef<HTMLDialogElement>(null);
   const [workflow, setWorkflow] = useState<"savings" | "review">("savings");
   const [mode, setMode] = useState<"replay" | "discovery">("replay");
+  const [goal, setGoal] = useState("Read the available savings balance for {memberId}.");
+  const [target, setTarget] = useState<"northstar">("northstar");
   const [memberId, setMemberId] = useState("A1001");
   const [scenario, setScenario] = useState<StartRequest["scenario"]>("normal");
   const [nickname, setNickname] = useState("Travel fund");
@@ -42,7 +44,7 @@ export function NewRun({
           if (
             await start({
               workflow,
-              mode,
+              ...(mode === "discovery" ? { mode, goal, target } : { mode }),
               scenario,
               inputs: workflow === "savings" ? { memberId } : { memberId, nickname, accountType },
             })
@@ -54,7 +56,15 @@ export function NewRun({
           Workflow
           <select
             value={workflow}
-            onChange={(event) => setWorkflow(event.target.value as "savings" | "review")}
+            onChange={(event) => {
+              const next = event.target.value as "savings" | "review";
+              setWorkflow(next);
+              setGoal(
+                next === "savings"
+                  ? "Read the available savings balance for {memberId}."
+                  : "Prepare a sub-account for {memberId} using {accountType} and {nickname}, then stop at review.",
+              );
+            }}
           >
             <option value="savings">Read savings balance</option>
             <option value="review">Prepare sub-account</option>
@@ -87,6 +97,32 @@ export function NewRun({
             </span>
           </label>
         </fieldset>
+        {mode === "discovery" ? (
+          <>
+            <label>
+              Target application
+              <select value={target} onChange={() => setTarget("northstar")}>
+                <option value="northstar">Northstar · Member search</option>
+              </select>
+            </label>
+            <label>
+              Goal
+              <textarea
+                required
+                minLength={10}
+                maxLength={500}
+                rows={3}
+                value={goal}
+                onChange={(event) => setGoal(event.target.value)}
+                aria-describedby="goal-guidance"
+              />
+            </label>
+            <p id="goal-guidance" className="form-note">
+              Describe the task using input names in braces. Keep personal details and secrets out
+              of the goal.
+            </p>
+          </>
+        ) : null}
         <div className="form-grid">
           <label>
             Member number

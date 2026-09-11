@@ -2,7 +2,7 @@
 
 Discover a workflow by operating a real UI. Save the successful path as a typed capability. Replay it without a model. When automation encounters a blocker, an operator can take control of the same live session and return it after checkpoint verification.
 
-**Audit status:** Caller-supplied goal and target inputs now reach discovery through the console and CLI. Unsupported goals stop explicitly. The final live-provider capture is being refreshed; [the audit](docs/assignment-audit.md) distinguishes completed checks from that remaining gate.
+**Assignment audit complete:** All seven core requirements have implementation or design evidence within the stated scope. The final review corrected goal/target input, failure diagnostics and prompt provenance. See [the audit](docs/assignment-audit.md) and [presentation guide](docs/presentation.md).
 
 **Implemented and verified:** genuine discovery for two workflows, provider-free replay, reviewed capabilities, same-session handoff, exceptional outcomes, a React operator console and optional container isolation. [Evidence and walkthrough](evidence/README.md).
 
@@ -68,9 +68,9 @@ corepack yarn check
 
 The aggregate check builds the server and production React assets, checks strict TypeScript and formatting, runs unit tests, verifies schema generation, and exercises real Chromium workflows. Browser coverage includes deterministic replay, typed outcomes, genuine compiler semantics using labeled test providers, same-session operator handoff, authorization, mobile form persistence, keyboard access, and an axe accessibility audit. Tests have no retry-to-green setting.
 
-The aggregate suite passes 22 unit and 58 browser tests. A separate 100-session stability exercise passed 100/100 without retries at concurrency two. These are local measurements, not a production availability claim.
+The aggregate suite passes 23 unit and 62 browser tests. A separate 100-session stability exercise passed 100/100 without retries at concurrency two. These are local measurements, not a production availability claim.
 
-Revision 4 of each included capability comes from the final live-model capture and passed a fresh replay before explicit review approval. The console uses the latest approved revision; pass `--revision 4` to the calling-agent CLI to select it. Earlier revisions remain immutable. `corepack yarn verify:evidence` checks the exported file hashes, run relationships and matching runtime source.
+Revision 5 of each included capability comes from the final live-model capture and passed a fresh replay before explicit review approval. The console uses the latest approved revision; pass `--revision 5` to the calling-agent CLI to select it. Earlier revisions remain immutable. `corepack yarn verify:evidence --current` checks exported file hashes, run relationships and exact current runtime identity.
 
 The final capture harness is `node --env-file-if-exists=.env.local scripts/capture-evidence.mjs` after a build and a clean commit. It performs real discovery through the console, pauses for complete artifact review, records provider-free replay and exceptional outcomes, and saves an agent-operated video and sanitized run files under `.local/submission/`. It never labels its scripted handoff as an independent human exercise. Review the export before tracking it.
 

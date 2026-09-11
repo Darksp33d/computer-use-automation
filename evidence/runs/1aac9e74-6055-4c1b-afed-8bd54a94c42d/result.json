@@ -1,0 +1,48 @@
+{
+  "status": "failure",
+  "diagnostic": {
+    "stage": "execution",
+    "expected": {
+      "conditions": [
+        {
+          "kind": "visible",
+          "target": "search-screen"
+        }
+      ],
+      "output": null
+    },
+    "observed": {
+      "screen": "search-screen",
+      "state": "ready",
+      "conditions": [
+        {
+          "condition": {
+            "kind": "visible",
+            "target": "savings-screen"
+          },
+          "satisfied": false
+        },
+        {
+          "condition": {
+            "kind": "equalsInput",
+            "target": "member-number",
+            "input": "memberId"
+          },
+          "satisfied": false
+        },
+        {
+          "condition": {
+            "kind": "equalsLiteral",
+            "target": "account-type",
+            "value": "savings"
+          },
+          "satisfied": false
+        }
+      ]
+    }
+  },
+  "runId": "1aac9e74-6055-4c1b-afed-8bd54a94c42d",
+  "code": "GOAL_UNSUPPORTED",
+  "stepId": null,
+  "effect": "not_dispatched"
+}

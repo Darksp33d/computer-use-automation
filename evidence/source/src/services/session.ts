@@ -12,6 +12,7 @@ import {
   visible,
 } from "../applications/legacy-bank.js";
 import type { Capability } from "../contracts/capability.js";
+import { type DiscoveryIntent, prepareGoal } from "../contracts/discovery.js";
 import { failureCode } from "../contracts/errors.js";
 import type { Result } from "../contracts/runtime.js";
 import { parseCapability, validateArguments } from "../contracts/validate.js";
@@ -54,7 +55,7 @@ export function createDiscoverySession(
   workflow: "savings" | "review",
   argumentsValue: unknown,
   sourceRevision: string,
-  options: SessionOptions,
+  options: SessionOptions & { intent?: DiscoveryIntent },
 ) {
   const draft: Capability = {
     schemaVersion: 1,
@@ -70,18 +71,25 @@ export function createDiscoverySession(
       kind: "discovery",
       runId: randomUUID(),
       model: "pending",
-      promptVersion: 1,
+      promptVersion: 2,
       browserVersion: "pending",
       sourceRevision,
     },
   };
-  return initializeSession(draft, argumentsValue, options);
+  const inputs = validateArguments(draft, argumentsValue);
+  const goal = prepareGoal(
+    options.intent ?? { goal: draft.description, target: "northstar" },
+    draft,
+    inputs,
+  );
+  return initializeSession(draft, inputs, options, goal);
 }
 
 async function initializeSession(
   capability: Capability,
   argumentsValue: unknown,
   options: SessionOptions,
+  discoveryGoal: string | null = null,
 ) {
   const inputs = validateArguments(capability, argumentsValue);
   const policy = new Policy(options.origin, {
@@ -105,6 +113,11 @@ async function initializeSession(
   } catch (error) {
     const result: Result = {
       status: "failure",
+      diagnostic: {
+        stage: "startup",
+        expected: { conditions: capability.entry.conditions, output: null },
+        observed: null,
+      },
       runId,
       code: failureCode(error),
       stepId: null,
@@ -136,6 +149,7 @@ async function initializeSession(
   return {
     runId,
     directory,
+    discoveryGoal,
     execution,
     surface,
     abort,

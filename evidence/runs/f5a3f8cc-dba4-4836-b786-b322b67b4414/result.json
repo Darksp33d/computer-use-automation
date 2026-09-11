@@ -1,0 +1,37 @@
+{
+  "status": "failure",
+  "diagnostic": {
+    "stage": "execution",
+    "expected": {
+      "conditions": [
+        {
+          "kind": "visible",
+          "target": "savings-screen"
+        }
+      ],
+      "output": {
+        "name": "availableBalanceMinor",
+        "target": "balance",
+        "parser": "usd-minor",
+        "allowedValues": []
+      }
+    },
+    "observed": {
+      "screen": "savings-screen",
+      "state": "ready",
+      "conditions": [
+        {
+          "condition": {
+            "kind": "visible",
+            "target": "savings-screen"
+          },
+          "satisfied": true
+        }
+      ]
+    }
+  },
+  "runId": "f5a3f8cc-dba4-4836-b786-b322b67b4414",
+  "code": "OUTPUT_INVALID",
+  "stepId": "step-5",
+  "effect": "confirmed"
+}

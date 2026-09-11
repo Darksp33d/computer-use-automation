@@ -50,9 +50,9 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 ### Assignment input and diagnostics correction
 
 - Added explicit public goal and registered target inputs to console discovery and the bounded JSON CLI. Goals reach the provider; private parameters remain separate. Unsupported requests stop with `GOAL_UNSUPPORTED` and cannot become approved capabilities.
-- Added safe expected/observed failure diagnostics to caller results and the console. Added provider-payload, mobile-form, rejected-input and failure-result coverage. Historical evidence now includes its exact source snapshot; `verify:evidence --current` additionally requires current runtime identity before release. Fresh live capture remains pending. Artifact review caught the expanded prompt still labeled as version 1; new discoveries use version 2 and replay retains compatibility with both versions. The first corrected-goal capture was stopped before approval and preserved.
+- Added safe expected/observed failure diagnostics to caller results and the console. Added provider-payload, mobile-form, rejected-input and failure-result coverage. Historical evidence now includes its exact source snapshot; `verify:evidence --current` additionally requires current runtime identity before release. Fresh live capture subsequently passed at `c7d617c`. Artifact review caught the expanded prompt still labeled as version 1; new discoveries use version 2 and replay retains compatibility with both versions. The first corrected-goal capture was stopped before approval and preserved.
 
-### In progress
+### Earlier release evidence
 
 - P10: Added an explicit capture harness for genuine console discovery, artifact review, keyless replay and exceptional outcomes. Captures stay private until reviewed. Simplified page titles, empty states, dialogs, activity and inspector copy following the owner’s review. Removed slogans and duplicate explanations, preserved contextual handoff instructions, and made the closed-session placeholder compact. Desktop/mobile visual inspection and the full automated suite pass. The final capture at `67c4000` passed both genuine discoveries, different-input validation, approval, keyless replay, business/failure cases and scripted same-session handoff. Reviewed revision 4 artifacts, thirteen inspected screenshots, the continuous recording and sanitized run histories are exported under `evidence/`.
 
@@ -63,3 +63,9 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 - Corrected a test-only 300 ms browser startup override exposed by Linux release CI. Decision-rejection tests use the normal five-second surface bound; production deadlines and policy are unchanged. The failed CI run `34635982748` is preserved.
 
 - Reopened assignment-complete sign-off after a fresh PDF/source audit identified that Section 3.1 requires goal and target inputs, while the delivered CLI/console only select predefined task contracts. Recorded requirement-by-requirement findings and the diagnostic/result caveat in `docs/assignment-audit.md`. Existing passing workflow evidence remains valid within its stated scope.
+
+### Final post-audit verification
+
+- Closed the assignment audit with explicit goal/target discovery, safe expected/observed failures and prompt version 2 provenance. Two genuine console discoveries produced reviewed revision 5 capabilities. Their fresh validations, provider-free replays, unsupported-goal rejection, business/failure cases and live-session handoff all pass. A separate genuine JSON-stdin CLI goal also discovers and replays with another member.
+- Verified 23 unit and 62 browser tests in the working repository, a clean GitHub checkout and Linux CI `34651378928`. The post-audit stability sample passes 100/100 at concurrency two with zero account commits; container egress and replay checks pass. Keyless startup and SIGINT cleanup pass.
+- Refreshed the evidence source snapshot, journals, 17 inspected screenshots and continuous recording. Reconciled README, REPORT, plan, decisions and the requirement audit; added a five-minute presentation walkthrough with concrete answers to architecture and scope questions. Publication remains the owner's decision.

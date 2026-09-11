@@ -17,6 +17,7 @@ body {
 }
 button,
 input,
+textarea,
 select {
   font: inherit;
 }
@@ -30,7 +31,8 @@ button:disabled {
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
-select:focus-visible {
+select:focus-visible,
+textarea:focus-visible {
   outline: 3px solid #ce784d;
   outline-offset: 3px;
 }
@@ -853,6 +855,7 @@ time {
   margin-top: 18px;
 }
 input,
+textarea,
 select {
   width: 100%;
   border: 1px solid #cdd5c4;
@@ -1303,4 +1306,9 @@ input[type="radio"] {
   background: #f5f7f0;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 88px;
 }

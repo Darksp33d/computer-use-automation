@@ -1,0 +1,17 @@
+{
+  "sourceRevision": "c7d617cef632b3d4197e6ac4fa968ce0ddbcd646",
+  "command": "node --env-file-if-exists=.env.local dist/src/cli/discover.js --request",
+  "request": {
+    "workflow": "savings",
+    "target": "northstar",
+    "goal": "Please read the savings balance for {memberId}.",
+    "inputs": {
+      "memberId": "B1002"
+    }
+  },
+  "validationMember": "A1001",
+  "discoveryRunId": "cb5572e5-7e81-4566-9147-c58eb5bfbb12",
+  "replayRunId": "3f853bae-420b-479e-8b32-5e900ceeebca",
+  "exitCode": 0,
+  "approval": "CLI draft only; not promoted to the catalog."
+}

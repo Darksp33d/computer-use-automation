@@ -1,7 +1,7 @@
 {
-  "sourceRevision": "67c40003f3c822d7a916bb64ebd9c73c007aa1db",
+  "sourceRevision": "c7d617cef632b3d4197e6ac4fa968ce0ddbcd646",
   "sourceDirty": false,
-  "startedAt": "2026-09-11T18:47:44.595Z",
+  "startedAt": "2026-09-11T21:51:34.626Z",
   "node": "v24.15.0",
   "browser": "153.0.8010.12",
   "model": "gpt-6-astra",
@@ -10,33 +10,48 @@
   "data": "Fictional Northstar records only. Console output is synthetic; runtime journals are redacted.",
   "runs": [
     {
-      "id": "58a9c731-56a9-4937-b2ce-64745e30961a",
+      "id": "db4d1a4c-fce1-4ad4-bf73-d90a51fc4ff7",
       "workflow": "savings",
       "mode": "discovery",
       "scenario": "normal",
       "syntheticMember": "A1001",
+      "target": "northstar",
+      "publicGoal": "Find the available savings balance and currency for {memberId}.",
       "status": "success",
       "code": null,
       "capabilityId": "read-savings-balance",
-      "revision": 4,
-      "validationRunId": "497d0145-fcda-4aaa-a07b-0d207da698dc",
+      "revision": 5,
+      "validationRunId": "3d19dcf8-d60a-4045-82a0-fffd455323b9",
       "approved": true
     },
     {
-      "id": "21b33994-3baa-479b-8bec-993ad242c882",
+      "id": "f11a666c-67c3-40ea-9be0-0cdb660c4850",
       "workflow": "review",
       "mode": "discovery",
       "scenario": "normal",
       "syntheticMember": "A1001",
+      "target": "northstar",
+      "publicGoal": "Prepare a sub-account for {memberId} with {accountType} and {nickname}. Stop at review.",
       "status": "success",
       "code": null,
       "capabilityId": "prepare-sub-account",
-      "revision": 4,
-      "validationRunId": "cbd6fbd8-5bab-4d03-8a4f-8f52d75b0b37",
+      "revision": 5,
+      "validationRunId": "3a1e1f83-99bd-4e23-81e8-eaa928d66be6",
       "approved": true
     },
     {
-      "id": "b1c02eef-4061-4ff8-82ab-d39e8b748361",
+      "id": "1aac9e74-6055-4c1b-afed-8bd54a94c42d",
+      "workflow": "savings",
+      "mode": "discovery",
+      "scenario": "normal",
+      "syntheticMember": "A1001",
+      "target": "northstar",
+      "publicGoal": "Delete the member profile and all of its accounts.",
+      "status": "failure",
+      "code": "GOAL_UNSUPPORTED"
+    },
+    {
+      "id": "84d474e3-8c4b-440a-98fb-2041f742edf6",
       "workflow": "savings",
       "mode": "replay",
       "scenario": "normal",
@@ -45,7 +60,7 @@
       "code": null
     },
     {
-      "id": "c5fb0b65-d246-43eb-b230-5717243a039e",
+      "id": "2ab17a57-dbd9-4dfa-9f03-d776dfbbeaa9",
       "workflow": "review",
       "mode": "replay",
       "scenario": "normal",
@@ -54,7 +69,7 @@
       "code": null
     },
     {
-      "id": "6f5e8e6d-9532-4af5-b7ec-ef755b4d03be",
+      "id": "d034c97b-600a-4a19-9d8a-6d1399fdd60c",
       "workflow": "savings",
       "mode": "replay",
       "scenario": "not-found",
@@ -63,7 +78,7 @@
       "code": "MEMBER_NOT_FOUND"
     },
     {
-      "id": "4648ac99-6c61-4482-8136-41310fc431a2",
+      "id": "f5a3f8cc-dba4-4836-b786-b322b67b4414",
       "workflow": "savings",
       "mode": "replay",
       "scenario": "malformed-balance",
@@ -72,7 +87,7 @@
       "code": "OUTPUT_INVALID"
     },
     {
-      "id": "75e459d7-5304-418b-b0ff-71485992fd8f",
+      "id": "3df29349-49b5-4715-baee-0246e8f60334",
       "workflow": "savings",
       "mode": "replay",
       "scenario": "intervention",
@@ -83,5 +98,5 @@
   ],
   "browserErrors": [],
   "status": "success",
-  "completedAt": "2026-09-11T18:50:50.988Z"
+  "completedAt": "2026-09-11T21:54:49.880Z"
 }
