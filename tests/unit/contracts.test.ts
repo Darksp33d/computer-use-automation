@@ -5,7 +5,10 @@ import { fixtureCapability } from "../fixtures/capability.js";
 
 test("capability round trip preserves its public contract", () => {
   const capability = fixtureCapability();
-  assert.deepEqual(parseCapability(JSON.stringify(capability)), capability);
+  for (const promptVersion of [1, 2] as const) {
+    capability.provenance.promptVersion = promptVersion;
+    assert.deepEqual(parseCapability(JSON.stringify(capability)), capability);
+  }
 });
 
 test("unknown schema versions, fields and executable actions are rejected", () => {

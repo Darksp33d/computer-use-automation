@@ -71,7 +71,7 @@ export function createDiscoverySession(
       kind: "discovery",
       runId: randomUUID(),
       model: "pending",
-      promptVersion: 1,
+      promptVersion: 2,
       browserVersion: "pending",
       sourceRevision,
     },

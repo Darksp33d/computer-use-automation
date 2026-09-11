@@ -50,7 +50,7 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 ### Assignment input and diagnostics correction
 
 - Added explicit public goal and registered target inputs to console discovery and the bounded JSON CLI. Goals reach the provider; private parameters remain separate. Unsupported requests stop with `GOAL_UNSUPPORTED` and cannot become approved capabilities.
-- Added safe expected/observed failure diagnostics to caller results and the console. Added provider-payload, mobile-form, rejected-input and failure-result coverage. Historical evidence now includes its exact source snapshot; `verify:evidence --current` additionally requires current runtime identity before release. Fresh live capture remains pending.
+- Added safe expected/observed failure diagnostics to caller results and the console. Added provider-payload, mobile-form, rejected-input and failure-result coverage. Historical evidence now includes its exact source snapshot; `verify:evidence --current` additionally requires current runtime identity before release. Fresh live capture remains pending. Artifact review caught the expanded prompt still labeled as version 1; new discoveries use version 2 and replay retains compatibility with both versions. The first corrected-goal capture was stopped before approval and preserved.
 
 ### In progress
 
