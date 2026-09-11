@@ -1,6 +1,6 @@
 # Design contract
 
-Status: living design contract. P1-P5 are implemented and verified. Discovery is in progress; registry promotion, the React console and containment remain planned. PLAN.md records the latest passed gates. The schema descriptions below match the implemented v1; future behavior is identified by its stage.
+Status: living design contract. P1-P6 are implemented and verified, including both live discovery workflows; registry promotion, the React console and containment remain planned. PLAN.md records the latest passed gates. The schema descriptions below match the implemented v1; future behavior is identified by its stage.
 
 ## 1. Trust boundaries and module responsibilities
 
@@ -80,7 +80,9 @@ Screenshots help discovery understand a poorly labeled screen. We are not claimi
 7. Compile only a successful executed path. Resolve observation references into stable target descriptors and parameter bindings. Keep the raw journal separate. A recovery detour must be represented by an explicit tested handler or rejected as unsuitable for publication; do not silently delete history to create a cleaner-looking flow.
 8. Validate structure and semantics, scan for sensitive values, and write a draft atomically. Replay it in a fresh session with different synthetic inputs. Compare actual output to an independent test oracle. Promote only after review and passing replay validation.
 
-Initial limits, to be confirmed in the first genuine run: 30 model decisions, 180 seconds of active discovery, 30 seconds per model call, 10 seconds per UI condition, at most two classified transient request retries, and intervention after three repeated safe structural states with no progress. Add input/output token limits and a conservative per-run cost admission check using the selected model's documented rates. Provider usage is recorded as metadata; cost is an estimate, including timed-out requests that may still be billed. The total deadline always dominates per-operation limits.
+Implemented P6 limits are 30 model decisions, 180 seconds active discovery, 30 seconds per provider request, 2,000 output tokens per request, 24 KB of structured observation and a 1 MB masked low-detail image. Aggregate reported tokens are limited to 120,000. Repeating the same action on the same screen stops as `NO_PROGRESS`. SDK retries are disabled: a provider failure ends this discovery attempt without replaying a UI action.
+
+The OpenAI adapter admits a request only if a conservative $0.50 reservation fits within its $2 estimated run budget. A completed response reconciles this against reported tokens at the researched standard rates ($10 input and $50 output per million, 2026-09-11). A failed or timed-out call retains the reservation. This is application admission accounting, not a provider billing guarantee; account-level spending controls remain separate. Standard service tier is explicit. [Published pricing](https://openai.com/index/gpt-6-astra/).
 
 SDK retry behavior must be configured explicitly to avoid multiplying retry layers. Cancellation stops new commands and aborts model requests; it cannot undo a UI effect already sent. The first genuine run verifies these budgets instead of assuming the initial values will work.
 

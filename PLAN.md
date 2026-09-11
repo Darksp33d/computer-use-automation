@@ -151,7 +151,7 @@ Stage order is dependency-driven. If early research or the P4/P6 experiments inv
 - [x] P3: Simulator and scenarios. Three real Chromium flow tests and a visual inspection pass. Fault fixtures are available for the runtime suite; no account commit occurs in the tested flows.
 - [x] P4: Policy and surface driver. Seventeen unit tests and six browser tests pass. The driver resolves legacy controls without generated IDs, rejects ambiguous targets and frame drift, and journals only allowlisted event fields. Broader adversarial containment checks remain in P9.
 - [x] P5: Deterministic replay. Verified 17 unit and 18 browser tests, including two parameter sets, typed outcomes, bounded notice recovery, delayed navigation, safe output persistence and the account-review boundary. Artifacts in these tests are explicitly handwritten fixtures; genuine discovery is P6.
-- [ ] P6: Genuine discovery and compiler.
+- [x] P6: Genuine discovery and compiler. GPT-6 Astra at low effort completed both savings and review workflows; each generated artifact replayed in a fresh session with different synthetic inputs. Verified 17 unit and 22 browser tests. Development run IDs: savings 3b1dffe5-ade5-4e07-b06e-f9df2a1e897b, review a1023f21-7521-4ca9-9478-92a3a8ed8ea7. Final evidence will be regenerated from committed source. Promotion review remains part of the operator layer.
 - [ ] P7: Live-session handoff.
 - [ ] P8: Complete flows and runtime recovery.
 - [ ] P9: Adversarial and containment verification.

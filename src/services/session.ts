@@ -1,6 +1,15 @@
 import { randomUUID } from "node:crypto";
 import { join } from "node:path";
-import { bankActions, bankMarkers, bankRoutes, bankTargets } from "../applications/legacy-bank.js";
+import {
+  bankActions,
+  bankMarkers,
+  bankOutcomes,
+  bankRecovery,
+  bankRoutes,
+  bankTargets,
+  taskContracts,
+  visible,
+} from "../applications/legacy-bank.js";
 import type { Capability } from "../contracts/capability.js";
 import { failureCode } from "../contracts/errors.js";
 import type { Result } from "../contracts/runtime.js";
@@ -28,18 +37,51 @@ export function safeResult(result: Result, capability: Capability): unknown {
   };
 }
 
-export async function createSession(
-  source: string,
+export interface SessionOptions {
+  origin: string;
+  directory: string;
+  conditionTimeoutMs?: number;
+  activeTimeoutMs?: number;
+  browserEndpoint?: string;
+}
+
+export function createSession(source: string, argumentsValue: unknown, options: SessionOptions) {
+  return initializeSession(parseCapability(source), argumentsValue, options);
+}
+
+export function createDiscoverySession(
+  workflow: "savings" | "review",
   argumentsValue: unknown,
-  options: {
-    origin: string;
-    directory: string;
-    conditionTimeoutMs?: number;
-    activeTimeoutMs?: number;
-    browserEndpoint?: string;
-  },
+  sourceRevision: string,
+  options: SessionOptions,
 ) {
-  const capability = parseCapability(source);
+  const draft: Capability = {
+    schemaVersion: 1,
+    ...taskContracts[workflow],
+    revision: 1,
+    application: { family: "legacy-bank", bindingVersion: 1, driver: "browser-v1" },
+    targets: bankTargets,
+    entry: { route: "search", conditions: [visible("search-screen")] },
+    steps: [],
+    outcomes: bankOutcomes,
+    recovery: bankRecovery,
+    provenance: {
+      kind: "discovery",
+      runId: randomUUID(),
+      model: "pending",
+      promptVersion: 1,
+      browserVersion: "pending",
+      sourceRevision,
+    },
+  };
+  return initializeSession(draft, argumentsValue, options);
+}
+
+async function initializeSession(
+  capability: Capability,
+  argumentsValue: unknown,
+  options: SessionOptions,
+) {
   const inputs = validateArguments(capability, argumentsValue);
   const policy = new Policy(options.origin, {
     targets: bankTargets,
@@ -109,10 +151,13 @@ export async function createSession(
           observation: execution.current,
         });
     },
-    async replay() {
+    replay() {
+      return this.run(replay);
+    },
+    async run(operation: (execution: Execution) => Promise<Result>) {
       if (started) throw new Error("SESSION_ALREADY_STARTED");
       started = true;
-      result = await replay(execution);
+      result = await operation(execution);
       try {
         await this.persist(result);
       } catch (error) {

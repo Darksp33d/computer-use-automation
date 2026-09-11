@@ -2,7 +2,7 @@
 
 Learn a workflow by operating a real UI. Save it as a typed capability. Replay it without an LLM. Transfer the same live session to an operator when automation cannot proceed safely.
 
-**Current status: implementation in progress. P1-P5 are verified: typed contracts, legacy simulator, policy-checked browser sessions and model-free replay. P6 discovery is in development; the React operator console and final evidence are still pending.**
+**Current status: implementation in progress. P1-P6 are verified: typed contracts, legacy simulator, policy-checked browser sessions model-free replay, and genuine discovery for both workflows; the React operator console and final evidence are still pending.**
 
 This repository is being built for the interface.ai computer-use assignment. Development is private. It uses a fictional local banking application and synthetic data; no access to a real banking system is needed.
 
@@ -33,7 +33,7 @@ corepack yarn doctor
 corepack yarn check
 ```
 
-Run `corepack yarn target` to inspect the legacy banking UI at http://127.0.0.1:4174. Browser tests currently exercise parameterized replay and exceptional outcomes. The experimental `corepack yarn discover savings` command uses a privately configured key, attempts genuine discovery and, on success, replays the artifact with another synthetic member. Discovery has not passed its stage gate yet. No current file should be mistaken for a successful discovery recording. See [the visual direction](docs/visual-direction.md) for the Dribbble references reviewed before interface implementation.
+Run `corepack yarn target` to inspect the legacy banking UI at http://127.0.0.1:4174. Browser tests currently exercise parameterized replay and exceptional outcomes. The experimental `corepack yarn discover savings` command uses a privately configured key, attempts genuine discovery and, on success, replays the artifact with another synthetic member. Both discovery workflows and parameterized replay have passed in development. Final committed evidence and the operator layer are pending. No current file should be mistaken for a successful discovery recording. See [the visual direction](docs/visual-direction.md) for the Dribbble references reviewed before interface implementation.
 
 ## Working agreement
 

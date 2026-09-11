@@ -12,6 +12,8 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 - P4: Policy-checked browser driver, request restrictions, safe observations and durable sanitized journals.
 - P5: Model-free replay with checkpoint verification, typed outputs, business outcomes, one-shot notice recovery, cancellation and structural failure evidence. Verified 17 unit tests and 18 browser tests before commit.
 
+- P6: Genuine GPT-6 Astra discovery and execution-derived compilation for both savings and account review, each replayed with different synthetic inputs. Verified 17 unit and 22 browser tests. Added request, output-token, no-progress and estimated cost admission bounds. Development evidence is retained locally; final evidence is pending.
+
 ### Decisions
 
 - Selected the owner-requested GPT-6 Astra model for discovery, starting at low reasoning effort. Provider availability and full workflow completion are separate gates.
@@ -20,5 +22,4 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 
 ### In progress
 
-- P6: Genuine provider decisions, execution-derived compilation and fresh-session replay. The first live call reached the provider successfully but execution stopped at a checkpoint before dispatch. No successful discovery or approved artifact is claimed yet.
 - P7 and later: React operator workspace, live handoff, expanded verification, containment and final evidence.

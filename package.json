@@ -18,9 +18,11 @@
     "test:browser": "playwright test",
     "check": "yarn lint && yarn typecheck && yarn test:unit && node scripts/schema.mjs --check && yarn test:browser",
     "schema:write": "yarn build && node scripts/schema.mjs",
-    "target": "yarn build && node dist/demo/server.js"
+    "target": "yarn build && node dist/demo/server.js",
+    "discover": "yarn build && node --env-file-if-exists=.env.local dist/src/cli/discover.js"
   },
   "dependencies": {
+    "openai": "7.13.0",
     "playwright": "1.63.0",
     "zod": "4.5.4"
   },
