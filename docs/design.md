@@ -20,16 +20,16 @@ Use a strict JSON-compatible schema with a deliberately small expression languag
 | --- | --- |
 | `schemaVersion` | Exact supported integer, initially `1`; never silently reinterpret an unknown version |
 | `id`, `revision`, `description` | Stable capability name, immutable revision, reviewed description with no runtime values |
-| `application` | Vendor/product family, required driver features and supported binding compatibility version; no tenant hostname or credentials |
+| `application` | Exact supported family, driver identifier and binding version; no tenant hostname or credentials |
 | `inputs` | Named, required constrained string/enum/integer/boolean definitions; no coercion; sensitivity classification and intended use |
 | `outputs` | Named typed definitions, sensitivity, deterministic parsing rule and source target |
-| `targets` | Logical control references with explicit scope, target strategy, expected cardinality and rationale; no opaque session node IDs |
+| `targets` | Logical control references with frame scope, target strategy and rationale; the driver requires exactly one match before acting |
 | `entry` | Registered route reference and a verifiable initial condition |
-| `steps` | Ordered steps with IDs, supported action, target/value references, preconditions, postconditions, effect classification and bounded recovery reference |
-| `outcomes` | Named business outcomes, detection conditions and permitted terminal step locations |
+| `steps` | Ordered steps with IDs, supported action, target/input/output references, preconditions, postconditions and effect classification |
+| `outcomes` | Named business outcomes and detection conditions, checked wherever the recognized state occurs |
 | `recovery` | Explicit known-condition handlers, exact allowed actions, bounded attempts and return checkpoint; no general scripting or arbitrary jumps |
 | `success` | Conditions binding the requested subject, reached screen and declared output sources |
-| `provenance` | Discovery run ID, actual provider/model, prompt-template revision, driver/browser/binding versions and source revision; no raw transcript |
+| `provenance` | Discovery or fixture kind, discovery run ID, actual model, prompt version, browser version and source revision; no raw transcript |
 
 A separate local registry entry pins the artifact's byte digest and binding digest and records a reviewed/approved revision. It is separate because an artifact must not approve itself. Hand-authored development fixtures are named and documented as fixtures; real evidence contains only genuinely discovered artifacts. A deliberate review and successful fresh replay are prerequisites to promote an artifact. The console records the local operator; bundled development revisions separately identify an engineering review and are not evidence of a human exercise. Editing any content creates a new revision and invalidates its prior approval.
 
@@ -55,9 +55,9 @@ Entry navigation is registered as `search`. Known recovery can click one reviewe
 
 ## 3. Observation and targeting
 
-The browser driver returns an observation generation, registered route/frame information, visible control candidates, allowed structural context, recognized state markers and an in-memory masked screenshot where safe. The model sees only this bounded observation, the goal, the task contract and named input references. It cannot inspect hidden DOM attributes for data, execute JavaScript, access the filesystem or call the simulator's backend.
+The browser driver returns an observation generation, recognized screen, registered controls with match counts and visibility/enabled flags, condition results and classified state. Frame scope comes from the reviewed targets. A separate screenshot method returns masked pixels where safe. The model sees this bounded observation, the goal, the task contract and named input references. It cannot inspect hidden DOM attributes for data, execute JavaScript, access the filesystem or call the simulator's backend.
 
-Discovery decisions select a control reference from the current observation. Immediately before dispatch the driver resolves that control again. Stale observations and changed identity force a new observation, not a blind click.
+Discovery decisions select a control reference from the current observation. Immediately before dispatch the executor re-observes and the driver resolves that control again. A stale generation or failed identity checkpoint prevents dispatch.
 
 Target strategies, in order of preference:
 
@@ -65,7 +65,7 @@ Target strategies, in order of preference:
 2. Exact visible text or associated field label in that scope.
 3. A reviewed relation in legacy markup, such as the input in the same form row as the exact visible "Member number" caption. Frame identity, row identity and control cardinality must all agree.
 
-Prefer stable user-visible meaning over generated IDs, broad CSS paths and element indexes. The binding can supply an explicit fallback only if it preserves identity and has its own test. Replay records which strategy resolved; it never uses `.first()`, force clicks, fuzzy matching, or silently generated fallback selectors. Zero matches wait within the deadline or fail. Multiple matches fail as `TARGET_AMBIGUOUS` before any input.
+Prefer stable user-visible meaning over generated IDs, broad CSS paths and element indexes. Each target has one reviewed strategy; the journal's target reference links to it in the artifact. There are no fallback selectors, `.first()`, force clicks or fuzzy matching. Zero matches wait within the deadline or fail. Multiple matches fail as `TARGET_AMBIGUOUS` before any input.
 
 Screenshots help discovery understand a poorly labeled screen. We are not claiming image-only deterministic replay in v1. If a control cannot be grounded into a supported stable strategy, discovery pauses for intervention or rejects the capability. A native desktop driver could implement accessibility identity and verified visual anchors later, but it must satisfy the same resolution and ambiguity contract.
 
@@ -73,12 +73,12 @@ Screenshots help discovery understand a poorly labeled screen. We are not claimi
 
 1. Resolve the registered target and reviewed task contract. Validate input types and policy compatibility. Launch a fresh owned session.
 2. Observe the live UI. Replace sensitive input values and matching displayed data with reference labels in model-bound text; mask the corresponding image regions. If masking coverage is unknown, omit the image and use the safe structured view.
-3. Ask the provider for exactly one structured decision: permitted action, current control reference, value reference and a bounded reason code. Do not request or persist private reasoning traces. Human-readable event reasons are generated from vetted templates.
-4. Handle refusal, incomplete response, malformed decision, timeout and rate limit separately. No parsing repair that could change action meaning. A bounded retry may repeat a failed model request, but no UI action is dispatched until a valid decision is accepted.
-5. Pass the decision to the shared executor and observe its outcome. Journal the sanitized action, decision reference, policy decision and actual result.
+3. Ask the provider for one strict decision: act with a typed action and named references, finish, or declare the goal unsupported. Do not request or persist private reasoning traces. The runtime supplies bounded journal reason codes and the console renders vetted event labels.
+4. Classify provider refusal as `MODEL_REFUSED`, incomplete or malformed responses as `MODEL_INVALID`, and transport/rate-limit failures as `MODEL_UNAVAILABLE`. Active-budget expiry and caller cancellation remain distinct. Do not repair parsing or retry the request; no UI action is dispatched until a valid decision is accepted.
+5. Pass the decision to the shared executor and observe its outcome. Journal provider response metadata, the authorized action intent and the actual completion or failure in sequence.
 6. Stop on verified completion, cancellation, budget exhaustion, no-progress detection, policy denial or a state requiring intervention. A model `finish` request is advisory until the task contract's conditions pass.
 7. Compile only a successful executed path. Resolve observation references into stable target descriptors and parameter bindings. Keep the raw journal separate. A recovery detour must be represented by an explicit tested handler or rejected as unsuitable for publication; do not silently delete history to create a cleaner-looking flow.
-8. Validate structure and semantics, scan for sensitive values, and write a draft atomically. Replay it in a fresh session with different synthetic inputs. Compare actual output to an independent test oracle. Promote only after review and passing replay validation.
+8. Validate structure, semantics and binding policy, then write the reference-based draft atomically. Replay it in a fresh session with different synthetic inputs and verify its output parsers and success conditions. Automated tests additionally compare outputs with independent fixture expectations and scan persisted evidence for sensitive canaries. Promote only after review and passing replay validation.
 
 Implemented P6 limits are 30 model decisions, 180 seconds active discovery, 30 seconds per provider request, 2,000 output tokens per request, 24 KB of structured observation and a 1 MB masked low-detail image. Aggregate reported tokens are limited to 120,000. Repeating the same action on the same screen stops as `NO_PROGRESS`. SDK retries are disabled: a provider failure ends this discovery attempt without replaying a UI action.
 
@@ -99,7 +99,7 @@ At each step: check ownership and cancellation; classify current state; evaluate
 | `failure` | A technical, policy or unresolved execution condition stopped the run | `PERMISSION_DENIED`, `TARGET_AMBIGUOUS`, `APP_UNAVAILABLE`, `UNSUPPORTED_BINDING`, `POLICY_DENIED`, `UNCERTAIN_EFFECT` |
 | `canceled` | Caller or operator terminated the run | No new commands; any already dispatched effect is reported |
 
-`awaiting_human` is a nonterminal run state, not a successful final result. A failed intervention deadline becomes a typed failure. Business outcomes have code and safe schema-defined details, not partial success output. Failure details include step ID, action type, safe expected/observed condition summaries, effect state (`not_dispatched`, `confirmed`, `unknown`), retry count, session/run identity and a sanitized evidence reference. Never serialize a raw Playwright/provider error message directly.
+`awaiting_human` is a nonterminal ownership state, not a successful final result. A failed intervention deadline becomes a typed failure. Business outcomes carry a run ID and code without partial success output. Failures carry the run ID, code, step ID, effect state (`not_dispatched`, `confirmed`, `unknown`) and structural expected/observed diagnostics. The step ID links to the action in the artifact and journal; the run ID identifies its evidence directory. Never serialize a raw Playwright/provider error message directly.
 
 ### Recovery rules
 
@@ -108,18 +108,18 @@ At each step: check ownership and cancellation; classify current state; evaluate
 - Missing member or account: return a business outcome immediately.
 - Validation rejection: return the declared outcome; never invent different business input to make the form pass.
 - Permission denied: pause or fail, with no privilege escalation or alternate account search.
-- Session expiry: pause for operator intervention. Resume at the current step only if its preconditions and subject identity are restored. If the entry state is restored instead, restart only a capability explicitly classified as read-only and only with operator acknowledgment. Review/form flows otherwise stop and require a fresh run.
+- Session expiry: pause for operator intervention. Resume only when the current checkpoint and subject identity are restored. Returning to an incompatible entry screen does not restart the capability; verification leaves it paused.
 - Unexpected modal or unknown screen: pause with safe evidence. Unknown browser-native dialogs remain pending under the same session and are exposed as an intervention; no blanket auto-accept handler.
-- Timeout after click: inspect the postcondition and known outcomes first. Retry only an explicitly repeat-safe action when the precondition establishes a safe state. An unobservable effect stops as `UNCERTAIN_EFFECT`.
+- Timeout after click: inspect the postcondition and known outcomes without repeating the action. A verified postcondition confirms completion; an unresolved checkpoint stops or requests intervention while preserving the unknown effect state.
 - Process or browser crash: report interruption from the persisted safe journal if available; do not recreate a session and claim it is the original live session.
 
 Exactly-once execution of arbitrary legacy UI side effects is not a guarantee the system can provide. A durable job ID can deduplicate job admission; it cannot prove whether a bank screen committed a transaction before losing its response.
 
 ## 6. Policy and data handling
 
-Effective permission is the intersection of trusted installation policy, reviewed binding policy, and the capability's requested permissions. An artifact can narrow authority but cannot expand it. Risk classification comes from the binding's known control/effect map, never from model wording or button-text heuristics alone. Unknown controls/effects are denied.
+The trusted origin and reviewed binding define permitted requests, controls and effects. The capability supplies a validated sequence within that authority; it has no separate permissions field. Risk classification comes from the binding's known control/effect map, never from model wording or button-text heuristics alone. Unknown controls/effects are denied. Tenant-specific policy intersection belongs to the deployment design.
 
-Allowlist exact origins, normalized registered routes, permitted query keys, HTTP methods and permitted UI actions. Reject URL userinfo, unregistered schemes, unregistered ports and unapproved navigation. Check before action and at the browser request boundary, including frames, resource loads, forms, redirects, popups and downloads. Service workers are blocked. WebSockets, downloads and file selection are denied unless explicitly implemented and tested. A route check after navigation is detection, not prevention.
+Allowlist the exact origin, registered paths, HTTP methods and UI actions. Reject query strings, fragments, URL userinfo, unregistered schemes, unregistered ports and unapproved navigation. Check before action and at the browser request boundary, including frames, resource loads, forms, redirects, popups and downloads. Service workers are blocked. WebSockets, downloads and file selection are denied. A route check after navigation is detection, not prevention.
 
 The initial target requires no redirects. Its intercepted requests use bounded fetching with automatic redirects and retries disabled; redirect responses fail closed. The actual request receiver tests must prove this behavior on the pinned browser. Arbitrary target support is disabled. Native browser hooks remain application guardrails, not complete network isolation. The container profile and future tenant worker boundary restrict egress independently; see [verification](verification.md) and [scale](scale.md).
 
@@ -127,7 +127,7 @@ The final account-opening action is blocked in v1 for automation and mediated op
 
 Persist schema-approved event fields only. Safe identifiers and allowlisted static labels describe what happened; sensitive inputs, output values, goals, DOM text, prompt contents, cookies, storage state, request bodies, credentials and raw screenshots do not enter logs. Do not hash low-entropy member IDs as a supposed anonymization method. Keep runtime values out of persisted evidence. Release the active session after completion. The authenticated console retains output in its bounded in-memory run history until eviction or shutdown. A sanitization failure stops evidence export rather than falling back to raw data.
 
-The guaranteed richer failure signal is a structural snapshot: safe registered route, frame tree, control types, visible/enabled flags, vetted label references, matching counts, condition evaluations and ownership state. Unknown strings are omitted. Screenshots are optional and use native opaque pixel masks before leaving the process. An application-owned allowlist covers visible text outside masked regions. Unknown text, unexpected frames, image/canvas/video content, backgrounds or generated text causes image omission; a missing image policy also defaults to omission. This targets the supported banking UI and is not a general redactor for arbitrary rendered content. Screenshot-only CSS was rejected after a canary experiment showed that the target CSP could block it. Masks can obscure overlapping notice content; the authenticated inspector supplies the registered intervention reason and permitted controls. Full traces and videos are disabled by default because they can contain sensitive page/network data. Synthetic evidence is exported explicitly after scanning and visual review.
+Execution failures persist a structural snapshot with run and step IDs, ownership and the last observation: recognized screen, registered control IDs/types, visible/enabled flags, match counts, condition evaluations and classified state. Startup failures explicitly report that no observation is available. Unknown strings are omitted. Screenshots are optional and use native opaque pixel masks before leaving the process. An application-owned allowlist covers visible text outside masked regions. Unknown text, unexpected frames, image/canvas/video content, backgrounds or generated text causes image omission; a missing image policy also defaults to omission. This targets the supported banking UI and is not a general redactor for arbitrary rendered content. Screenshot-only CSS was rejected after a canary experiment showed that the target CSP could block it. Masks can obscure overlapping notice content; the authenticated inspector supplies the registered intervention reason and permitted controls. Full traces and videos are disabled by default because they can contain sensitive page/network data. Synthetic evidence is exported explicitly after scanning and visual review.
 
 Use `store: false` for provider requests, but do not equate that setting with zero provider retention. Production financial data needs approved provider controls and data policy; the submission sends synthetic data only.
 
@@ -149,19 +149,19 @@ stateDiagram-v2
   Terminal --> [*]
 ```
 
-Ownership contains `sessionId`, `runId`, `owner`, monotonically increasing `epoch`, and operator identity when applicable. The controller serializes commands and state transitions. It does not hold an action queue open to old commands after a transfer. Every command carries the expected epoch and is checked again at dispatch.
+Each session owns a control state containing `owner`, monotonically increasing `epoch` and `actor`. The session and its journal provide the run ID; ownership does not duplicate it. The controller serializes UI commands and ownership transitions. These operations carry the expected epoch and are checked again at dispatch, so queued stale commands cannot act after a transfer. Cancellation separately aborts the session.
 
 Pausing rejects new automation commands and resolves the in-flight action's known/unknown status before granting human control. A second claimant receives a conflict. A stale automation response or stale operator tab cannot act after an ownership change. Lease expiry pauses the session; it does not silently return control to automation.
 
 A timeout wrapper alone is not cancellation: the underlying browser command must settle or be stopped before another owner may issue input. If command quiescence cannot be established, retain a blocked session or terminate it with a failure. Application-side asynchronous effects can still complete after the input command settles; show that uncertainty to the operator and require re-observation before any conflicting action.
 
-The console is a small loopback service with an intervention list, safe reason/current-step view, live screenshot or structural view, claim, click/type/select controls, dialog controls, return-control and cancel. Its commands drive the existing browser/page object through the executor. It never opens a replacement browser session. Human actions are individually recorded with actor, epoch, step context and sanitized target/value references. These events remain a separate manual segment and do not silently alter the saved capability.
+The console is a small loopback service with an intervention list, safe reason/current-step view, live screenshot or structural view, claim, click/type/select controls, dialog controls, return-control and cancel. Its commands drive the existing browser/page object through the executor. It never opens a replacement browser session. Human actions are individually recorded with actor, epoch and action. Workflow controls also carry the target and current step ID; native-dialog dismissal has no DOM target. Input values are omitted. These events remain a separate manual segment and do not silently alter the saved capability.
 
-Bind to loopback, validate Host and Origin, require a per-session high-entropy credential, restrict request sizes, expire credentials, and reject stale generations. No credential in query logs or persisted evidence. Console bootstrap should use a URL fragment exchanged for an in-memory credential with immediate fragment removal; requests use an authorization header. The target application never receives the operator credential or the model key. Provider and operator routes are outside the target's allowed browser origins.
+The controller binds to loopback, validates Host and Origin, restricts request sizes and rejects stale command generations. A random bearer credential lasts for this controller process and authorizes its local workspace. The launch fragment is removed immediately and held in browser memory; refresh requires the launch link again, and restarting the controller replaces the credential. Human control leases expire independently. Credentials never enter query logs or persisted evidence; API requests use an authorization header. The target application never receives the operator credential or the model key. Provider and operator routes are outside the target's allowed browser origins.
 
 The normal manual path uses mediated console commands so authority and action evidence are enforceable. Direct DevTools or unmanaged browser input is outside this guarantee and is disabled in the default flow. The local operator name is attribution on a trusted workstation, not enterprise identity proof. Production requires authenticated operator identities and per-tenant authorization.
 
-Before resuming, revoke human command admission, wait for any accepted human command to settle, increment the epoch, re-observe, verify current step/subject preconditions and policy, then re-enable automation. A human "done" click never marks the goal successful by itself. Polls and commands are bounded; a ten-minute initial intervention TTL prevents orphaned sessions, with explicit remaining-time display.
+Resume runs in the same serialized queue as actions. It waits for earlier accepted commands, re-observes and verifies the current checkpoint, then increments the epoch and transfers ownership to automation on success or leaves it awaiting a human on failure. Later commands carrying the old epoch are rejected. A human "done" click never marks the goal successful by itself. Polls and commands are bounded; a ten-minute initial intervention TTL prevents orphaned sessions, with explicit remaining-time display.
 
 ## 8. Persistence and lifecycle
 
@@ -171,7 +171,7 @@ The local runner supports one active session per invocation and bounded independ
 
 Cancellation also reaches the fresh replay used to validate a discovery; a canceled validation cannot be approved. A late screenshot poll cannot replace the final retained image after execution ends.
 
-On cancellation, stop admitting commands, settle or classify the in-flight operation, close the browser, expire operator credentials, drain safe journal writes and stop owned servers. Terminate only processes created by this run. Normal runtime files live in ignored `.local/`; submission evidence is a deliberate reviewed export. Individual journals are bounded to 2,000 events and 1 MiB. Total on-disk retention is manual in this local edition; automatic age/size retention and protected archival are production prerequisites. Filesystem deletion is not a cryptographic erasure guarantee.
+On cancellation, stop admitting session commands, settle or classify the in-flight operation, close the browser, end session ownership, drain safe journal writes and stop the owned target. The controller credential remains usable for other sessions until controller shutdown. Terminate only processes created by this run. Normal runtime files live in ignored `.local/`; submission evidence is a deliberate reviewed export. Individual journals are bounded to 2,000 events and 1 MiB. Total on-disk retention is manual in this local edition; automatic age/size retention and protected archival are production prerequisites. Filesystem deletion is not a cryptographic erasure guarantee.
 
 ## Public discovery invocation
 

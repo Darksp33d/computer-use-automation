@@ -73,3 +73,8 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 ### CI runtime maintenance
 
 - The final evidence commit passed both Linux jobs in run `34652225619`, but GitHub warned that the older checkout/setup actions used deprecated Node 20 runtimes. Updated only those immutable pins to checkout v7.0.1 and setup-node v7.0.0, whose published action definitions use Node 24. The project runtime, checks and capture source remain unchanged. Reviewed upstream migration notes; the workflow uses ordinary push/pull-request triggers and no removed setup-node inputs.
+
+### Final contract review
+
+- Re-read all ten assignment pages and reviewed the execution, safety, ownership, provider and approval boundaries. A fresh full check passed 23 unit and 62 browser tests; direct keyless revision 5 savings/review replays and a not-found outcome also passed. Current evidence identity, dependency audit and repository scans pass.
+- Reconciled design descriptions with the implemented artifact, observation, result, recovery, policy and credential contracts. Removed claims about proposed fields or behavior absent from this version. No runtime code or approved capability changed.
