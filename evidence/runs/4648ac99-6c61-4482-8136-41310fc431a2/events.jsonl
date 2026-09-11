@@ -1,0 +1,16 @@
+{"type":"run-started","seq":1,"runId":"4648ac99-6c61-4482-8136-41310fc431a2","at":"2026-09-11T18:50:44.150Z"}
+{"type":"action-intent","stepId":"step-1","target":"member-field","action":"fill","actor":"automation","epoch":0,"reason":"goal-step","seq":2,"runId":"4648ac99-6c61-4482-8136-41310fc431a2","at":"2026-09-11T18:50:44.274Z"}
+{"type":"action-completed","stepId":"step-1","target":"member-field","action":"fill","actor":"automation","epoch":0,"seq":3,"runId":"4648ac99-6c61-4482-8136-41310fc431a2","at":"2026-09-11T18:50:44.286Z"}
+{"type":"checkpoint","stepId":"step-1","reason":"checkpoint","seq":4,"runId":"4648ac99-6c61-4482-8136-41310fc431a2","at":"2026-09-11T18:50:44.318Z"}
+{"type":"action-intent","stepId":"step-2","target":"search-members","action":"click","actor":"automation","epoch":0,"reason":"goal-step","seq":5,"runId":"4648ac99-6c61-4482-8136-41310fc431a2","at":"2026-09-11T18:50:44.372Z"}
+{"type":"action-completed","stepId":"step-2","target":"search-members","action":"click","actor":"automation","epoch":0,"seq":6,"runId":"4648ac99-6c61-4482-8136-41310fc431a2","at":"2026-09-11T18:50:44.419Z"}
+{"type":"checkpoint","stepId":"step-2","reason":"checkpoint","seq":7,"runId":"4648ac99-6c61-4482-8136-41310fc431a2","at":"2026-09-11T18:50:44.468Z"}
+{"type":"action-intent","stepId":"step-3","target":"open-member","action":"click","actor":"automation","epoch":0,"reason":"goal-step","seq":8,"runId":"4648ac99-6c61-4482-8136-41310fc431a2","at":"2026-09-11T18:50:44.519Z"}
+{"type":"action-completed","stepId":"step-3","target":"open-member","action":"click","actor":"automation","epoch":0,"seq":9,"runId":"4648ac99-6c61-4482-8136-41310fc431a2","at":"2026-09-11T18:50:44.548Z"}
+{"type":"checkpoint","stepId":"step-3","reason":"checkpoint","seq":10,"runId":"4648ac99-6c61-4482-8136-41310fc431a2","at":"2026-09-11T18:50:44.583Z"}
+{"type":"action-intent","stepId":"step-4","target":"view-savings","action":"click","actor":"automation","epoch":0,"reason":"goal-step","seq":11,"runId":"4648ac99-6c61-4482-8136-41310fc431a2","at":"2026-09-11T18:50:44.642Z"}
+{"type":"action-completed","stepId":"step-4","target":"view-savings","action":"click","actor":"automation","epoch":0,"seq":12,"runId":"4648ac99-6c61-4482-8136-41310fc431a2","at":"2026-09-11T18:50:44.681Z"}
+{"type":"checkpoint","stepId":"step-4","reason":"checkpoint","seq":13,"runId":"4648ac99-6c61-4482-8136-41310fc431a2","at":"2026-09-11T18:50:44.717Z"}
+{"type":"action-intent","stepId":"step-5","target":"balance","action":"read","actor":"automation","epoch":0,"reason":"goal-step","seq":14,"runId":"4648ac99-6c61-4482-8136-41310fc431a2","at":"2026-09-11T18:50:44.783Z"}
+{"type":"action-completed","stepId":"step-5","target":"balance","action":"read","actor":"automation","epoch":0,"seq":15,"runId":"4648ac99-6c61-4482-8136-41310fc431a2","at":"2026-09-11T18:50:44.788Z"}
+{"type":"run-finished","code":"OUTPUT_INVALID","status":"failure","reason":"completed","seq":16,"runId":"4648ac99-6c61-4482-8136-41310fc431a2","at":"2026-09-11T18:50:44.818Z"}

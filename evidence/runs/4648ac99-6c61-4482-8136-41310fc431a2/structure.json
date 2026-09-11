@@ -1,0 +1,251 @@
+{
+  "runId": "4648ac99-6c61-4482-8136-41310fc431a2",
+  "stepId": "step-5",
+  "ownership": {
+    "owner": "terminal",
+    "epoch": 1,
+    "actor": null
+  },
+  "observation": {
+    "generation": 9,
+    "screen": "savings-screen",
+    "controls": [
+      {
+        "id": "search-screen",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "results-screen",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "member-screen",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "savings-screen",
+        "kind": "role",
+        "count": 1,
+        "visible": true,
+        "enabled": true
+      },
+      {
+        "id": "form-screen",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "review-screen",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "member-field",
+        "kind": "field",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "search-members",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "open-member",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "view-savings",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "new-account",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "account-type-field",
+        "kind": "field",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "nickname-field",
+        "kind": "field",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "review-account",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "open-account",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "member-number",
+        "kind": "cell",
+        "count": 1,
+        "visible": true,
+        "enabled": true
+      },
+      {
+        "id": "account-type",
+        "kind": "cell",
+        "count": 1,
+        "visible": true,
+        "enabled": true
+      },
+      {
+        "id": "balance",
+        "kind": "cell",
+        "count": 1,
+        "visible": true,
+        "enabled": true
+      },
+      {
+        "id": "currency",
+        "kind": "cell",
+        "count": 1,
+        "visible": true,
+        "enabled": true
+      },
+      {
+        "id": "nickname",
+        "kind": "cell",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "preparation-status",
+        "kind": "cell",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "member-not-found",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "account-not-found",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "validation-rejected",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "permission-denied",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "app-unavailable",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "session-expired",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "service-notice",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "operator-notice",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "dismiss-notice",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "acknowledge-notice",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      },
+      {
+        "id": "restore-session",
+        "kind": "role",
+        "count": 0,
+        "visible": false,
+        "enabled": false
+      }
+    ],
+    "conditions": [
+      {
+        "condition": {
+          "kind": "visible",
+          "target": "savings-screen"
+        },
+        "satisfied": true
+      }
+    ],
+    "state": {
+      "kind": "ready"
+    }
+  }
+}

@@ -1,0 +1,1030 @@
+{
+  "sourceRevision": "bba5b6e46df47bc86790b73919307da41eaf22ba",
+  "startedAt": "2026-09-11T18:35:27.031Z",
+  "completedAt": "2026-09-11T18:36:22.878Z",
+  "count": 100,
+  "concurrency": 2,
+  "totalElapsedMs": 55846.466416999996,
+  "passed": 100,
+  "latencyMs": {
+    "p50": 1088.149542000001,
+    "p95": 1153.7277920000015,
+    "max": 1545.56475
+  },
+  "runtime": {
+    "node": "v24.15.0",
+    "browser": "153.0.8010.12",
+    "platform": "darwin",
+    "availableParallelism": 18,
+    "cpu": "Apple M5 Pro",
+    "memoryBytes": 25769803776
+  },
+  "artifact": {
+    "id": "read-savings-balance",
+    "revision": 1
+  },
+  "method": "100 fresh target and Chromium sessions, alternating two synthetic inputs; no retries; latency includes browser startup and replay but excludes cleanup.",
+  "limit": "Local small-sample stability observation, not a production availability or throughput claim.",
+  "runs": [
+    {
+      "index": 0,
+      "runId": "ffa61c9e-65ec-4cfe-a1b2-8edb631762eb",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1545.56475,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 1,
+      "runId": "02eab719-1b10-4618-a7de-af3524c12cd4",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1544.040083,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 2,
+      "runId": "2e9286eb-a6fb-44b2-8037-d890fb3a8a42",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1146.401625,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 3,
+      "runId": "a9bbac96-82c9-4c1c-b7a9-0bdb5ac91fc0",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1138.943875,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 4,
+      "runId": "bfbd5823-6137-42a8-8c6a-2d6c896bd147",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1169.7617500000001,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 5,
+      "runId": "259519a1-46eb-4c50-8699-bbc413c77cde",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1171.4732079999999,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 6,
+      "runId": "271d1c04-bfbd-468e-ab6c-34858a27e549",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1128.296042,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 7,
+      "runId": "740228c9-d2b4-43e3-a3cb-b3cfb2c48c85",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1105.629,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 8,
+      "runId": "4895a8cf-d790-4785-8b1b-fca31016d3df",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1113.3658750000004,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 9,
+      "runId": "8162933c-33c3-402b-8cb7-cb9eabfae7bf",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1079.5669590000007,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 10,
+      "runId": "c916781b-96bc-4c8a-af66-7a94c0cca338",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1119.2906659999999,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 11,
+      "runId": "2cef1186-25a0-48a8-9b8c-c5bf4976d9bf",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1125.1622500000003,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 12,
+      "runId": "0a82cc64-51bb-4606-b80a-49e68b872db9",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1084.9456670000009,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 13,
+      "runId": "c32d01bb-5700-466e-92d1-f7842c466a9f",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1082.7089589999996,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 14,
+      "runId": "8cc15a27-56c8-4a32-9bb5-62a07592d565",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1083.8400419999998,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 15,
+      "runId": "e307ecb2-db00-4fb9-a257-349bb1602f71",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1086.5993340000005,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 16,
+      "runId": "90dbc5ea-5fda-41e7-bf49-05d46fecc389",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1091.8682090000002,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 17,
+      "runId": "448cd364-3127-4092-a1f1-9501e960a01c",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1097.07625,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 18,
+      "runId": "b10b58f2-4515-4561-926c-fb763bb3e13f",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1088.149542000001,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 19,
+      "runId": "fb8c5538-7d42-4790-844d-1b36d3daf943",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1082.538708,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 20,
+      "runId": "fe0639a3-500c-41fc-b080-0440d14b7d90",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1053.6017919999995,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 21,
+      "runId": "df811165-7828-4414-84f1-5909e03065ab",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1059.5391249999993,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 22,
+      "runId": "33de232f-b679-4d6e-96a4-d1bca737a30b",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1118.305875,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 23,
+      "runId": "ef6b04cd-29ea-4337-90ce-7272d3a333ae",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1124.816417,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 24,
+      "runId": "969f78a7-0427-485e-b06a-678e8c6906d3",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1098.6777089999996,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 25,
+      "runId": "51664d37-b948-4fb1-ae49-a49f78a90be1",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1054.3240830000013,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 26,
+      "runId": "587bdd03-1fb7-476e-be83-86bfbd26acff",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1072.4672499999997,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 27,
+      "runId": "a9a2bf4e-87af-45cb-908e-9f28e5e13c91",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1052.5696249999983,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 28,
+      "runId": "530e17df-bb96-447b-8a9a-9f942a590ee2",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1090.756292,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 29,
+      "runId": "adff2123-cc70-4062-bab0-a3ec2aad04c8",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1099.8167499999981,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 30,
+      "runId": "099a2e08-bfd0-40dc-95e4-d0e9c1c65f87",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1083.3996670000015,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 31,
+      "runId": "3a00755f-0f05-4f66-806e-06648f8742b4",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1089.7109999999993,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 32,
+      "runId": "f2987628-3c6c-4ff6-b050-8ee0f933da4e",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1087.875,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 33,
+      "runId": "b6a4acab-6fa9-4c3f-81bd-79253b6a3d48",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1057.8717079999988,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 34,
+      "runId": "3e174171-b175-4d72-bd3f-90d454a4032e",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1068.0050420000007,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 35,
+      "runId": "7f9c1587-5877-4723-bba9-9fdc25a8addf",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1057.5582910000012,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 36,
+      "runId": "e36a6c4e-9936-4366-8a95-d417161c9ecb",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1097.565999999999,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 37,
+      "runId": "0d47158f-7289-4d87-9229-a299f8dacbc3",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1093.4023750000015,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 38,
+      "runId": "b99f589c-b65c-4554-bc44-d6aa9af0ddf8",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1060.2957500000011,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 39,
+      "runId": "6fa12fbb-120d-46be-aa43-08e998cf2959",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1080.0790839999972,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 40,
+      "runId": "b7801780-7740-4ec8-9ce7-03c5c4aa5ab5",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1067.9582499999997,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 41,
+      "runId": "983da65e-cae5-44c3-9ff5-500e8093eb69",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1067.5567499999997,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 42,
+      "runId": "b61b1d7b-79fc-45ff-835e-048ecc229b33",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1169.1717080000017,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 43,
+      "runId": "76203ed7-d3f9-446b-bcbc-bdd48951c413",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1153.7277920000015,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 44,
+      "runId": "7c9423a2-bc63-4dc0-b56e-4f7624729403",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1088.2120410000025,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 45,
+      "runId": "07890242-a96c-4112-9ac7-98445aa0fea0",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1076.153374999998,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 46,
+      "runId": "170bbcca-2fd4-4680-b045-0bcbf144fa97",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1083.6054160000022,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 47,
+      "runId": "1b1b07b3-37d8-4792-97e2-dac218fa76b1",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1089.4098330000015,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 48,
+      "runId": "bee5ff4d-32e9-496d-9ca4-cd9d34fb11c6",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1089.0995829999993,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 49,
+      "runId": "f37f7f00-3b20-4ef8-9d1e-efed84fe8f78",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1060.7599169999994,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 50,
+      "runId": "a92186af-4675-4b50-ae48-938f4795a52b",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1106.870417000002,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 51,
+      "runId": "d4a1e91d-8b94-4241-a87a-98a3f94de1af",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1076.0891250000022,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 52,
+      "runId": "92f9fb92-fc64-47d8-bcfa-c86fa09ada79",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1092.4989999999998,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 53,
+      "runId": "5a451889-3ae0-4faa-bf23-d7a6a2f0ec42",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1067.297375000002,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 54,
+      "runId": "8b68eda4-7b9f-4e0b-8420-d3bff88ad2c7",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1093.5224999999991,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 55,
+      "runId": "c7db50b5-472d-48c8-a8ff-8149daf797ff",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1083.5986249999987,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 56,
+      "runId": "c683d4cd-dfff-4408-8bd1-1d68e5f374df",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1122.1784170000028,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 57,
+      "runId": "431d7ffb-4317-49cd-9ed7-1444355ab968",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1105.2583750000013,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 58,
+      "runId": "8485b33d-a763-41eb-8b28-e93541d47381",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1112.5353749999995,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 59,
+      "runId": "f80e752a-64b8-49c2-8af5-6232d3a5b6b9",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1092.5594590000037,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 60,
+      "runId": "3928122a-5984-4c80-87f7-d79c89779d7a",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1071.0343749999956,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 61,
+      "runId": "679e698f-1502-47a4-b6ed-4f3b2d5ec571",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1104.521667000001,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 62,
+      "runId": "89d869bc-6cb7-4b93-95bf-e73164233e23",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1056.7952499999956,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 63,
+      "runId": "e7466d44-a678-4597-ab2a-86adb092cb00",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1030.7866670000003,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 64,
+      "runId": "497314ea-5493-4abf-b984-e1bd9c72a7e0",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1080.9413339999955,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 65,
+      "runId": "3d8a1bcb-e29b-48fa-8f80-25e74263c26c",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1052.0908750000017,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 66,
+      "runId": "f01a825d-d4ca-4a67-9f56-61b2ef78a210",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1115.4789170000004,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 67,
+      "runId": "64e9a976-c56b-4d30-a45d-61e0d7760f74",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1097.404582999996,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 68,
+      "runId": "515609ee-fbfd-44fd-8623-18b9981a5a6f",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1074.6807499999995,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 69,
+      "runId": "654dafe4-1594-44dd-95b2-006e3a8fc7be",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1088.2955000000002,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 70,
+      "runId": "500ae617-7dc6-4d38-bcde-6be8ddb41cbe",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1152.6923749999987,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 71,
+      "runId": "df265c45-aff1-47e2-98f8-f0e926c49cdd",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1131.7200410000005,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 72,
+      "runId": "d5039b39-5080-4c3a-ad0e-fed00f88c3ed",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1117.0089169999992,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 73,
+      "runId": "07ce1da4-81f7-4392-afcc-2c4bb0e5ddef",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1120.4946249999994,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 74,
+      "runId": "a18162e5-d92f-4cf7-847f-1acac51fbabd",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1101.3104999999996,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 75,
+      "runId": "b01ce561-0912-4ac8-84e8-e2b4ec9b17a5",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1111.2402500000026,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 76,
+      "runId": "02e09fe0-616d-42e0-a459-747600d09e6c",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1084.8011669999978,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 77,
+      "runId": "f0f1c574-7943-4107-9a3c-c334d2f2be77",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1059.3392920000042,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 78,
+      "runId": "1ec34b47-ef41-478d-acc0-4c2d9741e414",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1076.9599579999995,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 79,
+      "runId": "396fbd9f-a01f-4996-bd70-69ea42cbaf47",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1050.6947500000024,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 80,
+      "runId": "d585ef7f-2c2c-437b-9b4f-ec27a4edc13b",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1105.940333000006,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 81,
+      "runId": "8665deb0-999a-458f-9581-0bc6b11574b6",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1094.2593750000015,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 82,
+      "runId": "f0a99b96-b56b-4703-b14b-ed2af8caba73",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1062.5263750000013,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 83,
+      "runId": "44ce70e8-f037-4247-bbd7-92712c2255cd",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1080.1738750000004,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 84,
+      "runId": "340aa39b-545d-4d4d-8b59-565386adc1ea",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1061.5729580000043,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 85,
+      "runId": "98761293-e706-4053-9082-6f61d5b21e9f",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1064.5973330000052,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 86,
+      "runId": "37e5aa7a-6342-48d0-95af-0f1d76e0aa66",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1148.0697079999954,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 87,
+      "runId": "0f0d8648-ca6a-4e7a-9e47-2e5ae11bd489",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1128.2090000000026,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 88,
+      "runId": "6cea9878-b175-48c3-bcb3-167caf31d757",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1090.2540410000001,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 89,
+      "runId": "9e3fbf3a-5906-49d7-be68-6e27bea6f58a",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1097.7905840000021,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 90,
+      "runId": "3fb40c0d-c3b4-4782-852c-b7d1ba7cfa2a",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1067.6382909999957,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 91,
+      "runId": "c5f51e35-a876-4c41-99b9-c931f8ead351",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1071.1445420000018,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 92,
+      "runId": "a189bc0a-eeba-4d85-a628-eafa33aa7491",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1076.9692499999946,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 93,
+      "runId": "57d9ea9b-57bb-44bf-94a3-91916cb08336",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1070.5582910000012,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 94,
+      "runId": "26cb8cf3-d24a-4e05-9d27-c091cfac12f1",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1103.3636250000054,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 95,
+      "runId": "5b457ed1-af9a-4b90-9659-e50e8f0702f3",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1078.8029999999999,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 96,
+      "runId": "da84b430-7e03-427e-81fb-afd9ed6a6f1b",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1072.6606249999968,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 97,
+      "runId": "2d55a454-1f4c-44a0-ac5e-90309ec8e0f2",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1053.3093339999978,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 98,
+      "runId": "8cec3265-66ce-40ff-b562-179941edd0f1",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1073.586000000003,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    },
+    {
+      "index": 99,
+      "runId": "9a221335-5424-412b-9bce-baf569736978",
+      "status": "success",
+      "correct": true,
+      "elapsedMs": 1052.4302080000052,
+      "requests": 10,
+      "searches": 1,
+      "commits": 0
+    }
+  ]
+}

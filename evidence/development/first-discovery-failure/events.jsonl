@@ -1,0 +1,3 @@
+{"type":"run-started","seq":1,"runId":"16388ae4-f68c-41b5-b1d4-7630f7cdace4","at":"2026-09-11T16:54:33.997Z"}
+{"type":"model-decision","reason":"provider-decision","provider":{"model":"gpt-6-astra","responseId":"resp_01b3e0b803bbef10016aa4324b50cc87d2a58f83307e53a69b","inputTokens":1493,"outputTokens":30},"seq":2,"runId":"16388ae4-f68c-41b5-b1d4-7630f7cdace4","at":"2026-09-11T16:54:39.467Z"}
+{"type":"run-finished","code":"CHECKPOINT_FAILED","status":"failure","reason":"completed","seq":3,"runId":"16388ae4-f68c-41b5-b1d4-7630f7cdace4","at":"2026-09-11T16:54:39.516Z"}

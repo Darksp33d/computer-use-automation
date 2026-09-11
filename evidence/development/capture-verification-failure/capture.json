@@ -1,0 +1,26 @@
+{
+  "sourceRevision": "ef7cf631ec98d0070a3301d529175dbbffaa320e",
+  "sourceDirty": false,
+  "startedAt": "2026-09-11T18:36:47.927Z",
+  "node": "v24.15.0",
+  "browser": "153.0.8010.12",
+  "model": "gpt-6-astra",
+  "command": "node --env-file-if-exists=.env.local scripts/capture-evidence.mjs",
+  "operator": "Development agent: scripted browser controls with explicit artifact review",
+  "data": "Fictional Northstar records only. Console output is synthetic; runtime journals are redacted.",
+  "runs": [
+    {
+      "id": "a8598a18-76d1-4eca-94d0-2c8f04224e89",
+      "workflow": "savings",
+      "mode": "discovery",
+      "scenario": "normal",
+      "syntheticMember": "A1001",
+      "status": "success",
+      "code": null
+    }
+  ],
+  "browserErrors": [],
+  "status": "failed",
+  "errorClass": "Error",
+  "completedAt": "2026-09-11T18:37:12.674Z"
+}

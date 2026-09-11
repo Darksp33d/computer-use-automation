@@ -1,0 +1,13 @@
+{
+  "sourceRevision": "bba5b6e46df47bc86790b73919307da41eaf22ba",
+  "sourceDirty": false,
+  "checks": {
+    "browserIsolation": true,
+    "targetIsolation": true,
+    "externalReceiverUnchanged": true,
+    "containedReplay": true
+  },
+  "runId": "12143f4d-854b-4aa1-9ed8-ba1ea5fc57e5",
+  "browserVersion": "153.0.8010.12",
+  "checkedAt": "2026-09-11T18:34:13.059Z"
+}

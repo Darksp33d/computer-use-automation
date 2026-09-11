@@ -1,0 +1,32 @@
+{
+  "checkedOn": "2026-09-11",
+  "freshCheckout": {
+    "sourceRevision": "bba5b6e46df47bc86790b73919307da41eaf22ba",
+    "origin": "https://github.com/Darksp33d/computer-use-automation.git",
+    "platform": "macOS arm64",
+    "providerKeyConfigured": false,
+    "commands": ["corepack yarn install --immutable", "corepack yarn setup", "corepack yarn doctor", "corepack yarn check"],
+    "exitCode": 0,
+    "unitPassed": 22,
+    "browserPassed": 58,
+    "retries": 0
+  },
+  "linuxCI": {
+    "sourceRevision": "67c40003f3c822d7a916bb64ebd9c73c007aa1db",
+    "url": "https://github.com/Darksp33d/computer-use-automation/actions/runs/34635276700",
+    "conclusion": "success",
+    "jobs": ["verify", "containment"]
+  },
+  "dependencyAudit": {
+    "command": "corepack yarn npm audit --recursive --json",
+    "exitCode": 0,
+    "reportedAdvisories": 0,
+    "limit": "Registry audit snapshot on the check date, not proof that dependencies have no vulnerabilities."
+  },
+  "visualReview": {
+    "screenshotsInspected": 13,
+    "desktopViewport": [1440, 960],
+    "mobileViewport": [390, 844],
+    "operator": "development agent"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "status": "success",
+  "runId": "b1c02eef-4061-4ff8-82ab-d39e8b748361",
+  "outputs": {
+    "availableBalanceMinor": "[redacted]",
+    "currency": "USD",
+    "accountType": "savings"
+  },
+  "redactedFields": [
+    "availableBalanceMinor"
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "sourceRevision": "67c40003f3c822d7a916bb64ebd9c73c007aa1db",
+  "sourceDirty": false,
+  "startedAt": "2026-09-11T18:47:44.595Z",
+  "node": "v24.15.0",
+  "browser": "153.0.8010.12",
+  "model": "gpt-6-astra",
+  "command": "node --env-file-if-exists=.env.local scripts/capture-evidence.mjs",
+  "operator": "Development agent: scripted browser controls with explicit artifact review",
+  "data": "Fictional Northstar records only. Console output is synthetic; runtime journals are redacted.",
+  "runs": [
+    {
+      "id": "58a9c731-56a9-4937-b2ce-64745e30961a",
+      "workflow": "savings",
+      "mode": "discovery",
+      "scenario": "normal",
+      "syntheticMember": "A1001",
+      "status": "success",
+      "code": null,
+      "capabilityId": "read-savings-balance",
+      "revision": 4,
+      "validationRunId": "497d0145-fcda-4aaa-a07b-0d207da698dc",
+      "approved": true
+    },
+    {
+      "id": "21b33994-3baa-479b-8bec-993ad242c882",
+      "workflow": "review",
+      "mode": "discovery",
+      "scenario": "normal",
+      "syntheticMember": "A1001",
+      "status": "success",
+      "code": null,
+      "capabilityId": "prepare-sub-account",
+      "revision": 4,
+      "validationRunId": "cbd6fbd8-5bab-4d03-8a4f-8f52d75b0b37",
+      "approved": true
+    },
+    {
+      "id": "b1c02eef-4061-4ff8-82ab-d39e8b748361",
+      "workflow": "savings",
+      "mode": "replay",
+      "scenario": "normal",
+      "syntheticMember": "B1002",
+      "status": "success",
+      "code": null
+    },
+    {
+      "id": "c5fb0b65-d246-43eb-b230-5717243a039e",
+      "workflow": "review",
+      "mode": "replay",
+      "scenario": "normal",
+      "syntheticMember": "B1002",
+      "status": "success",
+      "code": null
+    },
+    {
+      "id": "6f5e8e6d-9532-4af5-b7ec-ef755b4d03be",
+      "workflow": "savings",
+      "mode": "replay",
+      "scenario": "not-found",
+      "syntheticMember": "A1001",
+      "status": "business_outcome",
+      "code": "MEMBER_NOT_FOUND"
+    },
+    {
+      "id": "4648ac99-6c61-4482-8136-41310fc431a2",
+      "workflow": "savings",
+      "mode": "replay",
+      "scenario": "malformed-balance",
+      "syntheticMember": "A1001",
+      "status": "failure",
+      "code": "OUTPUT_INVALID"
+    },
+    {
+      "id": "75e459d7-5304-418b-b0ff-71485992fd8f",
+      "workflow": "savings",
+      "mode": "replay",
+      "scenario": "intervention",
+      "syntheticMember": "A1001",
+      "status": "success",
+      "code": null
+    }
+  ],
+  "browserErrors": [],
+  "status": "success",
+  "completedAt": "2026-09-11T18:50:50.988Z"
+}

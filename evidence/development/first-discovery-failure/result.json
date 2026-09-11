@@ -1,0 +1,7 @@
+{
+  "status": "failure",
+  "runId": "16388ae4-f68c-41b5-b1d4-7630f7cdace4",
+  "code": "CHECKPOINT_FAILED",
+  "stepId": "step-1",
+  "effect": "not_dispatched"
+}

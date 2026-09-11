@@ -1,0 +1,7 @@
+{"type":"run-started","seq":1,"runId":"cfaf8adf-4678-4f80-b922-e530c3e8bd5e","at":"2026-09-11T18:33:12.446Z"}
+{"type":"action-intent","stepId":"step-1","target":"member-field","action":"fill","actor":"automation","epoch":0,"reason":"goal-step","seq":2,"runId":"cfaf8adf-4678-4f80-b922-e530c3e8bd5e","at":"2026-09-11T18:33:12.577Z"}
+{"type":"action-completed","stepId":"step-1","target":"member-field","action":"fill","actor":"automation","epoch":0,"seq":3,"runId":"cfaf8adf-4678-4f80-b922-e530c3e8bd5e","at":"2026-09-11T18:33:12.589Z"}
+{"type":"checkpoint","stepId":"step-1","reason":"checkpoint","seq":4,"runId":"cfaf8adf-4678-4f80-b922-e530c3e8bd5e","at":"2026-09-11T18:33:12.619Z"}
+{"type":"action-intent","stepId":"step-2","target":"search-members","action":"click","actor":"automation","epoch":0,"reason":"goal-step","seq":5,"runId":"cfaf8adf-4678-4f80-b922-e530c3e8bd5e","at":"2026-09-11T18:33:12.672Z"}
+{"type":"action-completed","stepId":"step-2","target":"search-members","action":"click","actor":"automation","epoch":0,"seq":6,"runId":"cfaf8adf-4678-4f80-b922-e530c3e8bd5e","at":"2026-09-11T18:33:12.716Z"}
+{"type":"run-finished","code":"MEMBER_NOT_FOUND","status":"business_outcome","reason":"completed","seq":7,"runId":"cfaf8adf-4678-4f80-b922-e530c3e8bd5e","at":"2026-09-11T18:33:12.764Z"}
