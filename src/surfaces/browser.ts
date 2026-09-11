@@ -312,9 +312,13 @@ export class BrowserSurface implements Surface {
     return this.page.screenshot({
       type: "png",
       animations: "disabled",
-      // Hide sensitive elements in their stacking context so overlays stay readable.
-      style:
-        "input, select, .details td + td, .data-table tbody td, .intro, .training { visibility: hidden !important; }",
+      // Screenshot styles can be blocked by the target CSP. Native masks must cover pixels.
+      mask: [
+        this.page
+          .frameLocator('iframe[name="workspace"]')
+          .locator("input, select, .details td + td, .data-table tbody td, .intro, .training"),
+      ],
+      maskColor: "#e0e5e4",
       timeout: this.timeoutMs,
     });
   }

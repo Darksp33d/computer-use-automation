@@ -16,6 +16,10 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 
 - P7: React/Vite operator console, authenticated commands, same-session manual controls, exclusive claim, verified resume, intervention expiry and exact-byte capability approval. Verified 18 unit and 30 browser tests, including axe accessibility checks. A browser-driven development exercise completed genuine discovery, fresh replay, contract review and approval. The owner separately confirmed successful manual notice handoff in run `b6e31893-3921-487c-a5cb-2c3da9477e13`. The control layer was also checked independently before commit: 18 unit and 28 browser tests.
 
+### Corrective verification
+
+- A visual canary check found that screenshot-only CSS did not hide sensitive fields under the target’s Content Security Policy. Replaced it with native screenshot masks. Prior development screenshots and provider runs do not establish image-redaction correctness and are excluded from final privacy evidence. Only synthetic fixture records were used. New regression coverage compares complete screenshot bytes across different private review values.
+
 ### Product identity
 
 - Renamed Relay to Praxis Loom across the console, launch message and product documentation. Added an original woven-line mark. Kept repository links, capability revisions and historical run identifiers stable.
