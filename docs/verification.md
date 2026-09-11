@@ -1,6 +1,6 @@
 # Verification and threat model
 
-Status: P1-P9 are implemented. The current checks pass 22 unit and 56 browser tests, including provider failure classification, cancellation, lost browser sessions, journal quotas, eleven unsupported network/browser channels and operator accessibility. The isolated container probe passed locally and in Linux CI at `14d8d2a`. The first no-retry stability exercise passed 100/100 at `c97f368`. Final source-linked runs, clean-checkout verification and the owner-requested UI simplification remain in P10.
+Status: P1-P9 are implemented. The current checks pass 22 unit and 58 browser tests, including provider failure classification, cancellation, lost browser sessions, journal quotas, eleven unsupported network/browser channels and operator accessibility. The isolated container probe passed locally and in Linux CI at `14d8d2a`. The first no-retry stability exercise passed 100/100 at `c97f368`. Final source-linked runs, clean-checkout verification and the owner-requested UI simplification remain in P10.
 
 The owner confirmed a successful manual notice handoff in development run `b6e31893-3921-487c-a5cb-2c3da9477e13`. A later visual canary exposed a CSP-related screenshot redaction defect, corrected with native masks and byte-level image invariance coverage. Pre-fix development images are not privacy evidence. Scripted provider and operator tests are not evidence of independent human or live-model execution.
 
@@ -62,7 +62,7 @@ Every scenario starts with a fresh session and isolated fixture state. The harne
 - R01-R13: `tests/browser/cli.spec.ts`, `replay.spec.ts`, `surface.spec.ts` and `handoff.spec.ts`. The CLI subprocess denies provider fetches; `scripts/boundaries.mjs` checks transitive imports.
 - H01-H06: `tests/unit/ownership.test.ts`, `tests/browser/handoff.spec.ts` and the full operator UI/API tests. The independent owner exercise supplements these scripted checks.
 - S01-S07: discovery injection, native receiver probes, policy, operator API and privacy tests; `scripts/verify-containment.mjs` separately bypasses application interception to test worker networking. Its external receiver has a positive control.
-- L01-L04: `tests/browser/lifecycle.spec.ts`, pending-provider cancellation, handoff expiry and operator shutdown tests; journal byte/event quotas in `tests/unit/evidence.test.ts`; the isolated-session stability harness. Browser loss is injected after the target accepted a search and before action completion is recorded. Journal loss uses a closed handle, not a claim of a real disk-full or host-power-loss experiment.
+- L01-L04: `tests/browser/lifecycle.spec.ts`, pending-provider cancellation, validation replay cancellation, late terminal-image polling, handoff expiry and operator shutdown tests; journal byte/event quotas in `tests/unit/evidence.test.ts`; the isolated-session stability harness. Browser loss is injected after the target accepted a search and before action completion is recorded. Journal loss uses a closed handle, not a claim of a real disk-full or host-power-loss experiment.
 
 ## 3. Threat boundaries and residual risks
 

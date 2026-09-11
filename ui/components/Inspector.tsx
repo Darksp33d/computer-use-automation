@@ -85,13 +85,15 @@ export function Inspector({
         <div>
           <dt>Control</dt>
           <dd>
-            {run.owner === "human"
-              ? "Local operator"
-              : run.owner === "awaiting_human"
-                ? "Waiting for operator"
-                : run.owner === "terminal"
-                  ? "Session closed"
-                  : "Automation"}
+            {run.phase === "validating"
+              ? "Validation run"
+              : run.owner === "human"
+                ? "Local operator"
+                : run.owner === "awaiting_human"
+                  ? "Waiting for operator"
+                  : run.owner === "terminal"
+                    ? "Session closed"
+                    : "Automation"}
           </dd>
         </div>
         <div>
@@ -243,7 +245,7 @@ export function Inspector({
           </small>
         </section>
       ) : null}
-      {run.owner !== "terminal" ? (
+      {run.owner !== "terminal" || run.phase === "validating" ? (
         <button
           className="text-button danger-text"
           disabled={busy}

@@ -35,6 +35,10 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 - P8: Added agent-invocable replay with bounded stdin, approved capability lookup, one JSON result, deliberate exit codes and opt-in sensitive stdout. Keyless subprocess tests cover success, redaction, business outcomes and invalid input. Expanded tests reject wrong currency/account type, distinguish application validation and prove one request after an uncertain navigation. The no-retry stability exercise passed 100/100 fresh sessions at concurrency two: p50 1.11 s, p95 1.56 s, 100 searches and zero account commits on the documented local machine.
 - P9: Native probes cover eleven unsupported browser channels; unrecognized image content causes omission. The non-root container replay and independent egress probe passed locally and in Linux CI. Provider calls now honor the remaining active deadline and distinguish invalid responses from transport failure. Verified 22 unit and 56 browser tests, including cancellation, browser loss after dispatch, unavailable journals, evidence quotas and prompt injection. Replay import boundaries and provider-disabled subprocess checks are part of the aggregate gate.
 
+### Lifecycle review
+
+- Preserved the final masked snapshot when an earlier image request finishes late. Propagated cancellation into discovery's validation replay in both the operator and CLI. A canceled validation cannot expose output or become approvable. Verified 22 unit and 58 browser tests, including deterministic races at both boundaries.
+
 ### In progress
 
 - P10: Simplified page titles, empty states, dialogs, activity and inspector copy following the owner’s review. Removed slogans and duplicate explanations, preserved contextual handoff instructions, and made the closed-session placeholder compact. Desktop/mobile visual inspection and the full automated suite pass. Final committed-source evidence and the clean-checkout walkthrough remain pending.

@@ -20,6 +20,14 @@ if (!["savings", "review"].includes(workflow)) {
   let session: Session | undefined;
   let replaySession: Session | undefined;
   const target = await startTarget({ scenario: "normal" });
+  let canceled = false;
+  const cancel = () => {
+    canceled = true;
+    session?.abort.abort();
+    replaySession?.abort.abort();
+  };
+  process.once("SIGINT", cancel);
+  process.once("SIGTERM", cancel);
   try {
     const sourceRevision = execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
     const inputs =
@@ -36,9 +44,7 @@ if (!["savings", "review"].includes(workflow)) {
         activeTimeoutMs: 180_000,
       },
     );
-    const cancel = () => session?.abort.abort();
-    process.once("SIGINT", cancel);
-    process.once("SIGTERM", cancel);
+    if (canceled) session.abort.abort();
     console.log(JSON.stringify({ mode: "discovery", runId: session.runId }));
     const result = await discover(session, new OpenAIDecisions());
     console.log(JSON.stringify(safeResult(result, session.execution.capability)));
@@ -52,6 +58,7 @@ if (!["savings", "review"].includes(workflow)) {
         origin: target.origin,
         directory: ".local/runs",
       });
+      if (canceled) replaySession.abort.abort();
       const replayResult = await replaySession.replay();
       console.log(
         JSON.stringify({
@@ -62,12 +69,12 @@ if (!["savings", "review"].includes(workflow)) {
       );
       if (replayResult.status !== "success") process.exitCode = 1;
     } else process.exitCode = 1;
-    process.removeListener("SIGINT", cancel);
-    process.removeListener("SIGTERM", cancel);
   } catch (error) {
     console.error(JSON.stringify({ code: failureCode(error) }));
     process.exitCode = 1;
   } finally {
+    process.removeListener("SIGINT", cancel);
+    process.removeListener("SIGTERM", cancel);
     await replaySession?.close();
     await session?.close();
     await target.close();

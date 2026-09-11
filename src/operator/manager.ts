@@ -230,25 +230,33 @@ export class RunManager {
               };
         const validationTarget = await startTarget({ scenario: "normal" });
         let validation: Session | undefined;
+        const cancelValidation = () => validation?.abort.abort();
+        session.abort.signal.addEventListener("abort", cancelValidation, { once: true });
         try {
           validation = await createSession(source, inputs, {
             origin: validationTarget.origin,
             directory: this.directory,
           });
+          if (session.abort.signal.aborted) validation.abort.abort();
           const verified = await validation.replay();
+          if (verified.status === "canceled" || session.abort.signal.aborted)
+            throw new RunError("CANCELED");
           if (verified.status !== "success") throw new RunError("CHECKPOINT_FAILED");
           record.candidate = session.execution.capability;
           record.replayRunId = validation.runId;
           record.view.canApprove = true;
           record.view.phase = "success";
         } finally {
+          session.abort.signal.removeEventListener("abort", cancelValidation);
           await validation?.close();
           await validationTarget.close();
         }
       }
     } catch (error) {
-      record.view.phase = "failure";
       record.view.code = failureCode(error);
+      record.view.phase = record.view.code === "CANCELED" ? "canceled" : "failure";
+      record.view.outputs = [];
+      record.view.canApprove = false;
     } finally {
       await session.close().catch(() => {});
       await target.close();
@@ -304,7 +312,12 @@ export class RunManager {
   async image(id: string) {
     const record = this.#runs.get(id);
     if (!record) throw new RunError("INVALID_INPUT");
-    if (record.session) record.image = await record.session.surface.screenshot().catch(() => null);
+    const session = record.session;
+    if (session) {
+      const image = await session.surface.screenshot().catch(() => null);
+      if (record.session === session && session.execution.ownership.state.owner !== "terminal")
+        record.image = image;
+    }
     return record.image;
   }
 
