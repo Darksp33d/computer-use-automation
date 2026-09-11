@@ -65,6 +65,25 @@ async function current() {
   return (await manager.workspace()).runs[0];
 }
 async function screenshot(name) {
+  const run = await current();
+  if (run && run.owner !== "automation") {
+    const expected = await manager.image(run.id);
+    if (expected) {
+      await expect
+        .poll(
+          async () => {
+            const image = page.locator(".screen-content img");
+            if ((await image.count()) !== 1) return false;
+            const bytes = await image.evaluate(async (element) =>
+              Array.from(new Uint8Array(await (await fetch(element.currentSrc)).arrayBuffer())),
+            );
+            return Buffer.from(bytes).equals(expected);
+          },
+          { timeout: 10_000 },
+        )
+        .toBe(true);
+    }
+  }
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: join(directory, `${name}.png`), fullPage: true });
 }
