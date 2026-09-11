@@ -1,0 +1,21 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+.local/
+node_modules/
+dist/
+coverage/
+test-results/
+playwright-report/
+*.log
+*.pem
+*.key
+.yarn/*
+!.yarn/patches/
+!.yarn/plugins/
+!.yarn/releases/
+!.yarn/versions/
+
+# Runtime evidence is reviewed and explicitly exported before it is tracked.
+evidence/raw/

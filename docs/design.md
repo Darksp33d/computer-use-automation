@@ -1,0 +1,175 @@
+# Design contract
+
+Status: proposed implementation specification. All behavior below must be verified before it is described as implemented.
+
+## 1. Trust boundaries and module responsibilities
+
+The calling agent supplies intent and runtime arguments. The model suggests the next UI action. Neither controls the policy, the interpreter, the artifact approval decision, or the operator's authority. The UI, model responses, artifact files and operator requests are untrusted inputs.
+
+The run coordinator owns cancellation, run identity, deadlines, session lifetime and terminal results. The discovery loop consumes observations and a decision provider. The replay interpreter consumes a validated capability and a surface interface. Both use one action executor. That executor checks ownership, policy, current target identity and action preconditions before performing an action.
+
+The compiler converts executed discovery events into a draft capability. It cannot invent unexecuted successful steps. A reviewed application binding supplies permitted origins, known control identities, risk classifications, error markers and input/output semantics. It may teach the engine what a control means; it may not embed a complete action sequence that masquerades as model discovery.
+
+The simulator and scenario harness are separate from the runtime. Tests may inspect fixture state as an independent oracle, but discovery and replay may only observe the UI. Browser-generated requests are allowed; direct backend integration by the automation is excluded.
+
+## 2. Capability v1
+
+Use a strict JSON-compatible schema with a deliberately small expression language. Reject unknown keys, unsupported schema versions, oversized files, excessive steps, duplicate IDs and invalid references before creating a browser. JSON Schema export and runtime validation come from the same Zod definitions. Add semantic validation for relationships a structural schema cannot express.
+
+| Field | Contract |
+| --- | --- |
+| `schemaVersion` | Exact supported integer, initially `1`; never silently reinterpret an unknown version |
+| `id`, `revision`, `description` | Stable capability name, immutable revision, reviewed description with no runtime values |
+| `application` | Vendor/product family, required driver features and supported binding compatibility version; no tenant hostname or credentials |
+| `inputs` | Named, required constrained string/enum/integer/boolean definitions; no coercion; sensitivity classification and intended use |
+| `outputs` | Named typed definitions, sensitivity, deterministic parsing rule and source target |
+| `targets` | Logical control references with explicit scope, target strategy, expected cardinality and rationale; no opaque session node IDs |
+| `entry` | Registered route reference and a verifiable initial condition |
+| `steps` | Ordered steps with IDs, supported action, target/value references, preconditions, postconditions, effect classification and bounded recovery reference |
+| `outcomes` | Named business outcomes, detection conditions and permitted terminal step locations |
+| `recovery` | Explicit known-condition handlers, exact allowed actions, bounded attempts and return checkpoint; no general scripting or arbitrary jumps |
+| `success` | Conditions binding the requested subject, reached screen and declared output sources |
+| `provenance` | Discovery run ID, actual provider/model, prompt-template revision, driver/browser/binding versions and source revision; no raw transcript |
+
+A separate local registry entry pins the artifact's byte digest and binding digest and records a reviewed/approved revision. It is separate because an artifact must not approve itself. Hand-authored development fixtures are named and documented as fixtures; real evidence contains only genuinely discovered artifacts. Human review and replay validation are prerequisites to promote an artifact. Editing any content creates a new revision and invalidates its prior approval.
+
+The initial schema implements only the browser strategies we actually execute. Future desktop strategies require a new explicit schema extension and driver support check. A generic `kind: string` escape hatch would weaken validation and is excluded.
+
+### Values and parameters
+
+Supported value sources are `input`, `literal` and previously validated `output` references. There is no string interpolation, JavaScript, template evaluation, arbitrary JSONPath, or dynamic code. Only reviewed, non-sensitive constants such as a button label or the literal account type may be persisted. Per-invocation member IDs, nicknames, amounts and credentials use references and remain in memory.
+
+Example of a step shape, illustrative only:
+
+```json
+{
+  "id": "fill-member-id",
+  "action": "fill",
+  "target": "member-id-field",
+  "value": { "source": "input", "name": "memberId" },
+  "preconditions": [{ "kind": "visible", "target": "search-screen" }],
+  "postconditions": [{ "kind": "valueEqualsInput", "target": "member-id-field", "input": "memberId" }],
+  "effect": "reversible",
+  "recovery": null
+}
+```
+
+Conditions support a finite set: target visible/absent, registered route matches, exact safe text, value equals an input, output type/range valid, and small bounded `all`/`any` groups. Dynamic strings are passed through locator APIs as literal values rather than injected into selectors. Referenced outputs must exist earlier in execution. All referenced inputs, targets, handlers and outcomes must resolve.
+
+Action kinds initially include navigate to a registered route, click, fill, select, read, wait for a condition, and handle an explicitly recognized dialog. Read parses a visible value using a declared parser. Numeric output rejects malformed grouping, unsupported currency, overflow and non-finite numbers. Currency is represented in integer minor units within the safe integer range. Time-dependent outputs may change on later replay; determinism describes execution rules, not an assertion that external state never changes.
+
+## 3. Observation and targeting
+
+The browser driver returns an observation generation, registered route/frame information, visible control candidates, allowed structural context, recognized state markers and an in-memory masked screenshot where safe. The model sees only this bounded observation, the goal, the task contract and named input references. It cannot inspect hidden DOM attributes for data, execute JavaScript, access the filesystem or call the simulator's backend.
+
+Discovery decisions select a control reference from the current observation. Immediately before dispatch the driver resolves that control again. Stale observations and changed identity force a new observation, not a blind click.
+
+Target strategies, in order of preference:
+
+1. Exact accessible role and name inside an explicit, unique frame/screen scope.
+2. Exact visible text or associated field label in that scope.
+3. A reviewed relation in legacy markup, such as the input in the same form row as the exact visible "Member number" caption. Frame identity, row identity and control cardinality must all agree.
+
+Prefer stable user-visible meaning over generated IDs, broad CSS paths and element indexes. The binding can supply an explicit fallback only if it preserves identity and has its own test. Replay records which strategy resolved; it never uses `.first()`, force clicks, fuzzy matching, or silently generated fallback selectors. Zero matches wait within the deadline or fail. Multiple matches fail as `TARGET_AMBIGUOUS` before any input.
+
+Screenshots help discovery understand a poorly labeled screen. We are not claiming image-only deterministic replay in v1. If a control cannot be grounded into a supported stable strategy, discovery pauses for intervention or rejects the capability. A native desktop driver could implement accessibility identity and verified visual anchors later, but it must satisfy the same resolution and ambiguity contract.
+
+## 4. Discovery and compilation
+
+1. Resolve the registered target and reviewed task contract. Validate input types and policy compatibility. Launch a fresh owned session.
+2. Observe the live UI. Replace sensitive input values and matching displayed data with reference labels in model-bound text; mask the corresponding image regions. If masking coverage is unknown, omit the image and use the safe structured view.
+3. Ask the provider for exactly one structured decision: permitted action, current control reference, value reference and a bounded reason code. Do not request or persist private reasoning traces. Human-readable event reasons are generated from vetted templates.
+4. Handle refusal, incomplete response, malformed decision, timeout and rate limit separately. No parsing repair that could change action meaning. A bounded retry may repeat a failed model request, but no UI action is dispatched until a valid decision is accepted.
+5. Pass the decision to the shared executor and observe its outcome. Journal the sanitized action, decision reference, policy decision and actual result.
+6. Stop on verified completion, cancellation, budget exhaustion, no-progress detection, policy denial or a state requiring intervention. A model `finish` request is advisory until the task contract's conditions pass.
+7. Compile only a successful executed path. Resolve observation references into stable target descriptors and parameter bindings. Keep the raw journal separate. A recovery detour must be represented by an explicit tested handler or rejected as unsuitable for publication; do not silently delete history to create a cleaner-looking flow.
+8. Validate structure and semantics, scan for sensitive values, and write a draft atomically. Replay it in a fresh session with different synthetic inputs. Compare actual output to an independent test oracle. Promote only after review and passing replay validation.
+
+Initial limits, to be confirmed in the first genuine run: 30 model decisions, 180 seconds of active discovery, 30 seconds per model call, 10 seconds per UI condition, at most two classified transient request retries, and intervention after three repeated safe structural states with no progress. Add input/output token limits and a conservative per-run cost admission check using the selected model's documented rates. Provider usage is recorded as metadata; cost is an estimate, including timed-out requests that may still be billed. The total deadline always dominates per-operation limits.
+
+SDK retry behavior must be configured explicitly to avoid multiplying retry layers. Cancellation stops new commands and aborts model requests; it cannot undo a UI effect already sent. The first genuine run verifies these budgets instead of assuming the initial values will work.
+
+## 5. Replay and result semantics
+
+Replay resolves a reviewed artifact revision plus a registered application binding and validated inputs. It checks compatibility and effective policy before opening a session. It has no provider instance, key requirement, or model fallback.
+
+At each step: check ownership and cancellation; classify current state; evaluate preconditions; uniquely resolve the target; authorize the exact action and its effect; dispatch once; wait for a declared postcondition or a classified competing state; record the result. Business outcomes and safety blockers take precedence over success if both appear. Conflicting state markers fail explicitly instead of being arbitrarily ordered.
+
+| Result | Meaning | Example |
+| --- | --- | --- |
+| `success` | Final checkpoint and output validation passed | Savings balance returned for the requested member |
+| `business_outcome` | Valid known response with a typed code | `MEMBER_NOT_FOUND`, `ACCOUNT_NOT_FOUND`, `VALIDATION_REJECTED` |
+| `failure` | A technical, policy or unresolved execution condition stopped the run | `PERMISSION_DENIED`, `TARGET_AMBIGUOUS`, `APP_UNAVAILABLE`, `UNSUPPORTED_BINDING`, `POLICY_DENIED`, `UNCERTAIN_EFFECT` |
+| `canceled` | Caller or operator terminated the run | No new commands; any already dispatched effect is reported |
+
+`awaiting_human` is a nonterminal run state, not a successful final result. A failed intervention deadline becomes a typed failure. Business outcomes have code and safe schema-defined details, not partial success output. Failure details include step ID, action type, safe expected/observed condition summaries, effect state (`not_dispatched`, `confirmed`, `unknown`), retry count, session/run identity and a sanitized evidence reference. Never serialize a raw Playwright/provider error message directly.
+
+### Recovery rules
+
+- Slow load: wait for the declared condition within one bounded deadline. Do not use a fixed sleep as proof that a screen is ready.
+- Known notice: run a reviewed dismiss action once, verify the notice is gone and the interrupted step's precondition holds.
+- Missing member or account: return a business outcome immediately.
+- Validation rejection: return the declared outcome; never invent different business input to make the form pass.
+- Permission denied: pause or fail, with no privilege escalation or alternate account search.
+- Session expiry: pause for operator intervention. Resume at the current step only if its preconditions and subject identity are restored. If the entry state is restored instead, restart only a capability explicitly classified as read-only and only with operator acknowledgment. Review/form flows otherwise stop and require a fresh run.
+- Unexpected modal or unknown screen: pause with safe evidence. Unknown browser-native dialogs remain pending under the same session and are exposed as an intervention; no blanket auto-accept handler.
+- Timeout after click: inspect the postcondition and known outcomes first. Retry only an explicitly repeat-safe action when the precondition establishes a safe state. An unobservable effect stops as `UNCERTAIN_EFFECT`.
+- Process or browser crash: report interruption from the persisted safe journal if available; do not recreate a session and claim it is the original live session.
+
+Exactly-once execution of arbitrary legacy UI side effects is not a guarantee the system can provide. A durable job ID can deduplicate job admission; it cannot prove whether a bank screen committed a transaction before losing its response.
+
+## 6. Policy and data handling
+
+Effective permission is the intersection of trusted installation policy, reviewed binding policy, and the capability's requested permissions. An artifact can narrow authority but cannot expand it. Risk classification comes from the binding's known control/effect map, never from model wording or button-text heuristics alone. Unknown controls/effects are denied.
+
+Allowlist exact origins, normalized registered routes, permitted query keys, HTTP methods and permitted UI actions. Reject URL userinfo, unregistered schemes, unregistered ports and unapproved navigation. Check before action and at the browser request boundary, including frames, resource loads, forms, redirects, popups and downloads. Service workers are blocked. WebSockets, downloads and file selection are denied unless explicitly implemented and tested. A route check after navigation is detection, not prevention.
+
+The initial target requires no redirects. Its intercepted requests use bounded fetching with automatic redirects and retries disabled; redirect responses fail closed. The actual request receiver tests must prove this behavior on the pinned browser. Arbitrary target support is disabled. Native browser hooks remain application guardrails, not complete network isolation. The container profile and future tenant worker boundary restrict egress independently; see [verification](verification.md) and [scale](scale.md).
+
+The final account-opening action is blocked in v1 for automation and mediated operators. A person cannot approve a forbidden action by setting `confirmed: true`. The review page is the capability's terminal boundary. Production write capabilities would require reviewed effect semantics, transaction-specific authorization and reconciliation before expanding this policy.
+
+Persist schema-approved event fields only. Safe identifiers and allowlisted static labels describe what happened; sensitive inputs, output values, goals, DOM text, prompt contents, cookies, storage state, request bodies, credentials and raw screenshots do not enter logs. Do not hash low-entropy member IDs as a supposed anonymization method. Keep runtime values in memory and release them at session termination. A sanitization failure stops evidence export rather than falling back to raw data.
+
+The guaranteed richer failure signal is a structural snapshot: safe registered route, frame tree, control types, visible/enabled flags, vetted label references, matching counts, condition evaluations and ownership state. Unknown strings are omitted. Screenshots are optional and masked before leaving the process. Full traces and videos are disabled by default because they can contain sensitive page/network data. Synthetic evidence is exported explicitly after scanning and visual review.
+
+Use `store: false` for provider requests, but do not equate that setting with zero provider retention. Production financial data needs approved provider controls and data policy; the submission sends synthetic data only.
+
+## 7. Human control transfer
+
+```mermaid
+stateDiagram-v2
+  [*] --> Automation
+  Automation --> Pausing: intervention required
+  Pausing --> AwaitingHuman: action settles or is classified uncertain
+  AwaitingHuman --> Human: exclusive claim
+  Human --> Resuming: return control
+  Resuming --> Automation: resume conditions verified
+  Resuming --> AwaitingHuman: incompatible live state
+  Human --> AwaitingHuman: operator lease expires
+  Automation --> Terminal: result or cancellation
+  AwaitingHuman --> Terminal: deadline or cancellation
+  Human --> Terminal: cancellation
+  Terminal --> [*]
+```
+
+Ownership contains `sessionId`, `runId`, `owner`, monotonically increasing `epoch`, and operator identity when applicable. The controller serializes commands and state transitions. It does not hold an action queue open to old commands after a transfer. Every command carries the expected epoch and is checked again at dispatch.
+
+Pausing rejects new automation commands and resolves the in-flight action's known/unknown status before granting human control. A second claimant receives a conflict. A stale automation response or stale operator tab cannot act after an ownership change. Lease expiry pauses the session; it does not silently return control to automation.
+
+A timeout wrapper alone is not cancellation: the underlying browser command must settle or be stopped before another owner may issue input. If command quiescence cannot be established, retain a blocked session or terminate it with a failure. Application-side asynchronous effects can still complete after the input command settles; show that uncertainty to the operator and require re-observation before any conflicting action.
+
+The console is a small loopback service with an intervention list, safe reason/current-step view, live screenshot or structural view, claim, click/type/select controls, dialog controls, return-control and cancel. Its commands drive the existing browser/page object through the executor. It never opens a replacement browser session. Human actions are individually recorded with actor, epoch, step context and sanitized target/value references. These events remain a separate manual segment and do not silently alter the saved capability.
+
+Bind to loopback, validate Host and Origin, require a per-session high-entropy credential, restrict request sizes, expire credentials, and reject stale generations. No credential in query logs or persisted evidence. Console bootstrap should use a URL fragment exchanged for an in-memory credential with immediate fragment removal; requests use an authorization header. The target application never receives the operator credential or the model key. Provider and operator routes are outside the target's allowed browser origins.
+
+The normal manual path uses mediated console commands so authority and action evidence are enforceable. Direct DevTools or unmanaged browser input is outside this guarantee and is disabled in the default flow. The local operator name is attribution on a trusted workstation, not enterprise identity proof. Production requires authenticated operator identities and per-tenant authorization.
+
+Before resuming, revoke human command admission, wait for any accepted human command to settle, increment the epoch, re-observe, verify current step/subject preconditions and policy, then re-enable automation. A human "done" click never marks the goal successful by itself. Polls and commands are bounded; a ten-minute initial intervention TTL prevents orphaned sessions, with explicit remaining-time display.
+
+## 8. Persistence and lifecycle
+
+Artifacts are immutable after promotion. Write a temporary file in the destination directory, flush it, then atomically rename it. Serialize bounded journal events with sequence numbers; disk write failures are surfaced. Enforce per-run event and byte limits. Persist action intent before dispatch and outcome afterward; if audit persistence is unavailable, stop new actions. A crash between these records means the effect may be unknown.
+
+The local runner supports one active session per invocation and bounded independent invocations. Each gets a separate browser process/context, credentials, output directory and lifecycle. Ownership is in-process; it is not a distributed lease. A small safe run manifest marks incomplete runs without retaining browser state or inputs. A subsequent invocation can report interruption, but cannot resume the lost session.
+
+On cancellation, stop admitting commands, settle or classify the in-flight operation, close the browser, expire operator credentials, drain safe journal writes and stop owned servers. Terminate only processes created by this run. Normal runtime files live in ignored `.local/`; submission evidence is a deliberate reviewed export. Apply age/size cleanup to runtime evidence with an explicit keep option, and document that filesystem deletion is not a cryptographic erasure guarantee.
