@@ -1,10 +1,10 @@
 # Computer-Use Automation System
 
-Planning edition. This describes the proposed system; application behavior and run evidence are not yet implemented. The final report will be reconciled with the tested code and genuine evidence before submission. The detailed working checklist is in [PLAN.md](PLAN.md).
+Implementation edition, updated at P5 on 2026-09-11. Contracts, the simulator, guarded browser sessions and deterministic replay are verified. Discovery is being integrated; artifact promotion, the React operator console, containment and final evidence remain pending. Statements about those pending features describe the planned contract. The detailed working checklist is in [PLAN.md](PLAN.md).
 
 ## Architecture
 
-The system will turn one model-discovered UI workflow into a reusable capability. A local fictional banking application will supply synthetic data, an iframe workspace, nested tables, generated element IDs and intentionally imperfect labels. The primary flow searches for a member, opens their savings account and reads the available balance. A second flow prepares a sub-account form and stops at review.
+The system will turn one model-discovered UI workflow into a reusable capability. A local fictional banking application supplies synthetic data, an iframe workspace, nested tables, generated element IDs and intentionally imperfect labels. The primary flow searches for a member, opens their savings account and reads the available balance. A second flow prepares a sub-account form and stops at review.
 
 TypeScript on Node.js 24 keeps the artifact, CLI, driver and operator contracts in one language. Playwright supplies real UI interaction and frame-aware targeting. A small OpenAI adapter supplies structured discovery decisions. Zod validates untrusted data. React with TypeScript and Vite will provide the stateful operator workspace, with static assets served by the local control server. The target retains intentionally legacy HTML and iframe navigation. Server-side authorization and policy remain the security boundary; the frontend framework does not confer trust.
 
@@ -12,13 +12,13 @@ The run coordinator owns session lifetime. Discovery and replay share a policy-c
 
 ## Artifact schema
 
-A capability will be strict versioned JSON with a stable ID, immutable revision, application compatibility, typed inputs/outputs, logical targets, ordered steps, preconditions, postconditions, known outcomes, bounded recovery and a success checkpoint. Runtime values are references, not literals. Money uses integer minor units and an explicit currency. Structural validation is followed by reference and compatibility validation before a browser opens.
+A capability is strict versioned JSON with a stable ID, immutable revision, application compatibility, typed inputs/outputs, logical targets, ordered steps, preconditions, postconditions, known outcomes, bounded recovery and a success checkpoint. Runtime values are references, not literals. Money uses integer minor units and an explicit currency. Structural validation is followed by reference and compatibility validation before a browser opens.
 
 The artifact is independent of the model transcript. Its provenance identifies the genuine discovery run and tool versions without preserving sensitive prompts or observations. A separate review record pins artifact and binding digests; the artifact cannot approve itself. A fresh-session replay with a second member establishes basic reuse before promotion. No arbitrary code or general expression language is embedded. [Full contract](docs/design.md).
 
 ## Determinism & error handling
 
-Replay will interpret the saved steps without a model, uniquely resolve each target, verify conditions and extract typed output from the UI. Exact role/text targets within frame scopes are preferred. Legacy controls use reviewed relations to visible captions; generated IDs and positional first-match choices are excluded. Ambiguity stops execution.
+Replay interprets the saved steps without a model, uniquely resolve each target, verify conditions and extract typed output from the UI. Exact role/text targets within frame scopes are preferred. Legacy controls use reviewed relations to visible captions; generated IDs and positional first-match choices are excluded. Ambiguity stops execution.
 
 Business outcomes such as member absent and validation rejected are separate from technical failures. Known notices have bounded recovery; unknown dialogs and expired sessions require intervention. A timeout after a click does not authorize a repeat: the engine re-observes, verifies the effect, or reports uncertainty. Final success requires the requested member, account type, screen and output schema to agree. Deterministic execution does not imply that a changing bank balance must be identical across runs. [Acceptance scenarios](docs/verification.md).
 
@@ -38,9 +38,9 @@ The loopback console will drive the same browser/page through mediated click, ty
 
 ## Safety
 
-Trusted policy will restrict origins, routes, methods, controls and effects before dispatch. Artifacts and model responses cannot grant themselves permission. Unknown effects and the final account-opening action are blocked. Browser request controls, service-worker blocking and redirect denial protect the supported target; network-enforced worker isolation is a separate production requirement.
+Trusted policy restricts origins, routes, methods, controls and effects before dispatch. Artifacts and model responses cannot grant themselves permission. Unknown effects and the final account-opening action are blocked. Browser request controls, service-worker blocking and redirect denial protect the supported target; network-enforced worker isolation is a separate production requirement.
 
-Events and artifacts contain allowlisted fields and input references. Sensitive values, goals, credentials, browser storage, raw exceptions and traces are excluded. A sanitized structural failure snapshot supplies richer evidence even when an image cannot be safely masked. Only synthetic data is used for provider calls and submission evidence. Provider storage settings are documented without claiming zero retention. The operator endpoint uses a local credential, Origin/Host checks and ownership epochs; enterprise operator identity is a deployment requirement.
+Events and artifacts contain allowlisted fields and input references. Sensitive values, goals, credentials, browser storage, raw exceptions and traces are excluded. A sanitized structural failure snapshot supplies richer evidence even when an image cannot be safely masked. Only synthetic data is used for provider calls and submission evidence. Provider storage settings are documented without claiming zero retention. The planned operator endpoint uses a local credential, Origin/Host checks and ownership epochs; enterprise operator identity is a deployment requirement.
 
 ## Cuts
 

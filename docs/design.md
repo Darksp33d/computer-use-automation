@@ -1,6 +1,6 @@
 # Design contract
 
-Status: proposed implementation specification. All behavior below must be verified before it is described as implemented.
+Status: living design contract. P1-P5 are implemented and verified. Discovery is in progress; registry promotion, the React console and containment remain planned. PLAN.md records the latest passed gates. The schema descriptions below match the implemented v1; future behavior is identified by its stage.
 
 ## 1. Trust boundaries and module responsibilities
 
@@ -37,26 +37,21 @@ The initial schema implements only the browser strategies we actually execute. F
 
 ### Values and parameters
 
-Supported value sources are `input`, `literal` and previously validated `output` references. There is no string interpolation, JavaScript, template evaluation, arbitrary JSONPath, or dynamic code. Only reviewed, non-sensitive constants such as a button label or the literal account type may be persisted. Per-invocation member IDs, nicknames, amounts and credentials use references and remain in memory.
+Fill and select actions accept named input references. Read actions name a declared output. Click actions name a registered target. There is no interpolation, JavaScript, arbitrary selector, output chaining or executable template. Conditions are bounded conjunctions of visible, absent, equalsInput and equalsLiteral checks. The reviewed binding supplies safe labels and literal conditions; invocation data stays in memory.
 
-Example of a step shape, illustrative only:
+Example of the implemented step shape:
 
 ```json
 {
   "id": "fill-member-id",
-  "action": "fill",
-  "target": "member-id-field",
-  "value": { "source": "input", "name": "memberId" },
+  "action": { "kind": "fill", "target": "member-field", "input": "memberId" },
   "preconditions": [{ "kind": "visible", "target": "search-screen" }],
-  "postconditions": [{ "kind": "valueEqualsInput", "target": "member-id-field", "input": "memberId" }],
-  "effect": "reversible",
-  "recovery": null
+  "postconditions": [{ "kind": "equalsInput", "target": "member-field", "input": "memberId" }],
+  "effect": "reversible"
 }
 ```
 
-Conditions support a finite set: target visible/absent, registered route matches, exact safe text, value equals an input, output type/range valid, and small bounded `all`/`any` groups. Dynamic strings are passed through locator APIs as literal values rather than injected into selectors. Referenced outputs must exist earlier in execution. All referenced inputs, targets, handlers and outcomes must resolve.
-
-Action kinds initially include navigate to a registered route, click, fill, select, read, wait for a condition, and handle an explicitly recognized dialog. Read parses a visible value using a declared parser. Numeric output rejects malformed grouping, unsupported currency, overflow and non-finite numbers. Currency is represented in integer minor units within the safe integer range. Time-dependent outputs may change on later replay; determinism describes execution rules, not an assertion that external state never changes.
+Entry navigation is registered as `search`. Known recovery can click one reviewed control once and verify its postconditions. The schema deliberately omits unused navigation actions, nested boolean expressions and output chaining (D10). Reads reject malformed grouping, unsupported currency, overflow and non-finite numbers. Money is integer minor units. Determinism describes execution rules; external values may change between runs.
 
 ## 3. Observation and targeting
 
