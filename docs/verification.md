@@ -1,6 +1,6 @@
 # Verification and threat model
 
-Status: P1-P7 are implemented. The current aggregate check passes 18 unit and 30 browser tests, including operator accessibility and responsive form behavior. The owner confirmed a successful manual notice handoff in development run `b6e31893-3921-487c-a5cb-2c3da9477e13`. A later visual canary exposed a CSP-related screenshot redaction defect, corrected with native masks and byte-level image invariance coverage. Pre-fix development images are not privacy evidence. The matrix below remains the acceptance contract: unchecked P8-P10 scenarios, independent containment, the 100-session exercise and final source-linked evidence are still pending. Test definitions live in `tests/unit/` and `tests/browser/`; scripted provider and operator tests are not evidence of independent human or live-model execution.
+Status: P1-P7 are implemented. The current aggregate check passes 18 unit and 31 browser tests, including operator accessibility and responsive form behavior. The owner confirmed a successful manual notice handoff in development run `b6e31893-3921-487c-a5cb-2c3da9477e13`. A later visual canary exposed a CSP-related screenshot redaction defect, corrected with native masks and byte-level image invariance coverage. Pre-fix development images are not privacy evidence. The matrix below remains the acceptance contract: unchecked P8-P10 scenarios, independent containment, the 100-session exercise and final source-linked evidence are still pending. Test definitions live in `tests/unit/` and `tests/browser/`; scripted provider and operator tests are not evidence of independent human or live-model execution.
 
 ## 1. Test strategy
 
@@ -108,3 +108,7 @@ The final release gate includes a fresh clone/install on documented macOS and Li
 Keep each commit about one behavior or prerequisite. Subjects use an imperative verb and a useful scope; bodies explain the reason and non-obvious tradeoffs. Tests and documentation describing a changed behavior travel with the change. Avoid giant final commits, `WIP` subjects, unrelated cleanup and rewriting already published iteration history.
 
 Before each commit, inspect the staged diff, run the stage's full available checks and inspect new data files. Record successful stage gates in the plan. CI must stay green at every published implementation revision. Do not install hooks that change the user's global Git configuration. Branch protection can be configured when repository/account capabilities are known; do not claim it is enabled without verifying GitHub's result.
+
+## Verification corrections
+
+The first Linux runs of the operator UI test (`34628609067`, `34628859463`) failed while the resumed workflow was still running. The assertion used the five-second single-element default for a multi-step workflow; other Linux replay measurements took seven to eight seconds. The completion assertion now allows twenty seconds while polling actual status. Runtime action and execution deadlines are unchanged, and the suite still has zero retries. The original failed CI runs remain in the history.

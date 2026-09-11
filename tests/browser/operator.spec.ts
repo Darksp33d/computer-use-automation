@@ -23,7 +23,8 @@ test("production React console completes exclusive handoff through visible contr
       0,
     );
     await page.getByRole("button", { name: "Verify & resume", exact: true }).click();
-    await expect(page.getByRole("status")).toHaveText("Completed");
+    // This waits for the remaining workflow, not a single UI render.
+    await expect(page.getByRole("status")).toHaveText("Completed", { timeout: 20_000 });
     await expect(page.getByText("$12,450.75", { exact: true })).toBeVisible();
     expect(errors).toEqual([]);
     const accessibility = await new AxeBuilder({ page })
