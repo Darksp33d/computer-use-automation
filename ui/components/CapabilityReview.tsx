@@ -27,8 +27,7 @@ export function CapabilityReview({
     >
       <div className="dialog-heading">
         <div>
-          <span className="eyebrow">CAPABILITY REVIEW</span>
-          <h2 id="review-title">Review the reusable path.</h2>
+          <h2 id="review-title">Review capability</h2>
         </div>
         <button className="icon-close" aria-label="Close capability review" onClick={close}>
           ×

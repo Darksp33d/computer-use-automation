@@ -34,3 +34,9 @@ All controls have real behavior, labels and keyboard focus. Disabled controls ex
 Honor reduced motion. Short transitions may clarify state changes; polling must not move focus or replace a partially completed operator form. Use an accessible dialog for starting a run, visible validation, proper status announcements, and text as well as color for outcomes. Test keyboard operation, narrow viewports and empty/error/paused/success states in a real browser.
 
 The legacy target has its own restrained banking visual identity and intentionally old markup. Its imperfect DOM is a test condition, not permission to make the operator experience visually careless.
+
+## Final copy review
+
+The owner requested less decorative copy. Page titles now name the destination: Sessions and Capabilities. Empty states contain one useful sentence and one action. Removed the promotional footer, capability claims under the empty state, redundant dialog labels and repeated runtime text in the activity record. Handoff instructions change with ownership; account-creation limits appear when choosing the review workflow. Closed sessions without an image use a compact, explicit closed state. Preserve the original palette, typography and layout rather than filling the removed space with new decoration.
+
+Desktop empty, paused, completed and catalog screens and the 390px session dialog were inspected after the change. The scripted visible-control handoff completed without browser errors; the existing keyboard, responsive form-state and accessibility tests remain the behavioral gate.

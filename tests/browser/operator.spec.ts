@@ -12,7 +12,7 @@ test("production React console completes exclusive handoff through visible contr
     await page.goto(app.server.url);
     expect(page.url()).toBe(`${app.server.origin}/`);
     await page.getByRole("button", { name: "New session", exact: true }).click();
-    await expect(page.getByRole("dialog", { name: "Put a workflow to work." })).toBeVisible();
+    await expect(page.getByRole("dialog", { name: "New session" })).toBeVisible();
     await page
       .getByRole("combobox", { name: "Scenario", exact: true })
       .selectOption("intervention");

@@ -20,7 +20,7 @@ export function App() {
     return (
       <main className="launch-state">
         <Wordmark />
-        <h1>Open your secure workspace.</h1>
+        <h1>Connect to Groove</h1>
         <p>
           Use the launch link printed by <code>yarn demo</code>. It connects this tab to your local
           session controller.
@@ -40,10 +40,9 @@ export function App() {
         <div className="workspace-label">
           <span className="workspace-avatar">N</span>
           <div>
-            Northstar workspace<small>Computer-use operations</small>
+            Northstar<small>Banking workspace</small>
           </div>
         </div>
-        <span className="nav-label">WORKSPACE</span>
         <button
           className={page === "sessions" ? "nav-item active" : "nav-item"}
           onClick={() => setPage("sessions")}
@@ -73,28 +72,22 @@ export function App() {
           </span>
           <span className="connection-state">
             <span className="local-indicator" />
-            {workspace.data ? "Controller connected" : "Connecting"}
+            {workspace.data ? "Connected" : "Connecting"}
           </span>
         </header>
         <main id="workspace">
           <div className="page-heading">
-            <div>
-              <span className="eyebrow">COMPUTER-USE OPERATIONS</span>
-              <h1>
-                {page === "sessions"
-                  ? "Your workflows, in motion."
-                  : "Learn once. Run with confidence."}
-              </h1>
-              <p>
-                {page === "sessions"
-                  ? "Follow every step. Step in when it matters."
-                  : "Reviewed, parameterized workflows ready for deterministic replay."}
-              </p>
-            </div>
-            <button className="primary" disabled={!workspace.data} onClick={() => setNewRun(true)}>
-              <Icon name="plus" size={16} />
-              New session
-            </button>
+            <h1>{page === "sessions" ? "Sessions" : "Capabilities"}</h1>
+            {page === "capabilities" || workspace.data?.runs.length ? (
+              <button
+                className="primary"
+                disabled={!workspace.data}
+                onClick={() => setNewRun(true)}
+              >
+                <Icon name="plus" size={16} />
+                New session
+              </button>
+            ) : null}
           </div>
           {workspace.error && !newRun ? (
             <div className="error-banner" role="alert">
@@ -125,7 +118,7 @@ export function App() {
                       <h3>{workflowTitle(capability.workflow)}</h3>
                       <p>
                         {capability.workflow === "savings"
-                          ? "Verify a member's savings balance and return typed output."
+                          ? "Read and verify a member's available savings balance."
                           : "Prepare account details and stop before final creation."}
                       </p>
                       <small className="mono">
@@ -141,11 +134,8 @@ export function App() {
               ) : (
                 <div className="empty-state">
                   <Icon name="box" size={38} />
-                  <h2>Your first capability starts with discovery.</h2>
-                  <p>
-                    Start a discovery session, inspect the verified result, and approve the reusable
-                    path.
-                  </p>
+                  <h2>No capabilities yet</h2>
+                  <p>Discover a workflow and approve it here for future replay.</p>
                   <button className="secondary" onClick={() => setNewRun(true)}>
                     Start a session
                   </button>
@@ -197,43 +187,20 @@ export function App() {
                       <Icon name="check" size={28} />
                     </div>
                   </div>
-                  <span className="eyebrow">READY WHEN YOU ARE</span>
-                  <h2>A clear view of every workflow.</h2>
-                  <p>
-                    Launch a reviewed capability or discover a new path.
-                    <br />
-                    Your live session and its execution record will appear here.
-                  </p>
+                  <h2>No sessions yet</h2>
+                  <p>Replay a saved workflow or discover a new one.</p>
                   <button
                     className="primary"
                     disabled={!workspace.data}
                     onClick={() => setNewRun(true)}
                   >
-                    Start your first session <Icon name="arrow" size={16} />
+                    <Icon name="plus" size={16} /> New session
                   </button>
-                  <div className="welcome-facts">
-                    <span>
-                      <Icon name="shield" size={16} />
-                      Policy-checked actions
-                    </span>
-                    <span>
-                      <Icon name="activity" size={16} />
-                      Same-session handoff
-                    </span>
-                    <span>
-                      <Icon name="box" size={16} />
-                      Model-free replay
-                    </span>
-                  </div>
                 </section>
               )}
             </>
           )}
         </main>
-        <footer className="workspace-footer">
-          <span>GROOVE / LOCAL WORKSPACE</span>
-          <span>Discover. Verify. Replay.</span>
-        </footer>
       </div>
       {reviewId ? (
         <CapabilityReview

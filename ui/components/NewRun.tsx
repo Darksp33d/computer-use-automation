@@ -30,8 +30,7 @@ export function NewRun({
     <dialog aria-labelledby="new-run-title" ref={dialog} className="new-run" onCancel={close}>
       <div className="dialog-heading">
         <div>
-          <span className="eyebrow">NEW SESSION</span>
-          <h2 id="new-run-title">Put a workflow to work.</h2>
+          <h2 id="new-run-title">New session</h2>
         </div>
         <button className="icon-close" type="button" aria-label="Close new session" onClick={close}>
           ×
@@ -72,7 +71,7 @@ export function NewRun({
             />
             <span>
               <strong>Replay</strong>
-              <small>Run a reviewed capability. No model calls.</small>
+              <small>Run a saved workflow. No model calls.</small>
             </span>
           </label>
           <label>
@@ -84,7 +83,7 @@ export function NewRun({
             />
             <span>
               <strong>Discover</strong>
-              <small>Learn from the live UI with GPT-6 Astra.</small>
+              <small>Learn a new workflow with GPT-6 Astra.</small>
             </span>
           </label>
         </fieldset>
@@ -134,7 +133,9 @@ export function NewRun({
             </label>
           </div>
         ) : null}
-        <p className="form-note">All records are fictional. Account preparation stops at review.</p>
+        {workflow === "review" ? (
+          <p className="form-note">Stops at review. No account will be opened.</p>
+        ) : null}
         {!allowed ? (
           <p role="status" className="notice-text">
             {mode === "replay"

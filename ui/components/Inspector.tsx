@@ -71,7 +71,6 @@ export function Inspector({
   const paused = run.owner === "awaiting_human" || run.owner === "human";
   return (
     <aside className="inspector">
-      <span className="eyebrow">SESSION DETAILS</span>
       <div className={`status-block ${paused ? "needs-attention" : ""}`}>
         <span className={`status-dot ${run.phase}`} />
         <h2 role="status" aria-live="polite">
@@ -81,7 +80,7 @@ export function Inspector({
       <dl className="metadata">
         <div>
           <dt>Mode</dt>
-          <dd>{run.mode === "replay" ? "Deterministic replay" : "Model discovery"}</dd>
+          <dd>{run.mode === "replay" ? "Replay" : "Discovery"}</dd>
         </div>
         <div>
           <dt>Control</dt>
@@ -108,7 +107,6 @@ export function Inspector({
       </dl>
       {paused ? (
         <section className="attention-card">
-          <span className="eyebrow">YOUR ATTENTION IS NEEDED</span>
           <h3>
             {run.code === "SESSION_EXPIRED"
               ? "Restore the session"
@@ -116,7 +114,11 @@ export function Inspector({
                 ? "Review the checkpoint"
                 : "Resolve the interruption"}
           </h3>
-          <p>Take control of this live session. Automation stays paused while you work.</p>
+          <p>
+            {run.owner === "awaiting_human"
+              ? "Take control to resolve this. Automation will stay paused."
+              : "Use the controls below, then verify and resume."}
+          </p>
           {run.expiresAt ? (
             <small>
               Intervention expires at{" "}
@@ -216,10 +218,9 @@ export function Inspector({
       ) : null}
       {run.canApprove ? (
         <section className="approval-card">
-          <h3>Ready for your review</h3>
+          <h3>Ready to review</h3>
           <p>
-            This discovered path passed a fresh replay with different inputs. Approve this revision
-            to make it available for future runs.
+            Replay passed with different inputs. Review the steps before saving this capability.
           </p>
           <button className="primary full" disabled={busy} onClick={review}>
             Review capability
@@ -242,13 +243,6 @@ export function Inspector({
           </small>
         </section>
       ) : null}
-      <div className="boundary-note">
-        <Icon name="shield" />
-        <p>
-          Only reviewed controls are permitted. Final account creation is blocked for every
-          operator.
-        </p>
-      </div>
       {run.owner !== "terminal" ? (
         <button
           className="text-button danger-text"

@@ -37,4 +37,4 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 
 ### In progress
 
-- P10: Final committed-source evidence and the clean-checkout walkthrough remain pending. The final UI pass will remove decorative slogans and repeated text while preserving useful instructions and the visual design.
+- P10: Simplified page titles, empty states, dialogs, activity and inspector copy following the owner’s review. Removed slogans and duplicate explanations, preserved contextual handoff instructions, and made the closed-session placeholder compact. Desktop/mobile visual inspection and the full automated suite pass. Final committed-source evidence and the clean-checkout walkthrough remain pending.

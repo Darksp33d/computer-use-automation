@@ -57,29 +57,34 @@ export function SessionPanel({ run }: { run: RunView }) {
             Masked view
           </span>
         </div>
-        <div className="screen-content">
+        <div
+          className={`screen-content${run.owner === "terminal" && !image ? " closed-screen" : ""}`}
+        >
           {image ? (
             <img src={image} alt="Masked view of the same live Northstar banking session" />
           ) : (
             <div className="screen-placeholder">
               <Icon name="screen" size={34} />
               <h3>
-                {run.hasDialog ? "A browser dialog needs attention" : "Session view is unavailable"}
+                {run.owner === "terminal"
+                  ? "Session closed"
+                  : run.hasDialog
+                    ? "A browser dialog needs attention"
+                    : "Session view is unavailable"}
               </h3>
               <p>
-                {run.hasDialog
-                  ? "Claim this session to dismiss the dialog, then verify and resume."
-                  : "The structured event record remains available below."}
+                {run.owner === "terminal"
+                  ? "Results and activity remain available."
+                  : run.hasDialog
+                    ? "Take control to dismiss the dialog, then verify and resume."
+                    : "Activity remains available below."}
               </p>
             </div>
           )}
         </div>
       </div>
       <div className="timeline-header">
-        <div>
-          <span className="eyebrow">EXECUTION RECORD</span>
-          <h2>Every action, accounted for.</h2>
-        </div>
+        <h2>Activity</h2>
         <span className="counter">{run.events.length} events</span>
       </div>
       <ol className="timeline" tabIndex={0} aria-label="Execution events">
@@ -93,15 +98,13 @@ export function SessionPanel({ run }: { run: RunView }) {
             </span>
             <div>
               <strong>{eventLabels[event.type] ?? event.type}</strong>
-              <p>
-                {event.target?.replaceAll("-", " ") ??
-                  event.code?.replaceAll("_", " ") ??
-                  (event.actor === "local-operator"
-                    ? "Local operator"
-                    : event.type === "model-decision"
-                      ? "GPT-6 Astra · structured decision"
-                      : "Verified session runtime")}
-              </p>
+              {event.target || event.code || event.actor === "local-operator" ? (
+                <p>
+                  {event.target?.replaceAll("-", " ") ??
+                    event.code?.replaceAll("_", " ") ??
+                    "Local operator"}
+                </p>
+              ) : null}
             </div>
             <time dateTime={event.at}>
               {new Date(event.at).toLocaleTimeString([], { hour12: false })}
