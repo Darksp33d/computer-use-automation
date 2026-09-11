@@ -47,6 +47,11 @@ This log records accepted milestones and material changes. PLAN.md is the comple
 
 - Preserved the final masked snapshot when an earlier image request finishes late. Propagated cancellation into discovery's validation replay in both the operator and CLI. A canceled validation cannot expose output or become approvable. Verified 22 unit and 58 browser tests, including deterministic races at both boundaries.
 
+### Assignment input and diagnostics correction
+
+- Added explicit public goal and registered target inputs to console discovery and the bounded JSON CLI. Goals reach the provider; private parameters remain separate. Unsupported requests stop with `GOAL_UNSUPPORTED` and cannot become approved capabilities.
+- Added safe expected/observed failure diagnostics to caller results and the console. Added provider-payload, mobile-form, rejected-input and failure-result coverage. Historical evidence now includes its exact source snapshot; `verify:evidence --current` additionally requires current runtime identity before release. Fresh live capture remains pending.
+
 ### In progress
 
 - P10: Added an explicit capture harness for genuine console discovery, artifact review, keyless replay and exceptional outcomes. Captures stay private until reviewed. Simplified page titles, empty states, dialogs, activity and inspector copy following the owner’s review. Removed slogans and duplicate explanations, preserved contextual handoff instructions, and made the closed-session placeholder compact. Desktop/mobile visual inspection and the full automated suite pass. The final capture at `67c4000` passed both genuine discoveries, different-input validation, approval, keyless replay, business/failure cases and scripted same-session handoff. Reviewed revision 4 artifacts, thirteen inspected screenshots, the continuous recording and sanitized run histories are exported under `evidence/`.

@@ -139,6 +139,8 @@ test("canceling discovery validation stops the child replay and prevents approva
     const { id } = await app.manager.start({
       workflow: "savings",
       mode: "discovery",
+      goal: "Read the savings balance for {memberId}.",
+      target: "northstar",
       scenario: "normal",
       inputs: { memberId: "A1001" },
     });

@@ -172,3 +172,9 @@ The local runner supports one active session per invocation and bounded independ
 Cancellation also reaches the fresh replay used to validate a discovery; a canceled validation cannot be approved. A late screenshot poll cannot replace the final retained image after execution ends.
 
 On cancellation, stop admitting commands, settle or classify the in-flight operation, close the browser, expire operator credentials, drain safe journal writes and stop owned servers. Terminate only processes created by this run. Normal runtime files live in ignored `.local/`; submission evidence is a deliberate reviewed export. Individual journals are bounded to 2,000 events and 1 MiB. Total on-disk retention is manual in this local edition; automatic age/size retention and protected archival are production prerequisites. Filesystem deletion is not a cryptographic erasure guarantee.
+
+## Public discovery invocation
+
+`DiscoveryIntent` carries a caller's public English goal and the registered `northstar` target. The console requires these fields in discovery mode; `discover --request` accepts them with the workflow contract and typed arguments over bounded JSON stdin. The member-search entry point comes from the reviewed binding. Only a supported contract is executable, and unsupported goals yield `GOAL_UNSUPPORTED`. The SDK request contains the prepared caller goal; neither compiled capabilities nor journals copy it. Sensitive argument values are replaced with references before transmission, with narrow input-shape rejection as documented in README. This does not authorize arbitrary private text or arbitrary URLs.
+
+Failure results carry structural expected/observed diagnostics with no raw value: expected conditions and output parser/allowlist, observed screen/state and condition satisfaction. Startup failures have no invented observation. Operator and CLI consumers receive the same diagnosis; the runtime persists it alongside the step and effect state.

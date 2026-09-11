@@ -1,13 +1,18 @@
 import { z } from "zod";
 import { scenarios } from "../../demo/fixtures.js";
 import { Action } from "../contracts/capability.js";
+import { DiscoveryIntent } from "../contracts/discovery.js";
+import { FailureDiagnostic } from "../contracts/runtime.js";
 
-export const StartRequest = z.strictObject({
+const StartFields = {
   workflow: z.enum(["savings", "review"]),
-  mode: z.enum(["replay", "discovery"]),
   scenario: z.enum(scenarios),
   inputs: z.record(z.string().max(64), z.union([z.string().max(256), z.number(), z.boolean()])),
-});
+};
+export const StartRequest = z.discriminatedUnion("mode", [
+  z.strictObject({ ...StartFields, mode: z.literal("replay") }),
+  z.strictObject({ ...StartFields, mode: z.literal("discovery"), ...DiscoveryIntent.shape }),
+]);
 export type StartRequest = z.infer<typeof StartRequest>;
 export const ControlRequest = z.discriminatedUnion("kind", [
   z.strictObject({ kind: z.literal("claim"), epoch: z.int().nonnegative() }),
@@ -41,6 +46,7 @@ export const RunView = z.strictObject({
   stepId: z.string().nullable(),
   phase: z.enum(["running", "validating", "success", "business_outcome", "failure", "canceled"]),
   code: z.string().nullable(),
+  diagnostic: FailureDiagnostic.nullable(),
   expiresAt: z.number().nullable(),
   hasDialog: z.boolean(),
   controls: z.array(

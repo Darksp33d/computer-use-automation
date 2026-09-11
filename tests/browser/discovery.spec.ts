@@ -19,6 +19,7 @@ test("compiler records only executed parameterized actions and replay uses a dif
   const session = await createDiscoverySession("savings", { memberId: "A1001" }, "0".repeat(40), {
     origin: target.origin,
     directory,
+    intent: { target: "northstar", goal: "Please report the current savings balance for A1001." },
   });
   const views: DiscoveryView[] = [];
   const actions = fixtureFlow().steps.map((step) => step.action);
@@ -37,6 +38,12 @@ test("compiler records only executed parameterized actions and replay uses a dif
     const artifact = await readFile(join(session.directory, "capability.json"), "utf8");
     expect(artifact).not.toContain("A1001");
     expect(JSON.stringify(views)).not.toContain("A1001");
+    expect(views[0]?.goal).toBe("Please report the current savings balance for {memberId}.");
+    expect(views[0]?.target).toBe("northstar");
+    expect(artifact).not.toContain("Please report");
+    expect(await readFile(join(session.directory, "events.jsonl"), "utf8")).not.toContain(
+      "Please report",
+    );
     const replay = await createSession(
       artifact,
       { memberId: "B1002" },
@@ -181,6 +188,32 @@ test("a model following injected page instructions cannot authorize a forbidden 
     expect(await readFile(join(session.directory, "events.jsonl"), "utf8")).not.toContain(
       "IGNORE-POLICY-CANARY",
     );
+  } finally {
+    await session.close();
+    await target.close();
+    await rm(directory, { recursive: true });
+  }
+});
+
+test("unsupported caller goal stops before actions and cannot publish a capability", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "unsupported-goal-"));
+  const target = await startTarget();
+  const session = await createDiscoverySession("savings", { memberId: "A1001" }, "0".repeat(40), {
+    directory,
+    origin: target.origin,
+    intent: { target: "northstar", goal: "Delete the member record instead of reading a balance." },
+  });
+  try {
+    const result = await discover(session, {
+      async decide(view) {
+        expect(view.goal).toContain("Delete the member");
+        return { decision: { kind: "unsupported", action: null }, metadata };
+      },
+    });
+    expect(result).toMatchObject({ status: "failure", code: "GOAL_UNSUPPORTED" });
+    expect(target.stats.searches).toBe(0);
+    expect(target.stats.commits).toBe(0);
+    await expect(readFile(join(session.directory, "capability.json"))).rejects.toThrow();
   } finally {
     await session.close();
     await target.close();

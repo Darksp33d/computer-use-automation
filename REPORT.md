@@ -1,10 +1,10 @@
 # Computer-Use Automation System
 
-Groove, verified on 2026-09-11. Two genuine model discoveries produced reviewed, reusable capabilities. The suite passes 22 unit and 58 browser tests; 100 fresh local replays passed without retries. [Runs, recording and measurement limits](evidence/README.md).
+Groove, verified on 2026-09-11. Two genuine model discoveries produced reviewed, reusable capabilities. Caller goal/target input and safe failure diagnostics have been added after the PDF audit. Fresh release evidence is being verified. [Runs, recording and measurement limits](evidence/README.md).
 
 ## Architecture
 
-The system turns one model-discovered UI workflow into a reusable capability. A local fictional banking application supplies synthetic data, an iframe workspace, nested tables, generated element IDs and intentionally imperfect labels. The primary flow searches for a member, opens their savings account and reads the available balance. A second flow prepares a sub-account form and stops at review.
+The system accepts a public natural-language goal, a registered application entry point and separate typed inputs. A reviewed task contract bounds outputs and success; the model chooses the UI actions or rejects an unsupported goal. Successful execution becomes a reusable capability. A local fictional banking application supplies synthetic data, an iframe workspace, nested tables, generated element IDs and intentionally imperfect labels. The primary flow searches for a member, opens their savings account and reads the available balance. A second flow prepares a sub-account form and stops at review.
 
 TypeScript on Node.js 24 keeps the artifact, CLI, driver and operator contracts in one language. Playwright supplies real UI interaction and frame-aware targeting. The OpenAI Responses adapter supplies one strict decision per live observation, with masked screenshots, parameter references and bounded usage. Zod validates untrusted data. React with TypeScript and Vite provides the stateful operator workspace, with static assets served by the local control server. The target retains intentionally legacy HTML and iframe navigation. Server-side authorization and policy remain the security boundary; the frontend framework does not confer trust.
 
@@ -20,7 +20,7 @@ The artifact is independent of the model transcript. Its provenance identifies t
 
 Replay interprets the saved steps without a model, uniquely resolves each target, verifies conditions and extracts typed output from the UI. Exact role/text targets within frame scopes are preferred. Legacy controls use reviewed relations to visible captions; generated IDs and positional first-match choices are excluded. Ambiguity stops execution.
 
-Business outcomes such as member absent and validation rejected are separate from technical failures. Known notices have bounded recovery; unknown dialogs and expired sessions require intervention. A timeout after a click does not authorize a repeat: the engine re-observes, verifies the effect, or reports uncertainty. Final success requires the requested member, account type, screen and output schema to agree. Deterministic execution does not imply that a changing bank balance must be identical across runs. [Acceptance scenarios](docs/verification.md).
+Failures include the step, effect state, expected conditions/output parser and safe observed screen state. Business outcomes such as member absent and validation rejected are separate from technical failures. Known notices have bounded recovery; unknown dialogs and expired sessions require intervention. A timeout after a click does not authorize a repeat: the engine re-observes, verifies the effect, or reports uncertainty. Final success requires the requested member, account type, screen and output schema to agree. Deterministic execution does not imply that a changing bank balance must be identical across runs. [Acceptance scenarios](docs/verification.md).
 
 ## Heterogeneity & multi-tenant
 

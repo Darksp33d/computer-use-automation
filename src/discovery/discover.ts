@@ -9,10 +9,12 @@ import { writeNewJson } from "../evidence/files.js";
 import type { Session } from "../services/session.js";
 import { Decision, type DecisionProvider, type DiscoveryView } from "./provider.js";
 
-function view(execution: Execution): DiscoveryView {
+function view(execution: Execution, goal: string): DiscoveryView {
   const observation = execution.current!;
   const capability = execution.capability;
   return {
+    goal,
+    target: "northstar",
     task: {
       description: capability.description,
       inputs: capability.inputs,
@@ -64,7 +66,7 @@ export function discover(session: Session, provider: DecisionProvider) {
         const before = await execution.handleState(capability.success);
         if (!before.screen) throw new RunError("CHECKPOINT_FAILED");
         const response = await provider.decide(
-          view(execution),
+          view(execution, session.discoveryGoal ?? capability.description),
           await session.surface.screenshot(),
           AbortSignal.any([execution.signal, AbortSignal.timeout(execution.remainingActiveMs)]),
         );
@@ -85,6 +87,10 @@ export function discover(session: Session, provider: DecisionProvider) {
           reason: "provider-decision",
           provider: response.metadata,
         });
+        if (decision.kind === "unsupported") {
+          if (decision.action !== null) throw new RunError("MODEL_INVALID");
+          throw new RunError("GOAL_UNSUPPORTED");
+        }
         if (decision.kind === "finish") {
           if (decision.action !== null) throw new RunError("MODEL_INVALID");
           result = await execution.successfulResult();
@@ -96,7 +102,11 @@ export function discover(session: Session, provider: DecisionProvider) {
         const action = decision.action;
         if (!action) throw new RunError("MODEL_INVALID");
         const effect = execution.policy.authorize(action, "automation");
-        if (!view(execution).controls.some((control) => control.id === action.target))
+        if (
+          !view(execution, session.discoveryGoal ?? capability.description).controls.some(
+            (control) => control.id === action.target,
+          )
+        )
           throw new RunError("MODEL_INVALID");
         const fingerprint = JSON.stringify([before.screen, action]);
         if (seen.has(fingerprint)) throw new RunError("NO_PROGRESS");
@@ -121,6 +131,8 @@ export function discover(session: Session, provider: DecisionProvider) {
               preconditions.push(condition);
         }
         execution.stepId = `step-${capability.steps.length + 1}`;
+        execution.expectedConditions = preconditions;
+        execution.expectedOutput = action.kind === "read" ? action.output : null;
         const raw = await execution.executor.execute(action, execution.inputs, {
           stepId: execution.stepId,
           owner: "automation",

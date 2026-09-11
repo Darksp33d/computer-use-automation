@@ -5,6 +5,8 @@ import { OpenAIDecisions } from "../../src/discovery/openai.js";
 import type { DiscoveryView } from "../../src/discovery/provider.js";
 
 const view: DiscoveryView = {
+  goal: "Read the savings balance for {memberId}.",
+  target: "northstar",
   task: taskContracts.savings,
   observation: {
     generation: 1,
@@ -52,6 +54,7 @@ test("official provider boundary sends references and classifies unsafe response
     assert.equal(JSON.parse(captured).service_tier, "default");
     assert.ok(!captured.includes("TEST-KEY-CANARY"));
     assert.ok(!captured.includes("A1001"));
+    assert.equal(JSON.parse(JSON.parse(captured).input[0].content[0].text).goal, view.goal);
     for (const [reply, code] of [
       [response([{ type: "refusal", refusal: "PRIVATE-RESPONSE-CANARY" }]), "MODEL_REFUSED"],
       [response([], "incomplete"), "MODEL_INVALID"],

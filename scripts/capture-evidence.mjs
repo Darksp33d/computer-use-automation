@@ -89,10 +89,27 @@ async function screenshot(name) {
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: join(directory, `${name}.png`), fullPage: true });
 }
-async function launch(workflow, mode, scenario = "normal", member = "A1001") {
+const goals = {
+  savings: "Find the available savings balance and currency for {memberId}.",
+  review: "Prepare a sub-account for {memberId} with {accountType} and {nickname}. Stop at review.",
+};
+async function launch(
+  workflow,
+  mode,
+  scenario = "normal",
+  member = "A1001",
+  goal = goals[workflow],
+) {
   await page.getByRole("button", { name: "New session", exact: true }).click();
   await page.getByRole("combobox", { name: "Workflow", exact: true }).selectOption(workflow);
-  if (mode === "discovery") await page.getByRole("radio", { name: /^Discover/ }).check();
+  if (mode === "discovery") {
+    await page.getByRole("radio", { name: /^Discover/ }).check();
+    await page
+      .getByRole("combobox", { name: "Target application", exact: true })
+      .selectOption("northstar");
+    await page.getByRole("textbox", { name: "Goal", exact: true }).fill(goal);
+    await screenshot(`${workflow}-${goal === goals[workflow] ? "goal" : "unsupported-goal"}`);
+  }
   await page.getByRole("combobox", { name: "Scenario", exact: true }).selectOption(scenario);
   await page.getByRole("combobox", { name: "Member number", exact: true }).selectOption(member);
   if (workflow === "review")
@@ -103,7 +120,14 @@ async function launch(workflow, mode, scenario = "normal", member = "A1001") {
   await page.getByRole("button", { name: "Start session", exact: true }).click();
   await expect.poll(async () => (await current())?.id).not.toBe(previous);
   const run = await current();
-  capture.runs.push({ id: run.id, workflow, mode, scenario, syntheticMember: member });
+  capture.runs.push({
+    id: run.id,
+    workflow,
+    mode,
+    scenario,
+    syntheticMember: member,
+    ...(mode === "discovery" ? { target: "northstar", publicGoal: goal } : {}),
+  });
   console.log(JSON.stringify({ started: run.id, workflow, mode, scenario }));
   return run.id;
 }
@@ -129,6 +153,7 @@ try {
   await screenshot("sessions");
   await page.getByRole("button", { name: "New session", exact: true }).click();
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.getByRole("radio", { name: /^Discover/ }).check();
   await screenshot("mobile-session-dialog");
   await page.keyboard.press("Escape");
   await page.setViewportSize({ width: 1440, height: 960 });
@@ -167,6 +192,16 @@ try {
       },
     );
   }
+  await launch(
+    "savings",
+    "discovery",
+    "normal",
+    "A1001",
+    "Delete the member profile and all of its accounts.",
+  );
+  assert.equal((await completed("failure")).code, "GOAL_UNSUPPORTED");
+  assert.equal((await current()).canApprove, false);
+  await screenshot("unsupported-goal");
   // Replay is independently exercised after removing the provider credential.
   delete process.env.OPENAI_API_KEY;
   for (const workflow of ["savings", "review"]) {

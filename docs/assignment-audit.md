@@ -2,7 +2,7 @@
 
 Reviewed source: `99e372cb590f4fab4f928a110c0ed22fa9fb4d3e`. This is a fresh review against all ten pages of the supplied assignment, followed by source inspection and the aggregate checks. It supersedes the earlier unconditional completion statement. Test success establishes the tested behavior, not completeness against the brief.
 
-## Finding requiring correction
+## Correction in verification
 
 **Section 3.1, page 3: the public discovery interface does not accept a caller-supplied natural-language goal and target.**
 
@@ -36,4 +36,4 @@ The PDF expressly permits one concrete surface and a design for desktop/multi-te
 
 The 100/100 stability result is a small local sample at concurrency two. Model discoveries use two task contracts against one synthetic application. Image privacy is verified for the reviewed binding and canaries, not every hostile page. Local approval files are not a protected signing authority. These limits remain material even when every automated test passes.
 
-The reviewed system is a substantial working solution. It should not receive unconditional assignment-complete sign-off until the goal/target input gap has been corrected and evidenced. No finite review can prove perfection or that this is the best possible solution.
+The goal/target interface and safe failure diagnostics are now implemented. Boundary, provider-payload, CLI and mobile-console tests pass; final live-provider evidence remains the release gate. The descriptions above preserve the audited baseline and will be reconciled with the final capture. No finite review can prove perfection or that this is the best possible solution.

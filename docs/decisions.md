@@ -94,3 +94,11 @@ P2 validation covers unknown fields/versions/actions, reference integrity, repea
 | 2026-09-11 | P10 evidence export | Two final live discoveries, revision 4 approvals, keyless replay, owner exercise, exceptional outcomes, 100-session stability and source integrity checks documented |
 
 When evidence changes a decision, add a dated entry explaining the trigger, replacement, validation and effect on prior artifacts. Keep the final design coherent rather than accumulating incompatible alternatives.
+
+## D11. Accept explicit intent within a reviewed task contract
+
+The final PDF audit exposed a missing public goal/target input. Discovery now accepts the caller's natural-language instruction and the registered `northstar` application entry point through the console and bounded JSON stdin. Separate typed parameters hold invocation values. The existing workflow selection supplies independently trusted output, checkpoint and action constraints, not a scripted action sequence. The model evaluates whether it can satisfy the goal within those constraints and returns `unsupported` otherwise. No task text can authorize an irreversible effect or change network policy.
+
+Public goals use a deliberately narrow English text format, at most 500 characters. Known sensitive arguments become references, common credential/address shapes and unknown references are rejected, and goals stay out of artifacts and journals. This is a synthetic-application invocation policy, not generic PII detection. Tests verify caller text reaches the SDK request, mobile edits survive polling, unsupported goals cannot be approved, and unsafe inputs stop before browser/provider startup. Final live evidence is regenerated after the implementation commit.
+
+Failure results now carry safe expected conditions, output type/parser and observed structural state beside the existing code, step and effect state. This closes the audit's diagnostic weakness without persisting raw DOM or invalid financial values.

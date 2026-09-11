@@ -24,11 +24,32 @@ assert.deepEqual(
 );
 for (const file of [...manifest.files, ...manifest.runtimeFiles]) {
   assert.ok(!isAbsolute(file.path) && !file.path.split(/[\\/]/).includes(".."));
-  const path = manifest.files.includes(file) ? join(root, file.path) : file.path;
+  const path = manifest.files.includes(file)
+    ? join(root, file.path)
+    : join(root, manifest.sourceSnapshot, file.path);
   const bytes = await readFile(path);
   assert.equal(hash(bytes), file.sha256, `Digest mismatch: ${path}`);
   if (file.bytes !== undefined) assert.equal(bytes.length, file.bytes, path);
 }
+assert.equal(manifest.sourceSnapshot, "source");
+let runtimeDifferences = 0;
+const currentPaths = [
+  ...(await files("src", "src")),
+  ...(await files("demo", "demo")),
+  ...(await files("ui", "ui")),
+  ...(await files("schemas", "schemas")),
+  "yarn.lock",
+  "tsconfig.json",
+  "scripts/assets.mjs",
+];
+const capturedPaths = new Set(manifest.runtimeFiles.map((file) => file.path));
+runtimeDifferences += currentPaths.filter((path) => !capturedPaths.has(path)).length;
+for (const file of manifest.runtimeFiles) {
+  const current = await readFile(file.path).catch(() => Buffer.alloc(0));
+  if (hash(current) !== file.sha256) runtimeDifferences++;
+}
+if (process.argv.includes("--current"))
+  assert.equal(runtimeDifferences, 0, "Refresh evidence after runtime changes");
 const capture = await json(join(root, "capture.json"));
 assert.equal(capture.status, "success");
 assert.equal(capture.sourceRevision, manifest.sourceRevision);
@@ -80,5 +101,5 @@ for (const run of capture.runs.filter((item) => item.approved)) {
   }
 }
 console.log(
-  `Verified ${manifest.files.length} evidence files and ${manifest.runtimeFiles.length} runtime source digests`,
+  `Verified ${manifest.files.length} evidence files and ${manifest.runtimeFiles.length} runtime source digests; ${runtimeDifferences} differ from this checkout`,
 );

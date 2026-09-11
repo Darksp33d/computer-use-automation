@@ -239,10 +239,32 @@ export function Inspector({
         <section className="result-note">
           <h3>{run.phase === "failure" ? "Execution stopped" : "Known business outcome"}</h3>
           <p>{run.code?.replaceAll("_", " ").toLowerCase()}</p>
-          <small>
-            No successful output was returned. Review the event record before starting a new
-            session.
-          </small>
+          {run.diagnostic ? (
+            <dl className="metadata">
+              {run.diagnostic.expected.output ? (
+                <div>
+                  <dt>Expected output</dt>
+                  <dd>
+                    {run.diagnostic.expected.output.name} ({run.diagnostic.expected.output.parser})
+                  </dd>
+                </div>
+              ) : null}
+              <div>
+                <dt>Observed screen</dt>
+                <dd>{run.diagnostic.observed?.screen?.replaceAll("-", " ") ?? "Unavailable"}</dd>
+              </div>
+              {run.diagnostic.observed?.conditions
+                .filter((item) => !item.satisfied)
+                .map((item, index) => (
+                  <div key={`${item.condition.target}-${index}`}>
+                    <dt>Unmet check</dt>
+                    <dd>
+                      {item.condition.target}: {item.condition.kind}
+                    </dd>
+                  </div>
+                ))}
+            </dl>
+          ) : null}
         </section>
       ) : null}
       {run.owner !== "terminal" || run.phase === "validating" ? (

@@ -1,6 +1,7 @@
 export const failureCodes = [
   "INVALID_ARTIFACT",
   "INVALID_INPUT",
+  "GOAL_UNSUPPORTED",
   "POLICY_DENIED",
   "TARGET_MISSING",
   "TARGET_AMBIGUOUS",

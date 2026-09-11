@@ -3,7 +3,9 @@ import { join } from "node:path";
 import { startTarget } from "../../demo/server.js";
 import { bankActions, bankTargets, taskContracts } from "../applications/legacy-bank.js";
 import type { Capability } from "../contracts/capability.js";
+import { prepareGoal } from "../contracts/discovery.js";
 import { failureCode, RunError } from "../contracts/errors.js";
+import { validateArguments } from "../contracts/validate.js";
 import { Catalog } from "../services/catalog.js";
 import { createDiscoverySession, createSession, type Session } from "../services/session.js";
 import type { ControlRequest, RunView, StartRequest, WorkspaceView } from "./contracts.js";
@@ -119,6 +121,12 @@ export class RunManager {
         request.mode === "replay" ? await this.catalog.load(id, entry?.revision ?? 1) : null;
       if (request.mode === "discovery" && !process.env.OPENAI_API_KEY)
         throw new RunError("MODEL_UNAVAILABLE");
+      if (request.mode === "discovery")
+        prepareGoal(
+          { goal: request.goal, target: request.target },
+          taskContracts[request.workflow],
+          validateArguments(taskContracts[request.workflow], request.inputs),
+        );
       target = await startTarget({ scenario: request.scenario });
       const options = {
         origin: target.origin,
@@ -127,12 +135,12 @@ export class RunManager {
       };
       const session = source
         ? await createSession(source, request.inputs, options)
-        : await createDiscoverySession(
-            request.workflow,
-            request.inputs,
-            this.sourceRevision,
-            options,
-          );
+        : await createDiscoverySession(request.workflow, request.inputs, this.sourceRevision, {
+            ...options,
+            ...(request.mode === "discovery"
+              ? { intent: { goal: request.goal, target: request.target } }
+              : {}),
+          });
       if (this.#closing) {
         await session.close();
         throw new RunError("CANCELED");
@@ -158,6 +166,7 @@ export class RunManager {
           stepId: null,
           phase: "running",
           code: null,
+          diagnostic: null,
           expiresAt: null,
           hasDialog: false,
           controls: [],
@@ -203,6 +212,7 @@ export class RunManager {
       this.#view(record);
       record.view = {
         ...record.view,
+        diagnostic: result.status === "failure" ? result.diagnostic : null,
         phase: result.status,
         code: "code" in result ? result.code : null,
         controls: [],

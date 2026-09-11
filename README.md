@@ -2,7 +2,7 @@
 
 Discover a workflow by operating a real UI. Save the successful path as a typed capability. Replay it without a model. When automation encounters a blocker, an operator can take control of the same live session and return it after checkpoint verification.
 
-**Audit status:** A fresh PDF review found an open Section 3.1 gap: discovery currently selects predefined workflows instead of accepting a caller-supplied goal and target. See [the assignment audit](docs/assignment-audit.md).
+**Audit status:** Caller-supplied goal and target inputs now reach discovery through the console and CLI. Unsupported goals stop explicitly. The final live-provider capture is being refreshed; [the audit](docs/assignment-audit.md) distinguishes completed checks from that remaining gate.
 
 **Implemented and verified:** genuine discovery for two workflows, provider-free replay, reviewed capabilities, same-session handoff, exceptional outcomes, a React operator console and optional container isolation. [Evidence and walkthrough](evidence/README.md).
 
@@ -50,8 +50,9 @@ Exit codes: `0` success, `2` business outcome, `3` failure or rejected invocatio
 Configure `OPENAI_API_KEY` privately in the ignored `.env.local` file. Never put a key in a capability, a client environment variable, or a commit. Then choose **Discover** in the console, or run:
 
 ```bash
-corepack yarn discover savings
-corepack yarn discover review
+corepack yarn discover --request <<'JSON'
+{"workflow":"savings","target":"northstar","goal":"Find the available savings balance for {memberId}.","inputs":{"memberId":"A1001"}}
+JSON
 ```
 
 The CLI learns from live masked observations and replays a successful artifact with different inputs. It prints sanitized results and writes the draft and journal under `.local/runs/<run-id>/`. The console additionally validates a fresh replay before offering a capability review and approval. Approval pins the exact artifact bytes and application binding; a draft cannot approve itself.
@@ -100,3 +101,9 @@ Each implementation stage is a focused, verified commit. See [AGENTS.md](AGENTS.
 ## Optional containment verification
 
 With Docker running, use `corepack yarn build` followed by `node scripts/verify-containment.mjs`. The script creates and tears down its own isolated project, verifies a real replay and proves that an external request receiver cannot be reached by either worker. See the [verified profile and limits](docs/containment.md).
+
+### Discovery input scope
+
+The console's **Discover** mode accepts an editable **Goal** and explicit **Target application**. The CLI's `--request` form accepts the same public task instruction and separate typed inputs. `northstar` identifies the reviewed application and its member-search entry point. Choose `savings` or `review` to supply independently reviewed output and success constraints; the model determines the action sequence. Unsupported goals return `GOAL_UNSUPPORTED` and cannot be approved.
+
+Goals are public English task instructions, 10-500 characters, using letters, whitespace and basic punctuation. Refer to private inputs as `{memberId}` or `{nickname}`. Known sensitive argument values are replaced with references before the provider sees the goal; credential terms, number/address shapes and unknown references are rejected. These checks do not make arbitrary free text private. Do not include personal details or secrets. Goals are not copied into artifacts or journals. Arbitrary URLs and unreviewed applications are intentionally unsupported.
