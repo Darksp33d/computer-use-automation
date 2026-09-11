@@ -150,7 +150,7 @@ Stage order is dependency-driven. If early research or the P4/P6 experiments inv
 - [x] P2: Contracts and state machine. Twelve unit tests pass, including invalid artifacts, typed parameters, money parsing and ownership races. Generated schema consistency passes.
 - [x] P3: Simulator and scenarios. Three real Chromium flow tests and a visual inspection pass. Fault fixtures are available for the runtime suite; no account commit occurs in the tested flows.
 - [x] P4: Policy and surface driver. Seventeen unit tests and six browser tests pass. The driver resolves legacy controls without generated IDs, rejects ambiguous targets and frame drift, and journals only allowlisted event fields. Broader adversarial containment checks remain in P9.
-- [ ] P5: Deterministic replay.
+- [x] P5: Deterministic replay. Verified 17 unit and 18 browser tests, including two parameter sets, typed outcomes, bounded notice recovery, delayed navigation, safe output persistence and the account-review boundary. Artifacts in these tests are explicitly handwritten fixtures; genuine discovery is P6.
 - [ ] P6: Genuine discovery and compiler.
 - [ ] P7: Live-session handoff.
 - [ ] P8: Complete flows and runtime recovery.

@@ -233,7 +233,9 @@ export class BrowserSurface implements Surface {
     for (const condition of conditions)
       evaluated.push({ condition, satisfied: await this.check(condition) });
     const safe = { screen: screens[0] ?? null, controls, conditions: evaluated, state };
-    const signature = createHash("sha256").update(JSON.stringify(safe)).digest("hex");
+    const signature = createHash("sha256")
+      .update(JSON.stringify({ screen: safe.screen, controls, state }))
+      .digest("hex");
     if (signature !== this.#signature) {
       this.#generation++;
       this.#signature = signature;
@@ -260,7 +262,20 @@ export class BrowserSurface implements Surface {
           await locator.selectOption(String(inputs[action.input]));
           break;
         case "click":
-          await locator.click({ timeout: this.timeoutMs });
+          if (this.policy.binding.actions[action.target]?.navigationFrame) {
+            const navigation = this.page.waitForEvent("framenavigated", {
+              predicate: (frame) =>
+                frame.name() === this.policy.binding.actions[action.target]?.navigationFrame,
+              timeout: this.timeoutMs,
+            });
+            const [frame] = await Promise.all([
+              navigation,
+              locator.click({ timeout: this.timeoutMs }),
+            ]);
+            await frame.waitForLoadState("domcontentloaded", { timeout: this.timeoutMs });
+          } else {
+            await locator.click({ timeout: this.timeoutMs });
+          }
           break;
         case "read":
           return (await locator.innerText()).trim();

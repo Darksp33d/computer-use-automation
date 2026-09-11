@@ -76,24 +76,35 @@ export const bankActions: Record<
     kind: "click" | "fill" | "select" | "read";
     input?: string;
     humanOnly?: boolean;
+    navigationFrame?: string;
     effect: "read" | "reversible";
   }
 > = {
   "member-field": { kind: "fill", input: "memberId", effect: "reversible" },
-  "search-members": { kind: "click", effect: "read" },
-  "open-member": { kind: "click", effect: "read" },
-  "view-savings": { kind: "click", effect: "read" },
-  "new-account": { kind: "click", effect: "reversible" },
+  "search-members": { kind: "click", navigationFrame: "workspace", effect: "read" },
+  "open-member": { kind: "click", navigationFrame: "workspace", effect: "read" },
+  "view-savings": { kind: "click", navigationFrame: "workspace", effect: "read" },
+  "new-account": { kind: "click", navigationFrame: "workspace", effect: "reversible" },
   "account-type-field": { kind: "select", input: "accountType", effect: "reversible" },
   "nickname-field": { kind: "fill", input: "nickname", effect: "reversible" },
-  "review-account": { kind: "click", effect: "reversible" },
+  "review-account": { kind: "click", navigationFrame: "workspace", effect: "reversible" },
   balance: { kind: "read", effect: "read" },
   currency: { kind: "read", effect: "read" },
   "account-type": { kind: "read", effect: "read" },
   "preparation-status": { kind: "read", effect: "read" },
-  "dismiss-notice": { kind: "click", effect: "read" },
-  "acknowledge-notice": { kind: "click", humanOnly: true, effect: "read" },
-  "restore-session": { kind: "click", humanOnly: true, effect: "read" },
+  "dismiss-notice": { kind: "click", navigationFrame: "workspace", effect: "read" },
+  "acknowledge-notice": {
+    kind: "click",
+    navigationFrame: "workspace",
+    humanOnly: true,
+    effect: "read",
+  },
+  "restore-session": {
+    kind: "click",
+    navigationFrame: "workspace",
+    humanOnly: true,
+    effect: "read",
+  },
 };
 
 export const visible = (target: string): Condition => ({ kind: "visible", target });

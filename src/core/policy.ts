@@ -7,7 +7,13 @@ export interface PolicyBinding {
   routes: Record<string, readonly string[]>;
   actions: Record<
     string,
-    { kind: Action["kind"]; input?: string; humanOnly?: boolean; effect: "read" | "reversible" }
+    {
+      kind: Action["kind"];
+      input?: string;
+      humanOnly?: boolean;
+      navigationFrame?: string;
+      effect: "read" | "reversible";
+    }
   >;
 }
 
